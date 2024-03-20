@@ -1,0 +1,278 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-buttons slot="start">
+      <ion-back-button style="color: white;" defaultHref="" (click)="navigateBackWithParams()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <div *ngIf="!IsEditMode" class="ion-text-wrap" style="font-weight:bolder;color:white;">Add return item -
+        {{returnItemName}} </div>
+      <div *ngIf="IsEditMode" class="ion-text-wrap" style="font-weight:bolder;color:white;">Update return item -
+        {{returnItemName}} </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content >
+  <form [formGroup]="docForm" novalidate>
+    <div class="responsive-form">
+
+      <div class="form-group">
+        <ion-label class="lable">NDC/UPC <span style="color:red">*</span></ion-label>
+        <div style="justify-content: center; display: flex;align-items:center;">
+          <ion-item *ngIf="defaultNDCUPC" class="roundedInput">
+            <ion-input  formControlName="ndcupcCode" [maskito]="phoneMask"
+            [maskitoElement]="maskPredicate" placeholder="NDC/UPC"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="greenNDCUPC" style="background-color: green;color:whitesmoke" class="roundedInput">
+             <ion-input  formControlName="ndcupcCode" [maskito]="phoneMask"
+            [maskitoElement]="maskPredicate" placeholder="NDC/UPC"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="redNDCUPC" style="background-color: #f6481c;color:whitesmoke" class="roundedInput">
+            <ion-input  formControlName="ndcupcCode"  [maskito]="phoneMask"
+            [maskitoElement]="maskPredicate" placeholder="NDC/UPC"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="blueNDCUPC" style="background-color:blue; color:whitesmoke" class="roundedInput">
+            <ion-input  formControlName="ndcupcCode" [maskito]="phoneMask"
+            [maskitoElement]="maskPredicate" placeholder="NDC/UPC"></ion-input>
+          </ion-item>
+        </div>
+        <div style="padding-left: 32px;" *ngIf="isSubmitted && docForm.controls['ndcupcCode'].hasError('required')">
+          <small style="color: #f70505;">Please enter NDC/UPC.</small>
+        </div>
+        <div style="padding-left: 32px;" *ngIf="docForm.controls['ndcupcCode'].hasError('pattern')">
+          <small style="color: hwb(34 0% 0%);"> NDC/UPC requires an 11-digit number in a 5-4-2 format!</small>
+        </div>
+        <div style="padding-left: 32px;" *ngIf="docForm.controls['ndcupcCode'].hasError('ndcUpcCodeValid') ">
+          <small style="color: #f70505;">NDC/UPC code is not exists</small>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 15px;">
+        <ion-button shape="round" class="ioncardButtonGreen" (click)="scanBarcode()">
+          <ion-icon slot="start" name="barcode"></ion-icon>
+        </ion-button>
+        <ion-button shape="round" class="ioncardButtonNormal" (click)="find_Click()">
+          <ion-icon slot="start" name="search"></ion-icon>FIND
+        </ion-button>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable"> </ion-label>
+        <ion-item *ngIf="defaultNDCUPC" class="roundedInput">
+          <ion-input formControlName="description" readonly type="text" placeholder="">
+          </ion-input>
+        </ion-item>
+        <ion-item *ngIf="greenNDCUPC" style="background-color: green;color:whitesmoke" class="roundedInput">
+          <ion-input formControlName="description" readonly type="text" placeholder="">
+          </ion-input>
+        </ion-item>
+        <ion-item *ngIf="redNDCUPC" style="background-color: #f6481c;color:whitesmoke" class="roundedInput">
+          <ion-input formControlName="description" readonly type="text" placeholder="">
+          </ion-input>
+        </ion-item>
+        <ion-item *ngIf="blueNDCUPC" style="background-color:blue; color:whitesmoke" class="roundedInput">
+          <ion-input formControlName="description" readonly type="text" placeholder="">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Package Size</ion-label>
+        <ion-item class="roundedInput">
+          <ion-input formControlName="packageSize" readonly type="text" placeholder="Package Size">
+          </ion-input>
+        </ion-item>
+      </div>
+
+
+      <div class="form-group">
+        <ion-label class="lable">Unit/package</ion-label>
+        <ion-item class="roundedInput">
+          <ion-input formControlName="unitPackage" readonly type="text" placeholder="Unit per package"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="form-group">
+        <ion-label class="lable">Control No</ion-label>
+        <ion-item class="roundedInput">
+          <ion-input formControlName="controlNo" readonly type="text" placeholder="Control No"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="form-group">
+        <ion-label class="lable">Strength</ion-label>
+        <ion-item class="roundedInput">
+          <ion-input formControlName="strength" readonly type="text" placeholder="Strength"></ion-input>
+        </ion-item>
+      </div>
+  
+      <div class="form-group">
+        <ion-label class="lable">Estimated value</ion-label>
+        <ion-item class="roundedInput">
+          <ion-input formControlName="estimatedValue" readonly type="text" placeholder="Estimated value"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Dosage </ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="dosage" readonly type="text" placeholder="Dosage">
+            </ion-input>
+          </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Manufacturer </ion-label>
+          <ion-item class="roundedInput">
+            <ion-row>
+              <ion-select formControlName="manufacturerBy" [disabled]="true" okText="Okay" cancelText="Dismiss"
+                 placeholder="Manufacturer name">
+                <ion-select-option *ngFor='let cElement of manufacturerList' value="{{cElement.id}}">
+                  {{cElement.text}}
+                </ion-select-option>
+              </ion-select>
+            </ion-row>
+          </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Return to </ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="returnTo" readonly type="text" placeholder="Return To"></ion-input>
+          </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Price <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="price" type="text" placeholder="Price">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && docForm.controls['price'].hasError('required')">
+            <small style="color: #f70505;">Please enter Price.</small>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Quantity <span style="color:red">*</span></ion-label>
+        <ion-item class="roundedInput">
+          <ion-input formControlName="quantity" type="number"
+            (ionChange)="keyUpQuantityAndcheckDecimalOrInteger($event)" placeholder="Quantity">
+          </ion-input>
+        </ion-item>
+        <div style="padding-left: 32px;" *ngIf="isSubmitted && docForm.controls['quantity'].hasError('required')">
+          <small style="color: #f70505;">Please enter Quantity.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Full quantity / Number of</ion-label>
+          <ion-item class="roundedInput">
+            <ion-radio-group formControlName="fullParticalProduct">
+              <ion-row>
+                <ion-col>
+                  <div class="genderbg">
+                    <div class="genderpadding">
+                      <ion-row style="align-items: center;">
+                        <ion-radio mode="md" class="ion-item-left" value="true"></ion-radio>
+                        <span class="emojitext">&nbsp;Full quantity</span>
+                      </ion-row>
+                    </div>
+                  </div>
+                </ion-col>
+                <ion-col>
+                  <div class="genderbg">
+                    <div class="genderpadding">
+                      <ion-row style="align-items: center;">
+                        <ion-radio mode="md" class="ion-item-left" value="false"></ion-radio>
+                        <span class="emojitext">&nbsp;Number of {{this.docForm.value.dosageDescription}}</span>
+                      </ion-row>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Reason <span style="color:red">*</span></ion-label>
+        <ion-item class="roundedInput">
+          <ion-select formControlName="reason" okText="Okay" cancelText="Dismiss"
+            placeholder="Reason">
+            <ion-select-option *ngFor='let element of returnReasonList' value="{{element.id}}">
+              {{element.text}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <div style="padding-left: 32px;" *ngIf="isSubmitted && docForm.controls['reason'].hasError('required')">
+          <small style="color: #f70505;">Please select Reason.</small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Expiry date <span style="color:red">*</span></ion-label>
+          <form class="center-datepicker">
+            <ion-item class="roundedInput">
+              <input [(ngModel)]="modelExpDate" (ngModelChange)="changeExpDate($event)" autocomplete="off"
+                class="form-control" name="date" readonly bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'MM/YYYY', containerClass: 'theme-default', monthLabel: 'MMM' }"
+                (onShown)="onOpenCalendar($event)">
+            </ion-item>
+          </form>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Entry number </ion-label>
+        <ion-item class="roundedInput">
+          <ion-input readonly formControlName="entryNo" type="text" placeholder="Entry number">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Lot No <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input (ionChange)="onInputChange()" formControlName="lotNo" maxlength="20" type="text"
+              placeholder="Lot number">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && docForm.controls['lotNo'].hasError('required')">
+            <small style="color: #f70505;">Please enter Lot No.</small>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Returnable</ion-label>
+        <ion-item class="roundedInput">
+          <ion-checkbox color="primary" [disabled]="true" formControlName="returnable"></ion-checkbox>&nbsp;
+          <ion-label>Is returnable?</ion-label>
+        </ion-item>
+      </div>
+
+      <div class="form-group">
+        <ion-label class="lable">Repackaged product</ion-label>
+        <ion-item class="roundedInput">
+          <ion-checkbox color="primary" formControlName="repackagedProduct"></ion-checkbox>&nbsp;
+          <ion-label>Is Repackaged product?</ion-label>
+        </ion-item>
+      </div>
+
+    </div>
+  </form>
+
+  <div style="padding-top: 15px;">
+    <ion-row>
+      <ion-col style="text-align: right; width: 100%;" class="ion-margin-top">
+        <ion-button *ngIf="!IsEditMode" shape="round" class="addBtn" (click)="checkValidationAndFullParticalProduct('onSubmit')">
+          <ion-icon slot="end" name="save-outline"></ion-icon>SAVE
+        </ion-button>
+        <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="checkValidationAndFullParticalProduct('update')">
+          <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+</ion-content>

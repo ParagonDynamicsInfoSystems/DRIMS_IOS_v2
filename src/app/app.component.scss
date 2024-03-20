@@ -1,0 +1,37 @@
+.menuHeaderStyle{
+  padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #091279;
+}
+
+[big-heading]{
+  font-family: Montserrat-SemiBold !important;
+  font-size: 40px !important;
+  font-weight: bolder;
+  color: #3cc4d2;
+}
+
+ion-content{
+  --background: linear-gradient(to top, #00dfff00, #2cd0da8f);
+}
+.ParentMenu{
+  --background: linear-gradient(to right top, #3cc4d2, #b8f6f9);
+  font-family: Montserrat-SemiBold;
+ // border-radius: 0px 0px 30px 30px;
+  font-size: 17px !important;
+  font-weight: 750;
+  color: #091279;
+}
+
+.ChildMenu{
+  --background: linear-gradient(to right top, #3cc4d2, #b8f6f9);
+  font-family: Montserrat-SemiBold;
+  font-size: 17px !important;
+  font-weight: 750;
+  color: #091279;
+ // border-radius: 0px 0px 30px 30px;
+}
+
+ion-item.active {
+  background-color: rgb(248, 243, 253);
+}

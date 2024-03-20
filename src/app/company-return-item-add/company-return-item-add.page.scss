@@ -1,0 +1,36 @@
+/* Add by Gokul for responsive form*/
+.responsive-form {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 15px;
+}
+
+.form-group {
+  flex: 1 0 100%; /* Take full width on small screens, half on medium, and one-third on large */
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 576px) {
+  /* Medium devices (tablets) */
+  .form-group {
+    flex: 1 0 50%; /* Take half the width on medium screens */
+  }
+}
+
+@media (min-width: 768px) {
+  /* Large devices (desktops) */
+  .form-group {
+    flex: 1 0 33.333%; /* Take one-third the width on large screens */
+  }
+}
+
+.ioncardButtonGreen {
+  --background: linear-gradient(to right top, #00FF00, #008000); /* Green gradient */
+  padding-left: 10px;
+  padding-right: 10px;
+  --border-radius: 20px !important;
+  color: #FFFFFF; /* White text color */
+  font-weight: bolder;
+}
+

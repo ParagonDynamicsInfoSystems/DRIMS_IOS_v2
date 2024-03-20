@@ -1,0 +1,225 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-buttons slot="start">
+      <ion-back-button style="color: white;" defaultHref="manufacturer-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="ion-text-wrap" style="font-weight:bolder;color:white;">Return policy</div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-slides #slides pager="true">
+    <ion-slide> -->
+      <swiper-container #swiper>
+        <swiper-slide>
+      <form [formGroup]="drimsFormOne" novalidate>
+        <h4 class="pageNumber"
+          *ngIf="this.drimsFormOne.value.acceptReturns=='false'||this.drimsFormOne.value.acceptReturns==''">Page 1 of 1
+        </h4>
+
+        <h4 class="pageNumber" *ngIf="this.drimsFormOne.value.acceptReturns=='true'">Page 1 of 2</h4>
+        <div class="button-content" style="padding-bottom: 8px;">
+          <h4><b> Manufacturer Name :</b> {{manufacturerName}} </h4>
+        </div>
+        <div class="button-content">
+          <ion-label class="lable">Accept returns <span style="color:red">*</span></ion-label>
+
+          <ion-item class="roundedInput">
+            <ion-radio-group formControlName="acceptReturns" style="width:100%">
+              <ion-row>
+                <ion-col>
+                  <ion-radio mode="md" value="true"></ion-radio>
+                </ion-col>
+                <ion-col style="margin-top: 3%;">
+                  <span style="color:#1e275b;" class="emojitext">Yes</span>
+                </ion-col>
+                <ion-col>
+                  <ion-radio mode="md" value="false"></ion-radio>
+                </ion-col>
+                <ion-col style="margin-top: 3%;">
+                  <span style="color:#1e275b;" class="emojitext">No</span>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['acceptReturns'].hasError('required')">
+            <small style="color: #f70505;"> Accept returns is required !</small>
+          </div>
+        </div>
+
+        
+
+        <div class="button-content" *ngIf="this.drimsFormOne.value.acceptReturns=='true'">
+          <ion-label class="lable">Accept partial returns<span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-radio-group formControlName="acceptPartialReturns" style="width:100%">
+              <ion-row>
+                <ion-col>
+                  <ion-radio mode="md" value="true"></ion-radio>
+                </ion-col>
+                <ion-col style="margin-top: 3%;">
+                  <span style="color:#1e275b;" class="emojitext">Yes</span>
+                </ion-col>
+                <ion-col>
+                  <ion-radio mode="md" value="false"></ion-radio>
+                </ion-col>
+                <ion-col style="margin-top: 3%;">
+                  <span style="color:#1e275b;" class="emojitext">No</span>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['acceptPartialReturns'].hasError('required')">
+            <small style="color: #f70505;"> Accept partial returns is required !</small>
+          </div>
+
+        </div>
+
+        <div *ngIf="this.drimsFormOne.value.acceptPartialReturns=='true'" class="button-content">
+          <ion-label class="lable">
+            Accept percentage <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input (ionChange)="acceptPercetageValidation($event.target.value)" formControlName="acceptpercentage"
+              type="text" placeholder="">
+            </ion-input>
+          </ion-item>
+          <div style="margin-left: 32px;" *ngIf="drimsFormOne.controls['acceptpercentage'].hasError('pattern')">
+            <small style="color: #f70505;"> Invalid Percentage</small>
+          </div>
+          <div style="margin-left: 32px;" *ngIf="Acceptpercentage">
+            <small style="color: #f70505;"> Accept percentage should be of minimum 1% and Maximum 100%.</small>
+          </div>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['acceptpercentage'].hasError('required')">
+            <small style="color: #f70505;">Accept percentage is required !</small>
+          </div>
+        </div>
+
+        <div *ngIf="this.drimsFormOne.value.acceptReturns=='true'" class="button-content">
+          <ion-label class="lable">Number of months before expiration <span style="color:red">*</span> </ion-label>
+          <ion-item class="roundedInput">
+            <ion-input type="number" formControlName="beforeExpiration" placeholder="" (ionChange)="noMonthsBeforeExpirationLimit($event, 15)"></ion-input>
+            <!-- <ion-input formControlName="beforeExpiration" (input)="noMonthsBeforeExpirationLimit($event, 15)"type="number" placeholder="">
+            </ion-input> -->
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['beforeExpiration'].hasError('required')">
+            <small style="color: #f70505;">Number of months before expiration is required !</small>
+          </div>
+
+        </div>
+
+        <div *ngIf="this.drimsFormOne.value.acceptReturns=='true'" class="button-content">
+          <ion-label class="lable">Number of months after expiration</ion-label>
+          <ion-item class="roundedInput">
+            <ion-input type="number" formControlName="afterExpiration" placeholder="" (ionChange)="noMonthsAfterExpirationLimit($event, 15)"></ion-input>
+            <!-- <ion-input formControlName="afterExpiration" (input)="noMonthsAfterExpirationLimit($event, 15)" type="number" placeholder="">
+            </ion-input> -->
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['afterExpiration'].hasError('required')">
+            <small style="color: #f70505;">Number of months after expiration is required !</small>
+          </div>
+        </div>
+
+
+
+
+
+        <div style="padding-top: 15px;">
+          <ion-row>
+            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+            </ion-col>
+            <ion-col *ngIf="this.drimsFormOne.value.acceptReturns=='true'" style="text-align: right;width: 50%;"
+              class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="firstCardNextClick()">
+                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
+              </ion-button>
+            </ion-col>
+            <ion-col *ngIf="this.drimsFormOne.value.acceptReturns=='false'||this.drimsFormOne.value.acceptReturns==''"
+              style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button *ngIf="!IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="end" name="save-outline"></ion-icon>SAVE
+              </ion-button>
+              <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
+              </ion-button>
+
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+        </swiper-slide>
+
+
+    <swiper-slide *ngIf="this.drimsFormOne.value.acceptReturns=='true'">
+      <form [formGroup]="drimsFormTwo" novalidate>
+        <h4 class="pageNumber">Page 2 of 2</h4>
+        <h3 class="heading">Return
+          Instruction</h3>
+        <div class="button-content">
+          <ion-label class="lable">Manufacturer</ion-label>
+          <ion-item class="roundedInput">
+            <ion-textarea formControlName="instnormaldrugitem" type="text" placeholder="">
+            </ion-textarea>
+          </ion-item>
+          <!-- <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls.phoneNo.hasError('required')">
+            <small style="color: #f70505;">Phone no is required !</small>
+          </div>
+          <div style="padding-left: 32px;" *ngIf="drimsFormOne.controls.phoneNo.hasError('pattern')">
+            <small style="color: hwb(34 0% 0%);">Phone no required an 10-digit number !</small>
+          </div> -->
+        </div>
+        <div class="button-content">
+          <ion-label class="lable">Schedule II</ion-label>
+          <ion-item class="roundedInput">
+            <ion-textarea formControlName="instschedule2items" type="text" placeholder="">
+            </ion-textarea>
+          </ion-item>
+          <!-- <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls.phoneNo.hasError('required')">
+            <small style="color: #f70505;">Phone no is required !</small>
+          </div>
+          <div style="padding-left: 32px;" *ngIf="drimsFormOne.controls.phoneNo.hasError('pattern')">
+            <small style="color: hwb(34 0% 0%);">Phone no required an 10-digit number !</small>
+          </div> -->
+        </div>
+        <div class="button-content">
+
+          <ion-label class="lable">Scheduler III - V</ion-label>
+          <ion-item class="roundedInput">
+            <ion-textarea formControlName="instschedule3to5items" type="text" placeholder="">
+            </ion-textarea>
+          </ion-item>
+          <!-- <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls.phoneNo.hasError('required')">
+            <small style="color: #f70505;">Phone no is required !</small>
+          </div>
+          <div style="padding-left: 32px;" *ngIf="drimsFormOne.controls.phoneNo.hasError('pattern')">
+            <small style="color: hwb(34 0% 0%);">Phone no required an 10-digit number !</small>
+          </div> -->
+        </div>
+        <div style="padding-top: 15px;">
+          <!-- Previous / Next button -->
+          <ion-row>
+            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
+                <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
+              </ion-button>
+            </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button *ngIf="!IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="end" name="save-outline"></ion-icon>SAVE
+              </ion-button>
+              <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </swiper-slide>
+      </swiper-container>
+</ion-content>

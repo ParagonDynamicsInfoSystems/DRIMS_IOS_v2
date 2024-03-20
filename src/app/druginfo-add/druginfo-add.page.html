@@ -1,0 +1,322 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-buttons slot="start">
+      <ion-back-button style="color: white;" defaultHref="druginfo-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="ion-text-wrap" style="font-weight:bolder;color:white;">Add drug info</div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <swiper-container #swiper>
+    <swiper-slide>
+      <form [formGroup]="drimsFormOne" novalidate>
+        <h4 class="pageNumber">Page 1 of 4</h4>
+        <div class="button-content">
+          
+          <ion-label class="lable">NDC/UPC <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input type="text" *ngIf="!IsEditMode" formControlName="ndcupc"  [maskito]="phoneMask"
+            [maskitoElement]="maskPredicate" placeholder="NDC/UPC"
+             (ionChange)="ndcupcCodeValidation($event.detail.value)"></ion-input>
+            <ion-input type="text" *ngIf="IsEditMode" [disabled]="IsEditMode" [maskito]="phoneMask"
+            [maskitoElement]="maskPredicate"formControlName="ndcupc" placeholder="NDC/UPC"
+              (ionChange)="ndcupcCodeValidation($event.detail.value)"></ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['ndcupc'].hasError('required')">
+            <small style="color: #f70505;">Please enter NDC/UPC.</small>
+          </div>
+          <div style="padding-left: 32px;" *ngIf="!IsEditMode && drimsFormOne.controls['ndcupc'].hasError('ndcupcValid') ">
+            <small style="color: #f70505;"> NDC/UPC code is already exists.</small>
+          </div>
+          <div style="padding-left: 32px;" *ngIf="drimsFormOne.controls['ndcupc'].hasError('pattern')">
+            <small style="color: hwb(34 0% 0%);"> NDC/UPC requires an 11-digit number in a 5-4-2 format!</small>
+          </div>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Manufacturer <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-row>
+              <ion-select formControlName="manufacturerBy" okText="Okay" cancelText="Dismiss" style="width: 520px;"
+                placeholder="Manufacturer">
+                <ion-select-option *ngFor='let cElement of manufacturerList' value="{{cElement.id}}">
+                  {{cElement.text}}
+                </ion-select-option>
+              </ion-select>
+            </ion-row>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['manufacturerBy'].hasError('required')">
+            <small style="color: #f70505;">Please select Manufacturer.</small>
+          </div>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Description <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="description" type="text" placeholder="Description">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['description'].hasError('required')">
+            <small style="color: #f70505;">Please enter Description.</small>
+          </div>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Strength <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="strength" type="text" placeholder="Strength">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['strength'].hasError('required')">
+            <small style="color: #f70505;">Please enter Strength.</small>
+          </div>
+        </div>
+
+        <div style="padding-top: 15px;">
+          <!-- Next button -->
+          <ion-row>
+            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+            </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="firstCardNextClick()">
+                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </swiper-slide>
+
+    <swiper-slide>
+      <form [formGroup]="drimsFormTwo" novalidate>
+        <h4 class="pageNumber">Page 2 of 4</h4>
+
+        <div style="padding-top: 15px;text-align: left;">
+          <ion-label class="lable">Package size <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="packageSize" type="number" placeholder="Package size">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormTwo.controls['packageSize'].hasError('required')">
+            <small style="color: #f70505;">Please enter Package size.</small>
+          </div>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Unit per package <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="unitPerPackage" type="number" placeholder="Unit per package">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormTwo.controls['unitPerPackage'].hasError('required')">
+            <small style="color: #f70505;">Please enter Unit per package.</small>
+          </div>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Dosage <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-row>
+              <ion-select formControlName="dosage" okText="Okay" cancelText="Dismiss" style="width: 520px;"
+                placeholder="Dosage">
+                <ion-select-option *ngFor='let cElement of dosageList' value="{{cElement.id}}">
+                  {{cElement.text}}
+                </ion-select-option>
+              </ion-select>
+            </ion-row>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormTwo.controls['dosage'].hasError('required')">
+            <small style="color: #f70505;">Please enter Dosage.</small>
+          </div>
+        </div>
+
+        <div class="button-content" style="display: flex; justify-content: space-between; gap: 10px;">
+          <div style="flex-basis: 50%;">
+            <ion-item class="roundedInput">
+              <ion-checkbox color="primary" formControlName="unitDose"></ion-checkbox>
+              <ion-label class="lable">Unit dose</ion-label>
+
+            </ion-item>
+          </div>
+
+          <div style="flex-basis: 50%;">
+            <ion-item class="roundedInput">
+              <ion-checkbox color="primary" formControlName="hazardous"></ion-checkbox>
+              <ion-label class="lable">Hazardous</ion-label>
+
+            </ion-item>
+          </div>
+        </div>
+
+        <div style="padding-top: 15px;">
+          <!-- Previous / Next button -->
+          <ion-row>
+            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
+                <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
+              </ion-button>
+            </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="secondCardNextClick()">
+                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </swiper-slide>
+
+    <swiper-slide>
+      <form [formGroup]="drimsFormThree" novalidate>
+        <h4 class="pageNumber">Page 3 of 4</h4>
+
+        <div class="button-content">
+          <ion-label  class="lable">Control <span style="color:red">*</span> </ion-label>
+          <ion-item class="roundedInput" style="height: fit-content;">
+            <ion-radio-group formControlName="control"  style="width:100% ; height: 115%;">
+              <ion-row>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">1</span>
+                  <ion-radio mode="md" class="ion-item-left" value="1"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">2</span>
+                  <ion-radio mode="md" class="ion-item-left" value="2"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">3</span>
+                  <ion-radio mode="md" class="ion-item-left" value="3"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">4</span>
+                  <ion-radio mode="md" class="ion-item-left" value="4"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">5</span>
+                  <ion-radio mode="md" class="ion-item-left" value="5"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">RX</span>
+                  <ion-radio mode="md" class="ion-item-left" value="RX"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">OTC</span>
+                  <ion-radio mode="md" class="ion-item-left" value="OTC"></ion-radio>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-item>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Unit of measure <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-radio-group formControlName="unitOfMeasure" style="width:100%  ; height: 115%;">
+              <ion-row>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">GM</span>
+                  <ion-radio mode="md" class="ion-item-left" value="GM"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">EA</span>
+                  <ion-radio mode="md" class="ion-item-left" value="EA"></ion-radio>
+                </ion-col>
+                <ion-col>
+                  <span style="color:#1e275b;" class="emojitext">ML</span>
+                  <ion-radio mode="md" class="ion-item-left" value="ML"></ion-radio>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-item>
+          <!-- <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormTwo.controls.unitOfMeasure.hasError('required')">
+            <small style="color: #f70505;">Please select Unit of measure.</small>
+          </div> -->
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Notes </ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="notes" type="text" placeholder="Notes">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div style="padding-top: 15px;">
+          <!-- Previous / Next button -->
+          <ion-row>
+            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
+                <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
+              </ion-button>
+            </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="thirdCardNextClick()">
+                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </swiper-slide>
+
+    <swiper-slide>
+      <form [formGroup]="drimsFormFour" novalidate>
+        <h4 class="pageNumber">Page 4 of 4</h4>
+        <div class="button-content">
+          <ion-label class="lable">AWP price </ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="awp" type="number" placeholder="AWP price">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">WAP price </ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="wap" type="number" placeholder="WAP price">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">My price <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input formControlName="myPrice" type="number" placeholder="My price">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormFour.controls['myPrice'].hasError('required')">
+            <small style="color: #f70505;">Please enter My price !</small>
+          </div>
+        </div>
+
+        <div style="padding-top: 15px;">
+          <!-- Previous / Next button -->
+          <ion-row>
+            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
+                <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
+              </ion-button>
+            </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button *ngIf="!IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="end" name="save-outline"></ion-icon>SAVE
+              </ion-button>
+              <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </swiper-slide>
+  </swiper-container>
+</ion-content>

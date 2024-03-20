@@ -1,0 +1,226 @@
+ion-slides {
+    height: 100%;
+  }
+  
+  form {
+    width: 100%;
+    height: 90%;
+  }
+  
+  .header {
+    --background: linear-gradient(to right top, #0a0ac4, #071460);
+   // --background: linear-gradient(to right top, #7171c9, #1e275b);
+  }
+  
+  ion-content {
+    --background: linear-gradient(to right top, #f9f9fc, #e7eaf8);
+  }
+  
+  ion-card {
+    --background: linear-gradient(to right top, #b8f6f9, #3cc4d2);
+    border-radius: 20px;
+    margin: 10px;
+  }
+  
+  ion-avatar {
+    width: 100% !important;
+    max-width: 60px !important;
+    height: 60px !important;
+  }
+  
+  h2 {
+    font-weight: bolder;
+  }
+  
+  p {
+    font-weight: bold;
+  }
+  
+  .item-inner {
+    border-style: unset !important;
+  }
+  
+  ion-card-content {
+    padding-inline-start: 0px;
+    padding-inline-end: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  
+  .fab-vertical-top {
+    top: -2px;
+    right: 2px;
+  }
+  
+  .addBtn {
+    --background: linear-gradient(to right top, #b8f6f9, #3cc4d2);
+    padding-left: 10px;
+    padding-right: 10px;
+    --border-radius: 20px !important;
+    color: #1e275b;
+    font-weight: bolder;
+  }
+  
+  .ioncardButtonNormal {
+    --background: linear-gradient(to right top, #0a0ac4, #071460);
+  //  --background: linear-gradient(to right top, #7171c9, #1e275b);
+    padding-left: 10px;
+    padding-right: 10px;
+    --border-radius: 20px !important;
+    color: #3cc4d2;
+    font-weight: bolder;
+  }
+  
+  .verifyDeclineBtn {
+    font-size: 15px;
+    font-weight: bolder;
+    --ion-color-contrast: white !important;
+    --border-radius: 20px !important;
+  }
+  
+  .verticalCenter {
+    display: flex !important;
+    align-content: center !important;
+    align-items: center !important;
+    justify-content: center;
+  }
+ 
+  .prfilepara {
+    margin-left: 7px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 2px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #3d3c3c;
+  }
+  
+  .prfileparaNormal {
+    margin-left: 7px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 2px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #3d3c3c;
+  }
+  
+  .margin {
+    margin: -6% -6% -6% -6%;
+  }
+  
+ion-slides {
+    height: 100%;
+  }
+  
+  form {
+    width: 100%;
+    height: 90%;
+  }
+  
+  .header {
+    --background: linear-gradient(to right top, #0a0ac4, #071460);
+   // --background: linear-gradient(to right top, #7171c9, #1e275b);
+  }
+  
+  ion-content {
+    --background: linear-gradient(to right top, #f9f9fc, #e7eaf8);
+  }
+  
+  ion-card {
+    --background: linear-gradient(to right top, #b8f6f9, #3cc4d2);
+    border-radius: 20px;
+    margin: 10px;
+  }
+  
+  ion-avatar {
+    width: 100% !important;
+    max-width: 60px !important;
+    height: 60px !important;
+  }
+  
+  h2 {
+    font-weight: bolder;
+  }
+  
+  p {
+    font-weight: bold;
+  }
+  
+  .item-inner {
+    border-style: unset !important;
+  }
+  
+  ion-card-content {
+    padding-inline-start: 0px;
+    padding-inline-end: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  
+  .fab-vertical-top {
+    top: -2px;
+    right: 2px;
+  }
+  
+  .addBtn {
+    --background: linear-gradient(to right top, #b8f6f9, #3cc4d2);
+    padding-left: 10px;
+    padding-right: 10px;
+    --border-radius: 20px !important;
+    color: #1e275b;
+    font-weight: bolder;
+  }
+  
+  .ioncardButtonNormal {
+    --background: linear-gradient(to right top, #0a0ac4, #071460);
+  //  --background: linear-gradient(to right top, #7171c9, #1e275b);
+    padding-left: 10px;
+    padding-right: 10px;
+    --border-radius: 20px !important;
+    color: #3cc4d2;
+    font-weight: bolder;
+  }
+  
+  .verifyDeclineBtn {
+    font-size: 15px;
+    font-weight: bolder;
+    --ion-color-contrast: white !important;
+    --border-radius: 20px !important;
+  }
+  
+  .verticalCenter {
+    display: flex !important;
+    align-content: center !important;
+    align-items: center !important;
+    justify-content: center;
+  }
+ 
+  .prfilepara {
+    margin-left: 7px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 2px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #3d3c3c;
+  }
+  
+  .prfileparaNormal {
+    margin-left: 7px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 2px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #3d3c3c;
+  }
+  
+  .margin {
+    margin: -6% -6% -6% -6%;
+  }
+  

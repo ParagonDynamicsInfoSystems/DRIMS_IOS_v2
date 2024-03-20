@@ -1,0 +1,7 @@
+{
+  "name": "Drug_IOS",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-buttons slot="start">
+      <ion-back-button class="back-button-ion" defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="ion-text-wrap header-title">Drug Info List </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item class="drugStatusCSS">
+    <ion-label>Drug Status</ion-label>
+    <ion-select [(ngModel)]="selectedStatus">
+      <ion-select-option value="Y">Active</ion-select-option>
+      <ion-select-option value="N">Inactive</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div class="search-bar">
+    <ion-item class="search-input">
+      <ion-input placeholder="Search" [(ngModel)]="searchInput" type="text"></ion-input>
+    </ion-item>
+    <ion-button class="search-button" (click)="filterList()">
+      <ion-icon name="search"></ion-icon>
+    </ion-button>
+    <ion-button class="reset-button" (click)="resetList()">
+      <ion-icon name="refresh"></ion-icon>
+    </ion-button>
+    <ion-button class="add-button" (click)="gotoAddNew()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div>
+    <ion-card *ngFor="let element of drugList" class="list-card">
+      <ion-card-content>
+        <ion-item style="--ion-item-background: transparent;" lines="none">
+          <ion-label>
+            <h2 *ngIf="element.ndcupccode" class="list-values-ion"> {{ element.ndcupccode }} </h2>
+            <p *ngIf="element.description" class="ion-text-wrap">Description: <span class="list-values-ion">{{ element.description }}</span></p>
+            <p *ngIf="element.manufacturerby" class="ion-text-wrap">Manufacturer: <span class="list-values-ion">{{ element.manufacturerby }}</span></p>
+            <p *ngIf="element.strength" class="ion-text-wrap">Strength: <span class="list-values-ion">{{ element.strength }}</span></p>
+            <p *ngIf="element.control" class="ion-text-wrap">Control: <span class="list-values-ion">{{ element.control }}</span></p>
+            <p *ngIf="element.dosage" class="ion-text-wrap">Dosage: <span class="list-values-ion">{{ element.dosage }}</span></p>
+            <p *ngIf="element.unitofmeasure" class="ion-text-wrap">UOM: <span class="list-values-ion">{{ element.unitofmeasure }}</span></p>
+            <br/>
+          </ion-label>
+        </ion-item>
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-button class="verifyDeclineBtn" size="small" 
+            (click)="edit(element.ndcupccode)">EDIT
+            <ion-icon slot="start" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button class="verifyDeclineBtn" size="small" style="--background:#5e16bc!important"
+            (click)="returnPolicy(element.ndcupccode)">RETURN POLICY
+            <ion-icon slot="start" name="return-up-forward-outline"></ion-icon>
+          </ion-button>
+          <ion-button class="verifyDeclineBtn" size="small" color="danger"
+              (click)="delete(element.ndcupccode)">
+              DELETE
+              <ion-icon slot="start" name="trash-outline"></ion-icon>
+            </ion-button> 
+        </ion-fab>
+      </ion-card-content>
+    </ion-card>
+    
+    <!-- Added by Gokul - Infinite Scroll -->
+    <ion-infinite-scroll (ionInfinite)="loadData($event)">
+      <ion-infinite-scroll-content loadingText="Loading more data..." loadingSpinner="bubbles"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+  </div>
+</ion-content>

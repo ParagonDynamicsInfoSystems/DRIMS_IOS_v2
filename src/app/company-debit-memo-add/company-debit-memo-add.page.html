@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-buttons slot="start">
+      <ion-back-button style="color: white;" defaultHref="company-debit-memo-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <div *ngIf="!IsEditMode" class="ion-text-wrap" style="font-weight:bolder;color:white;">Add DebitMemo</div>
+      <div *ngIf="IsEditMode" class="ion-text-wrap" style="font-weight:bolder;color:white;">Update DebitMemo</div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <swiper-container #swiper>
+    <swiper-slide>
+      <form [formGroup]="drimsFormOne" novalidate>
+        <h4 class="pageNumber">Page 1 of 1</h4> 
+        <h5 class="heading">Return Management</h5>       
+        <h5 class="heading">Return Memo Information</h5>
+      <hr>
+        <div class="button-content">
+          <ion-label class="lable">Company Name <span style="color:red">*</span></ion-label>
+          <!-- <ion-item lines="none" class="roundedInput">
+            <ion-row>
+              <ion-select disabled="true" formControlName="companyName"
+                okText="Okay" cancelText="Dismiss" style="width: 520px;" placeholder="Company name">
+                <ion-select-option *ngFor='let cElement of companyList' value="{{cElement.companyCode}}">
+                  {{cElement.companyName}}
+                </ion-select-option>
+              </ion-select>
+            </ion-row>
+          </ion-item> -->
+          <ion-item class="roundedInput">
+            <ion-select  [disabled]="isdisable" formControlName="companyName"placeholder="Company Name">
+              <ion-select-option *ngFor='let cElement of companyList' value="{{cElement.id}}">
+                {{cElement.text}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['companyName'].hasError('required')">
+            <small style="color: #f70505;">Please select Company name.</small>
+          </div>          
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Date Entered <span style="color:red">*</span></ion-label>
+          <ion-item lines="none" class="roundedInput">
+            <ion-input formControlName="dateEntered"  type="date" placeholder="Date entered">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['dateEntered'].hasError('required')">
+            <small style="color: #f70505;">Please enter 'Date entered'.</small>
+          </div>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Return Name <span style="color:red">*</span></ion-label>
+          <ion-item lines="none" class="roundedInput">
+            <ion-input formControlName="returnName"  type="text" placeholder="Return name">
+            </ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['returnName'].hasError('required')">
+            <small style="color: #f70505;">Please enter 'Return name'.</small>
+          </div>
+        </div>
+
+        <div class="button-content">
+          <ion-label class="lable">Debit Memo No <span style="color:red">*</span></ion-label>
+          <ion-item lines="none" class="roundedInput">
+            <ion-input [disabled]="IsEditMode" formControlName="dbMemoNo"type="text" placeholder="Debit memo number"></ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['dbMemoNo'].hasError('required')">
+            <small style="color: #f70505;">Please enter 'Debit memo number'.</small>
+          </div>
+        </div>
+
+        <div style="padding-top: 15px;">
+          <!-- Previous / Next button -->
+          <ion-row>
+            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="Cancel()">
+                <ion-icon slot="start" name="close-circle-outline"></ion-icon>CANCEL
+              </ion-button>
+            </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button *ngIf="!IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="end" name="save-outline"></ion-icon>SAVE
+              </ion-button>
+              <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+    </swiper-slide>
+  </swiper-container>
+</ion-content>

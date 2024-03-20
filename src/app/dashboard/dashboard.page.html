@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-row>
+      <ion-col size="10%">
+        <ion-menu-button autoHide="false" style="color: white;" class="pinkBackground">
+        </ion-menu-button>
+      </ion-col>
+      <ion-col style="text-align: center;">
+        <!-- <ion-title style="text-align: left;"> -->
+        <div class="ion-text-wrap" style="font-weight:bolder;color:White;padding-top: 3%;">Welcome {{userName}}</div>
+        <!-- </ion-title> -->
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="search-bar">
+    <ion-item class="search-input">
+      <ion-input placeholder="Search" [(ngModel)]="searchInput" type="text"></ion-input>
+    </ion-item>
+    <ion-button class="search-button" (click)="filterList()">
+      <ion-icon name="search"></ion-icon>
+    </ion-button>
+    <ion-button class="reset-button" (click)="resetList()">
+      <ion-icon name="refresh"></ion-icon>
+    </ion-button>
+    <ion-button class="add-button" (click)="gotoAddNew()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div>
+    <ion-toggle  [(ngModel)]="isonline" labelPlacement="start" (ionChange)="toggleChanged($event)" ></ion-toggle>online
+
+
+    <h4 class="list-heading"> Company List </h4>
+    <ion-card *ngFor='let element of companyList' class="list-card">
+      <ion-card-content>
+        <ion-item style="--ion-item-background: transparent;" lines="none">
+          <ion-label>
+            <h2 *ngIf="element.companyName != null && element.companyName != ''" class="ion-text-wrap"
+              class="list-values-ion">{{element.companyName}}
+            </h2>
+            <p *ngIf="element.companyDba != null && element.companyDba != ''" class="ion-text-wrap">DBA no.: <span
+                class="list-values-ion">{{element.companyDba}}</span></p>
+            <p *ngIf="element.companyCity != null && element.companyCity != ''" class="ion-text-wrap">
+              City:
+              <span class="list-values-ion">{{element.companyCity}}</span>
+            </p>
+            <p *ngIf="element.companyState != null && element.companyState != ''" class="ion-text-wrap">State: <span
+                class="list-values-ion">{{element.companyState}}</span>
+            </p>
+            <p *ngIf="element.companyPincode != null && element.companyPincode != ''" class="ion-text-wrap">Zip code:
+              <span class="list-values-ion">{{element.companyPincode}}</span>
+            </p>
+            <p *ngIf="element.companyPhone != null && element.companyPhone != ''" class="ion-text-wrap">Phone no.:
+              <span class="list-values-ion">{{element.companyPhone}}</span>
+            </p>
+            <br />
+          </ion-label>
+        </ion-item>
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-button class="verifyDeclineBtn" size="small" (click)="edit_click(element.companyCode)">EDIT
+            <ion-icon slot="start" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button class="verifyDeclineBtn" size="small" style="--background:#5e16bc!important"
+            (click)="debitMemo_click(element.companyCode)">OPEN<ion-icon slot="start"
+              name="log-in-outline"></ion-icon>
+          </ion-button>
+          
+          <ion-button class="verifyDeclineBtn" size="small" color="danger" (click)="delete(element.companyCode)">
+            DELETE
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+          </ion-button>
+          
+        </ion-fab>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

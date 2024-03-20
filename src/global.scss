@@ -1,0 +1,285 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+// @font-face {
+//     font-family: 'Montserrat-Regular'; //This is what we are going to call
+//     src: url('../assets/fonts/Montserrat-Regular.ttf');
+// }
+
+// @font-face {
+//     font-family: 'Montserrat-SemiBold'; //This is what we are going to call
+//     src: url('../assets/fonts/Montserrat-SemiBold.ttf');
+// }
+
+
+//Added by gokul for datepicker style in Debit memo
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+.bs-datepicker-head,
+.bs-datepicker-head, .bs-datepicker button:active,
+.bs-datepicker-body table td span.selected, 
+.bs-datepicker-body table td.selected span,
+.bs-datepicker-body table td span[class*="select-"]:after,
+.bs-datepicker-body table td[class*="select-"] span:after, 
+.bs-datepicker-body table td.active-week span:hover 
+{
+    background-color: rgb(61, 64, 138) !important;
+    //background-color: $primary !important; 
+}
+
+
+/* Loading indicator */
+.loadingIndicatorCustom {
+  --background: #1e275b;
+  --spinner-color: #3cc4d2;
+  color: white;
+}
+
+.md body {
+  --ion-background-color: white;
+  --ion-text-color: black;
+  --ion-color-step-300: #f3f3f3;
+}
+
+.alertclass .alert-message {
+  max-height: 240px;
+  font-size: 15px !important;
+  text-align: center !important;
+  padding-bottom: 10px !important;
+}
+
+.alertclass .alert-head {
+  text-align: center !important;
+}
+
+.alertclass.sc-ion-alert-md-h {
+
+  --max-width: 200px !important;
+
+}
+
+.alertclass .btncss .alert-button-inner {
+  text-align: center !important;
+}
+
+.alertclass .alert-button-group {
+  background: #1e275b !important;
+  justify-content: center;
+}
+
+.alert-button.sc-ion-alert-md {
+  color: white !important;
+}
+
+.alert-button-group.sc-ion-alert-md {
+  background: #1e275b !important;
+  justify-content: center;
+}
+
+.pageNumber {
+  text-align: right;
+  font-weight: bold;
+  font-size: 10px;
+  padding-right: 20px;
+  color: #1e275b;
+}
+
+.button-content {
+  display: flex;
+  // padding: 0px 16px;
+  flex-direction: column;
+  padding-top: 0px;
+  text-align: left;
+}
+
+.lable {
+  font-size: 18px;
+  color: #1e275b;
+  padding-left: 32px;
+  margin-bottom: 7px;
+}
+
+.roundedInput {
+  margin-top: 0px !important;
+  margin-bottom: 7px !important;
+  font-size: 15px;
+  border-radius: 20px !important;
+  margin: 15px;
+  background: #e5e6f0;
+  --background: transparent !important;
+}
+
+.roundedInputBox {
+  margin-top: 0px !important;
+  margin-bottom: 7px !important;
+  font-size: 15px !important; 
+  border-radius: 20px !important;
+  margin: 15px;
+  background: #e5e6f0;
+  --background: transparent !important;
+  padding: 15px; 
+  height: auto;
+}
+
+//List page Start 
+ion-content {
+  --background: #f9f9fc;
+}
+
+.header {
+  --background: linear-gradient(to right top, #0a0ac4, #071460);
+  color: white;
+}
+
+.header-title {
+  font-weight: bold;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.search-input {
+  border-radius: 0px 20px 0px 20px !important;
+  flex-grow: 1;
+  margin-right: 10px;
+  background: linear-gradient(to right top, #d9baf145, #d1f5f84a);
+  --background: transparent !important;
+}
+
+.search-button {
+  flex-shrink: 0;
+  --background: #1593ce!important;
+}
+
+.reset-button {
+  flex-shrink: 0;
+  --background: #f44336!important;
+}
+
+.add-button{
+  flex-shrink: 0;
+ --background: #1593ce!important;
+}
+.list-heading {
+  padding-left: 12px;
+  color: #1e275b;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.list-card {
+  --background: linear-gradient(to right top, #ae77dc45, #7bf3ff4a);
+  border-radius: 0px 30px 0px 30px;
+  margin: 10px;
+}
+
+.fab-buttons {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+}
+
+.ion-list-item {
+  --ion-item-background: transparent;
+}
+
+
+.list-values-ion {
+  color: #1e275b;
+}
+
+.back-button-ion {
+  color: white;
+}
+
+.verifyDeclineBtn {
+  font-size: 10px;
+  font-weight: bolder;
+  --ion-color-contrast: white !important;
+  --border-radius: 20px !important;
+  --background: #0b6a71 !important;
+}
+.swiper-container {
+  margin: 0 auto;
+  position: relative;
+  overflow: auto;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+}
+.alert-radio-label.sc-ion-alert-md {
+  padding-top: 13px;
+  padding-bottom: 13px;
+  -ms-flex: 1;
+  flex: 1;
+  color: #0066fc;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  // overflow: auto;
+}
+//delete
+.alertclass .alert-button:not(.alert-button-group) {
+  color: white;
+}
+input{
+  width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+//List page End 
+ion-input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: none;
+}
+ion-checkbox {
+  --background: #e5e6f0;
+}
+ion-checkbox::part(container) {
+  border: 2px solid #8d8c8c;
+}
+.swiper-pagination {
+  position: fixed;
+}
+.alert-radio-icon.sc-ion-alert-md { 
+    border-color: #010a3d;
+}
+.alert-radio-label.sc-ion-alert-md {  
+  color: #010a3d; 
+}
+[aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+  color: #005feb;
+}
