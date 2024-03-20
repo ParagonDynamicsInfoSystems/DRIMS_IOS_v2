@@ -15,7 +15,7 @@ export class DashboardPage implements OnInit {
   companyList: any;
   userName: any = '';
   searchInput: string = '';
-  isonline :boolean = false;
+  isonline :boolean = true;
   constructor(private ced: CedService,private router: Router, public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController,private connectivity: ConnectivityService) {
     this.userName = localStorage.getItem('firstNameLastName');
 

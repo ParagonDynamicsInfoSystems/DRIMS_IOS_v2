@@ -93,6 +93,7 @@ swiper?:Swiper
       if (result["success"] == true) {
         var data = result["manufactureReturnPolicyBean"];
         //To show the values
+        if(data !=null){
         this.drimsFormOne.patchValue({
           'manufacturerCode': data["manufacturerCode"],
           'beforeExpiration': data["noMonthsBeforeExpiration"],
@@ -108,6 +109,7 @@ swiper?:Swiper
           'instschedule3to5items': data["instschedule3to5items"],
           cityName: data["cityName"]
         });
+      }
         this.storageservice.hideLoadingIndicator();
       }
       else {

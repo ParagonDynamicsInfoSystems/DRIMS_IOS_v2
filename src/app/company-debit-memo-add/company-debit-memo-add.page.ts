@@ -16,7 +16,7 @@ register();
 })
 export class CompanyDebitMemoAddPage implements OnInit {
 
-  isdisable : boolean=true;
+  isDisabled : boolean=true;
     drimsFormOne: FormGroup;
   isSubmitted: boolean = false;
   userId: any;
@@ -25,6 +25,7 @@ export class CompanyDebitMemoAddPage implements OnInit {
   dbMemoNoVal: string="";
   companyList:any;
   requestId: string="";
+  compId: any;
   //#endregion
 
   //#region Constructor
@@ -34,7 +35,7 @@ export class CompanyDebitMemoAddPage implements OnInit {
     this.userId = localStorage.getItem('empId');
     this.drimsFormOne = formbuilder.group({
       returnName: ['', Validators.required],
-      companyName: ['', Validators.required],
+      companyName: ['', Validators.required,],
       dateEntered: ['', Validators.required],
       dbMemoNo: ['', Validators.required]
     });
@@ -58,7 +59,7 @@ var params :any = par
               'companyName': params.companyCode,           
             });
           }, 500);
-         
+         this.compId = params.companyCode
         }
       }
     });

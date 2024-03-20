@@ -31,9 +31,12 @@
             </ion-row>
           </ion-item> -->
           <ion-item class="roundedInput">
-            <ion-select  [disabled]="isdisable" formControlName="companyName"placeholder="Company Name">
-              <ion-select-option *ngFor='let cElement of companyList' value="{{cElement.id}}">
-                {{cElement.text}}
+            <ion-select  [disabled]="isDisabled" formControlName="companyName"placeholder="Company Name">
+              <ion-select-option *ngFor='let cElement of companyList'  value="{{cElement.id}}">
+                <ng-container *ngIf="cElement.id==compId">
+                  {{cElement.text}}
+
+                </ng-container>
               </ion-select-option>
             </ion-select>
           </ion-item>
