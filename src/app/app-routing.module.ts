@@ -70,7 +70,19 @@ const routes: Routes = [
   {
     path: 'druginfo-add',
     loadChildren: () => import('./druginfo-add/druginfo-add.module').then( m => m.DruginfoAddPageModule)
+  },  {
+    path: 'druginfo-return-policy',
+    loadChildren: () => import('./druginfo-return-policy/druginfo-return-policy.module').then( m => m.DruginfoReturnPolicyPageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   }
+
 ];
 
 @NgModule({
