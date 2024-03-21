@@ -164,7 +164,7 @@ export class DashboardPage implements OnInit {
  
  bindList() {
 
-  //  if(this.isonline){
+   
    // this.storageservice.showLoadingIndicator();
    var getListURL = `api/auth/app/companyMaster/getList`;
    this.storageservice.getrequest(getListURL).subscribe(
@@ -184,17 +184,7 @@ export class DashboardPage implements OnInit {
          this.storageservice.warningToast('Error: ' + error.message);
        }
      });
-//  } 
-//  else{
-//   //  this.datastorage.getCompanylist()
-//   //  .then((companies) => {
-//   //    console.log("Companies:", companies);
-//   //    this.companyList = companies
-//   //  })
-//   //  .catch((error) => {
-//   //    console.error("Error fetching companies:", error);
-//   //  });
-//  }
+
 }
 
 }
