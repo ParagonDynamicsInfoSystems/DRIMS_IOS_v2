@@ -231,7 +231,7 @@ export class StorageService {
     return new Promise<boolean>(async (resolve) => {
       const alert = await this.alertController.create({
         header: headerText,
-        message: `<div>${messageText}</div>`,
+        message: messageText,
         cssClass: 'alertclass',
         buttons: [
           {
@@ -252,21 +252,23 @@ export class StorageService {
   return new Promise<boolean>(async (resolve) => {
     const alert = await this.alertController.create({
       header: headerText,
-      message: `
-        <div>${messageText}</div>
-        <div style="display: flex; align-items: center;">
-          <ion-checkbox id="overrideCheckbox" slot="start" style="margin-right: 8px;"></ion-checkbox>
-          <span style="font-weight: bold;">${overrideText}</span>
-        </div>
-      `,
+      message: messageText,
+      inputs: [
+        {
+          name: 'checkbox1',
+          type: 'checkbox',
+          label: overrideText,
+          value: 'value',
+          id: "overrideCheckbox"
+        }],
       cssClass: 'alertclass',
       buttons: [
         {
           text: okText,
           role: 'cancel',
           handler: () => {
-            const checkbox = document.getElementById('overrideCheckbox') as HTMLIonCheckboxElement;
-            const isCheckboxChecked = checkbox.checked;
+             const checkbox = document.getElementById('overrideCheckbox') as HTMLIonCheckboxElement;
+            const isCheckboxChecked :any= checkbox.ariaChecked;
             resolve(isCheckboxChecked); // Return whether the checkbox is checked
           }
         }

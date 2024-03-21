@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { CompanyReturnItemListPage } from './company-return-item-list.page';
 
 describe('CompanyReturnItemListPage', () => {
