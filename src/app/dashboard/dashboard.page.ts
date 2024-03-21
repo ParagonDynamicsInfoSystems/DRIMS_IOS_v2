@@ -22,10 +22,12 @@ export class DashboardPage implements OnInit {
    }
 
    async ngOnInit() {
+    localStorage.setItem('onlineStatus', "true");
+
     if(localStorage.getItem('onlineStatus') =="true"){
      this.isonline = true
    }else{
-     this.isonline = false
+     this.isonline = true
    }
   //  this.connectivity.showNetworkStatusAlert();
 
@@ -60,8 +62,8 @@ export class DashboardPage implements OnInit {
    // Get the value of the toggle
    const isonline = event.detail.checked;
    this.isonline = event.detail.checked;
-   localStorage.setItem('onlineStatus', isonline);
-   console.log('Toggle changed. New value:', isonline);
+   localStorage.setItem('onlineStatus', "true");
+   console.log('Toggle changed. New value:', "true");
    
    // You can perform other actions based on the value of the toggle
  }
@@ -162,7 +164,7 @@ export class DashboardPage implements OnInit {
  
  bindList() {
 
-   if(this.isonline){
+  //  if(this.isonline){
    // this.storageservice.showLoadingIndicator();
    var getListURL = `api/auth/app/companyMaster/getList`;
    this.storageservice.getrequest(getListURL).subscribe(
@@ -182,17 +184,17 @@ export class DashboardPage implements OnInit {
          this.storageservice.warningToast('Error: ' + error.message);
        }
      });
- } 
- else{
-  //  this.datastorage.getCompanylist()
-  //  .then((companies) => {
-  //    console.log("Companies:", companies);
-  //    this.companyList = companies
-  //  })
-  //  .catch((error) => {
-  //    console.error("Error fetching companies:", error);
-  //  });
- }
+//  } 
+//  else{
+//   //  this.datastorage.getCompanylist()
+//   //  .then((companies) => {
+//   //    console.log("Companies:", companies);
+//   //    this.companyList = companies
+//   //  })
+//   //  .catch((error) => {
+//   //    console.error("Error fetching companies:", error);
+//   //  });
+//  }
 }
 
 }

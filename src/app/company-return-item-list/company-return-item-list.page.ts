@@ -25,7 +25,7 @@ export class CompanyReturnItemListPage implements OnInit {
     if(localStorage.getItem('onlineStatus') =="true"){
       this.isonline = true
     }else{
-      this.isonline = false
+      this.isonline = true
     }
     this.route.queryParams.subscribe(par => {
       var params :any = par
@@ -50,7 +50,7 @@ export class CompanyReturnItemListPage implements OnInit {
     if(localStorage.getItem('onlineStatus') =="true"){
       this.isonline = true
     }else{
-      this.isonline = false
+      this.isonline = true
     }
     this.bindList();
   }

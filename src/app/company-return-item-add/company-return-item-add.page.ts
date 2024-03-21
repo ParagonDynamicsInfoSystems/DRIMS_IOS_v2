@@ -119,7 +119,7 @@ export class CompanyReturnItemAddPage implements OnInit {
     if(localStorage.getItem('onlineStatus') =="true"){
       this.isonline = true
     }else{
-      this.isonline = false
+      this.isonline = true
     }
    // this.connectivity.showNetworkStatusAlert();
     

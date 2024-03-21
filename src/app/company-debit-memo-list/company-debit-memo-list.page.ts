@@ -22,7 +22,7 @@ export class CompanyDebitMemoListPage implements OnInit {
     if(localStorage.getItem('onlineStatus') =="true"){
       this.isonline = true
     }else{
-      this.isonline = false
+      this.isonline = true
     }
     //Load existing values from the "Visit request" page.
     this.route.queryParams.subscribe(par => {
@@ -54,7 +54,7 @@ export class CompanyDebitMemoListPage implements OnInit {
     if(localStorage.getItem('onlineStatus') =="true"){
       this.isonline = true
     }else{
-      this.isonline = false
+      this.isonline = true
     }
     this.bindList();
   }
