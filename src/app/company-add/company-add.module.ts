@@ -19,7 +19,6 @@ import { MaskitoModule } from '@maskito/angular';
     CompanyAddPageRoutingModule,
     ReactiveFormsModule,
     MaskitoModule
-
   ],
   declarations: [CompanyAddPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add CUSTOM_ELEMENTS_SCHEMA here

@@ -7,6 +7,7 @@ import { CommonService } from '../common.service';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { register } from 'swiper/element/bundle';
 import Swiper from 'swiper';
+import { IonSelect } from '@ionic/angular';
 
 register();
 
@@ -17,8 +18,11 @@ register();
 })
 export class CompanyAddPage implements OnInit {
 @ViewChild('swiper')
+
 swiperRef:ElementRef | undefined
 swiper?:Swiper
+@ViewChild('input2') input2!: IonSelect;
+
 
 
 
@@ -727,6 +731,17 @@ back(){
 
 
   this.swiper?.slidePrev();
+}
+
+focusInput(event :any, nextInput :any) {
+  if (event.key === 'Tab') {
+    event.preventDefault(); // prevent default tab behavior
+    switch (nextInput) {
+      case 'input2':
+        this.input2.open();
+        break;
+    }
+  }
 }
 }
 
