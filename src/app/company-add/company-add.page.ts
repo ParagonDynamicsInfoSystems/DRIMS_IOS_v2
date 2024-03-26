@@ -739,6 +739,7 @@ back(){
 }
 
 focusInput(event :any, nextInput :any) {
+  console.log("Karthikeyan ")
   if (event.key === 'Tab') {
     event.preventDefault(); // prevent default tab behavior
     switch (nextInput) {
