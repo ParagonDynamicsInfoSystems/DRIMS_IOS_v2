@@ -649,7 +649,7 @@ if(this.isonline){
                 'estimatedValue': data["estimatedValue"],
                 'manufacturerBy': data["manufacturerBy"],
                 'returnTo': data["linkToReturn"],
-                'price': data["price"],
+                'price': data["myPrice"],
                 'dosageDescription': data["dosageDescription"]
               });
 
