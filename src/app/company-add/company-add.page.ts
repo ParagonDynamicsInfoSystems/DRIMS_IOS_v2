@@ -79,6 +79,8 @@ swiper?:Swiper
       companyContact: ['', Validators.compose([Validators.maxLength(60), Validators.pattern(this.splCharNumRegex), Validators.required])],
 
       companyEmailID: ['', [Validators.required, Validators.email, Validators.pattern('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}')]],
+      defNumber: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z]{2}[0-9]{7}')])],
+      defExpirationDate: ['', [Validators.required]],
     });
 
     this.drimsFormThree = formbuilder.group({
@@ -103,8 +105,7 @@ swiper?:Swiper
       wholesalerPhone: [""],
     });
     this.drimsFormFive = formbuilder.group({
-      defNumber: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z]{2}[0-9]{7}')])],
-      defExpirationDate: ['', [Validators.required]],
+     
       issuesCreditsName: ['', Validators.required],
     });
     this.drimsFormSeven = formbuilder.group({
@@ -113,12 +114,13 @@ swiper?:Swiper
       issuesCreditsCity: ["", [Validators.required]],
       issuesCreditsState: ["", [Validators.required]],
       issuesCreditsZipCode: ["", [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(5), Validators.minLength(5)]],
-    });
-
-    this.drimsFormEight = formbuilder.group({
       issuesCreditsPhone: ["", [Validators.required, Validators.pattern('[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}'), Validators.maxLength(12), Validators.minLength(12)]],
       issuesCreditsFax: ["", [Validators.required, Validators.pattern('[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}'), Validators.maxLength(12), Validators.minLength(12)]],
 
+    });
+
+    this.drimsFormEight = formbuilder.group({
+     
       generalInfroWacAwapMyprice: ['', ''],
       generalInfroWacAwapPer: ['', '']
     });
@@ -197,6 +199,8 @@ swiper?:Swiper
           "companyFax": data['companyFax'],
           "companyContact": data['companyContact'],
           "companyEmailID": data['companyEmailID'],
+          "defNumber": data['defNumber'],
+          "defExpirationDate": data['defExpirationDate'],
         });
 
         this.drimsFormThree.patchValue({
@@ -221,8 +225,7 @@ swiper?:Swiper
         });
 
         this.drimsFormFive.patchValue({
-          "defNumber": data['defNumber'],
-          "defExpirationDate": data['defExpirationDate'],
+          
           "issuesCreditsName": data['issuesCreditsName'],
         });
 
@@ -232,11 +235,12 @@ swiper?:Swiper
           "issuesCreditsCity": data['issuesCreditsCity'],
           "issuesCreditsState": data['issuesCreditsState'],
           "issuesCreditsZipCode": data['issuesCreditsZipCode'],
+          "issuesCreditsPhone": data['issuesCreditsPhone'],
+          "issuesCreditsFax": data['issuesCreditsFax']
         });
 
         this.drimsFormEight.patchValue({
-          "issuesCreditsPhone": data['issuesCreditsPhone'],
-          "issuesCreditsFax": data['issuesCreditsFax'],
+        
           "generalInfroWacAwapMyprice": data['generalInfroWacAwapMyprice'],
           "generalInfroWacAwapPer": data['generalInfroWacAwapPer'],
         });
@@ -434,8 +438,8 @@ this.next()
         "wholesalerTollFreeNo": this.drimsFormFour.controls['wholesalerTollFreeNo'].value,
         "wholesalerFax": this.drimsFormFour.controls['wholesalerFax'].value,
         //   "wholesalerPhone": this.drimsFormFour.controls['wholesalerPhone'].value,
-        "defNumber": this.drimsFormFive.controls['defNumber'].value,
-        "defExpirationDate": this.drimsFormFive.controls['defExpirationDate'].value,
+        "defNumber": this.drimsFormTwo.controls['defNumber'].value,
+        "defExpirationDate": this.drimsFormTwo.controls['defExpirationDate'].value,
         "issuesCreditsName": this.drimsFormFive.controls['issuesCreditsName'].value,
         "issuesCreditsDba": this.drimsFormSeven.controls['issuesCreditsDba'].value,
         "issuesCreditsStreet": this.drimsFormSeven.controls['issuesCreditsStreet'].value,
@@ -443,8 +447,8 @@ this.next()
         "issuesCreditsState": this.drimsFormSeven.controls['issuesCreditsState'].value,
         "issuesCreditsZipCode": this.drimsFormSeven.controls['issuesCreditsZipCode'].value,
 
-        "issuesCreditsPhone": this.drimsFormEight.controls['issuesCreditsPhone'].value,
-        "issuesCreditsFax": this.drimsFormEight.controls['issuesCreditsFax'].value,
+        "issuesCreditsPhone": this.drimsFormSeven.controls['issuesCreditsPhone'].value,
+        "issuesCreditsFax": this.drimsFormSeven.controls['issuesCreditsFax'].value,
         "generalInfroWacAwapMyprice": this.drimsFormEight.controls['generalInfroWacAwapMyprice'].value,
         "generalInfroWacAwapPer": this.drimsFormEight.controls['generalInfroWacAwapPer'].value,
 
@@ -641,10 +645,11 @@ this.next()
         'issuesCreditsCity': this.drimsFormOne.value.companyCity,
         'issuesCreditsState': this.drimsFormOne.value.companyState,
         'issuesCreditsZipCode': this.drimsFormTwo.value.companyPincode,
-      })
-      this.drimsFormEight.patchValue({
         'issuesCreditsPhone': this.drimsFormTwo.value.companyPhone,
         'issuesCreditsFax': this.drimsFormTwo.value.companyFax
+      })
+      this.drimsFormEight.patchValue({
+     
       })
     } else {
       this.drimsFormFive.patchValue({

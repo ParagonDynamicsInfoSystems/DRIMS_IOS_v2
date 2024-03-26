@@ -14,7 +14,7 @@
   <swiper-container #swiper>
     <swiper-slide>
       <form [formGroup]="drimsFormOne" novalidate>
-        <h4 class="pageNumber">Page 1 of 8</h4>
+        <h4 class="pageNumber">Page 1 of 5</h4>
 
         <h3 class="heading">Company Information</h3>
         <div class="button-content">
@@ -87,23 +87,26 @@
           <ion-row>
             <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
             </ion-col>
-            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-              <ion-button shape="round" class="ioncardButtonNormal" (click)="firstCardNextClick()">
-                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
-              </ion-button>
-            </ion-col>
+
             <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
               <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
                 <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
               </ion-button>
             </ion-col>
+
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="firstCardNextClick()">
+                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
+              </ion-button>
+            </ion-col>
+           
           </ion-row>
         </div>
       </form>
 
     </swiper-slide>
     <swiper-slide><form [formGroup]="drimsFormTwo" novalidate>
-      <h4 class="pageNumber">Page 2 of 8</h4>
+      <h4 class="pageNumber">Page 2 of 5</h4>
 
 
       <div class="button-content">
@@ -183,6 +186,35 @@
         </div>
       </div>
 
+      <h3 class="heading">DEA information</h3>
+      <div class="button-content">
+        <ion-label class="lable">DEA Number <span style="color:red">*</span></ion-label>
+        <ion-item class="roundedInput">
+          <ion-row>
+            <ion-input maxlength="9" formControlName="defNumber" type="text" placeholder="DEA number">
+            </ion-input>
+          </ion-row>
+        </ion-item>
+        <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormTwo.controls['defNumber'].hasError('required')">
+          <small style="color: #f70505;">Number is required !</small>
+        </div>
+        <div style="padding-left: 32px;" *ngIf="drimsFormTwo.controls['defNumber'].hasError('pattern')">
+          <small style="color: hwb(34 0% 0%);">DEA number should start with 2 Alphabets followed by 7 numbers!</small>
+        </div>
+      </div>
+
+      <div class="button-content">
+        <ion-label class="lable">Expiry date <span style="color:red">*</span></ion-label>
+        <ion-item class="roundedInput">
+          <ion-input formControlName="defExpirationDate" type="date" style="--padding-top: 14px;color: #1e275b;">
+          </ion-input>
+        </ion-item>
+        <div style="padding-left: 32px;"
+          *ngIf="isSubmitted && drimsFormTwo.controls['defExpirationDate'].hasError('required')">
+          <small style="color: #f70505;">Expiry date is required !</small>
+        </div>
+      </div>
+
       <div style="padding-top: 15px;">
         <!-- Previous / Next button -->
         <ion-row>
@@ -192,22 +224,23 @@
             </ion-button>
           </ion-col>
           <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-            <ion-button shape="round" class="ioncardButtonNormal" (click)="secondCardNextClick()">
-              <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
-            </ion-button>
-          </ion-col>
-          <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
             <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
               <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
             </ion-button>
           </ion-col>
+          <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+            <ion-button shape="round" class="ioncardButtonNormal" (click)="secondCardNextClick()">
+              <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
+            </ion-button>
+          </ion-col>
+        
         </ion-row>
       </div>
     </form>
   </swiper-slide>
     <swiper-slide>
       <form [formGroup]="drimsFormThree" novalidate>
-        <h4 class="pageNumber">Page 3 of 8</h4>
+        <h4 class="pageNumber">Page 3 of 5</h4>
 
         <h3 class="heading">Wholesaler Information</h3>
         <div class="button-content">
@@ -270,8 +303,7 @@
           </div>
         </div>
 
-        <div style="padding-top: 15px;">
-          <!-- Previous / Next button -->
+        <!-- <div style="padding-top: 15px;">
           <ion-row>
             <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
               <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
@@ -289,12 +321,10 @@
               </ion-button>
             </ion-col>
           </ion-row>
-        </div>
+        </div> -->
       </form>
-    </swiper-slide>
-    <swiper-slide>
       <form [formGroup]="drimsFormFour" novalidate>
-        <h4 class="pageNumber">Page 4 of 8</h4>
+        <!-- <h4 class="pageNumber">Page 4 of 8</h4> -->
 
         <div class="button-content">
           <ion-label class="lable">Street</ion-label>
@@ -345,56 +375,33 @@
               </ion-button>
             </ion-col>
             <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-              <ion-button shape="round" class="ioncardButtonNormal" (click)="fourthCardNextClick()">
-                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
-              </ion-button>
-            </ion-col>
-            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
               <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
                 <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
               </ion-button>
             </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="fourthCardNextClick()">
+                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
+              </ion-button>
+            </ion-col>
+           
           </ion-row>
         </div>
       </form>
     </swiper-slide>
+    <!-- <swiper-slide>
+     
+    </swiper-slide> -->
     <swiper-slide>
       <form [formGroup]="drimsFormFive" novalidate>
-        <h4 class="pageNumber">Page 5 of 8</h4>
+        <h4 class="pageNumber">Page 4 of 5</h4>
 
         <!-- <div class="divOutLine"> -->
-        <h3 class="heading">DEA information</h3>
-        <div class="button-content">
-          <ion-label class="lable">DEA Number <span style="color:red">*</span></ion-label>
-          <ion-item class="roundedInput">
-            <ion-row>
-              <ion-input maxlength="9" formControlName="defNumber" type="text" placeholder="DEA number">
-              </ion-input>
-            </ion-row>
-          </ion-item>
-          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormFive.controls['defNumber'].hasError('required')">
-            <small style="color: #f70505;">Number is required !</small>
-          </div>
-          <div style="padding-left: 32px;" *ngIf="drimsFormFive.controls['defNumber'].hasError('pattern')">
-            <small style="color: hwb(34 0% 0%);">DEA number should start with 2 Alphabets followed by 7 numbers!</small>
-          </div>
-        </div>
-
-        <div class="button-content">
-          <ion-label class="lable">Expiry date <span style="color:red">*</span></ion-label>
-          <ion-item class="roundedInput">
-            <ion-input formControlName="defExpirationDate" type="date" style="--padding-top: 14px;color: #1e275b;">
-            </ion-input>
-          </ion-item>
-          <div style="padding-left: 32px;"
-            *ngIf="isSubmitted && drimsFormFive.controls['defExpirationDate'].hasError('required')">
-            <small style="color: #f70505;">Expiry date is required !</small>
-          </div>
-        </div>
+       
 
         <!-- </div> -->
         <div class="divOutLine">
-          <h3 class="heading">Issues credits to</h3>
+          <h3 class="heading">Issue Credit To</h3>
           <div class="button-content">
             <ion-list style="background: transparent;">
               <ion-item class="roundedInput">
@@ -418,37 +425,10 @@
               <small style="color: #f70505;">Name is required !</small>
             </div>
           </div>
-
         </div>
-        <div style="padding-top: 15px;">
-          <!-- Previous / Next button -->
-          <ion-row>
-            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
-              <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
-                <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
-              </ion-button>
-            </ion-col>
-            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-              <ion-button shape="round" class="ioncardButtonNormal" (click)="fifthCardNextClick()">
-                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
-              </ion-button>
-            </ion-col>
-            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-              <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
-                <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </div>
-
-
       </form>
-
-    </swiper-slide>
-    <swiper-slide>
       <form [formGroup]="drimsFormSeven" novalidate>
-        <h4 class="pageNumber">Page 6 of 8</h4>
-        <h3 class="heading">Issues credits to</h3>
+        
 
         <div class="button-content">
           <ion-label class="lable">D/B/A </ion-label>
@@ -515,6 +495,34 @@
             <small style="color: hwb(34 0% 0%);">Zip Code must be exactly 5 digits!</small>
           </div>
         </div>
+        <div class="button-content">
+          <ion-label class="lable">Phone no <span style="color:red">*</span> </ion-label>
+          <ion-item class="roundedInput">
+            <ion-input type="text" formControlName="issuesCreditsPhone"  [maskito]="phoneMask"
+            [maskitoElement]="maskPredicate" placeholder="Phone no"></ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormSeven.controls['issuesCreditsPhone'].hasError('required')">
+            <small style="color: #f70505;">Phone no is required !</small>
+          </div>
+          <div style="padding-left: 32px;" *ngIf="drimsFormSeven.controls['issuesCreditsPhone'].hasError('pattern')">
+            <small style="color: hwb(34 0% 0%);">Phone no required an 10-digit number !</small>
+          </div>
+        </div>
+        <div class="button-content">
+          <ion-label class="lable">Fax <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput">
+            <ion-input type="text" formControlName="issuesCreditsFax"  [maskito]="phoneMask"
+            [maskitoElement]="maskPredicate" placeholder="Fax" ></ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormSeven.controls['issuesCreditsFax'].hasError('required')">
+            <small style="color: #f70505;">Fax is required !</small>
+          </div>
+          <div style="padding-left: 32px;" *ngIf="drimsFormSeven.controls['issuesCreditsFax'].hasError('pattern')">
+            <small style="color: hwb(34 0% 0%);">Fax required an 10-digit number !</small>
+          </div>
+        </div>
 
 
         <div style="padding-top: 0px;">
@@ -542,35 +550,8 @@
     </swiper-slide>
     <swiper-slide>
       <form [formGroup]="drimsFormEight" novalidate>
-        <h4 class="pageNumber">Page 7 of 8</h4>
-        <div class="button-content">
-          <ion-label class="lable">Phone no <span style="color:red">*</span> </ion-label>
-          <ion-item class="roundedInput">
-            <ion-input type="text" formControlName="issuesCreditsPhone"  [maskito]="phoneMask"
-            [maskitoElement]="maskPredicate" placeholder="Phone no"></ion-input>
-          </ion-item>
-          <div style="padding-left: 32px;"
-            *ngIf="isSubmitted && drimsFormEight.controls['issuesCreditsPhone'].hasError('required')">
-            <small style="color: #f70505;">Phone no is required !</small>
-          </div>
-          <div style="padding-left: 32px;" *ngIf="drimsFormEight.controls['issuesCreditsPhone'].hasError('pattern')">
-            <small style="color: hwb(34 0% 0%);">Phone no required an 10-digit number !</small>
-          </div>
-        </div>
-        <div class="button-content">
-          <ion-label class="lable">Fax <span style="color:red">*</span></ion-label>
-          <ion-item class="roundedInput">
-            <ion-input type="text" formControlName="issuesCreditsFax"  [maskito]="phoneMask"
-            [maskitoElement]="maskPredicate" placeholder="Fax" ></ion-input>
-          </ion-item>
-          <div style="padding-left: 32px;"
-            *ngIf="isSubmitted && drimsFormEight.controls['issuesCreditsFax'].hasError('required')">
-            <small style="color: #f70505;">Fax is required !</small>
-          </div>
-          <div style="padding-left: 32px;" *ngIf="drimsFormEight.controls['issuesCreditsFax'].hasError('pattern')">
-            <small style="color: hwb(34 0% 0%);">Fax required an 10-digit number !</small>
-          </div>
-        </div>
+        <h4 class="pageNumber">Page 5 of 5</h4>
+       
 
         <!-- <div class="divOutLine"> -->
         <h3 class="heading">General information <span style="color:red">*</span></h3>
@@ -609,94 +590,10 @@
             </ion-list>
           </ion-radio-group>
         </div>
-        <!-- <br /> -->
-        <!-- </div> -->
-
-        <div style="padding-top: 15px;">
-          <!-- Previous / Next button -->
-          <ion-row>
-            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
-              <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
-                <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
-              </ion-button>
-            </ion-col>
-            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-              <ion-button shape="round" class="ioncardButtonNormal" (click)="eighthCardNextClick()">
-                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
-              </ion-button>
-            </ion-col>
-            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-              <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
-                <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </div>
+      
       </form>
-    </swiper-slide>
-    <!-- <swiper-slide>
-      <form [formGroup]="drimsFormNine" novalidate>
-        <h4 class="pageNumber">Page 8 of 8</h4>
 
-        <div class="divOutLine">
-          <h3 class="heading">My wholesaler will</h3>
-          <div class="button-content">
-            <ion-radio-group formControlName="myWholesalerPolicyType">
-              <ion-list style="background: transparent;">
-                <ion-item class="roundedInput">
-                  <ion-label class="lable" style="white-space: unset;">Accept returns according to manufacturer
-                    policy</ion-label>
-                  <ion-radio mode="md" value="1" color="secondary" slot="start"
-                    (ionSelect)="myWholesalerWill('wsAcceptRATMP')">
-                  </ion-radio>
-                </ion-item>
-                <ion-item class="roundedInput">
-                  <ion-label class="lable" style="white-space: unset;">Not accept returns for outdated over</ion-label>
-                  <ion-radio mode="md" value="2" color="secondary" slot="start"
-                    (ionSelect)="myWholesalerWill('wsNotAcceptRFOO')">
-                  </ion-radio>
-                </ion-item>
-                <ion-item class="roundedInput">
-                  <ion-input formControlName="myWholesalerPolicyMonths" type="number" placeholder="Months">
-                  </ion-input>
-                  <ion-label class="lable">months</ion-label>
-                </ion-item>
-                <ion-item class="roundedInput">
-                  <ion-label class="lable">Not accept returns</ion-label>
-                  <ion-radio mode="md" value="3" color="secondary" slot="start"
-                    (ionSelect)="myWholesalerWill('wsNotAcceptReturns')">
-                  </ion-radio>
-                </ion-item>
-              </ion-list>
-            </ion-radio-group>
-          </div>
-          <br />
-        </div>
-
-        <div style="padding-top: 15px;">
-          <ion-row>
-            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
-              <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
-                <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
-              </ion-button>
-            </ion-col>
-            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-              <ion-button shape="round" class="ioncardButtonNormal" (click)="ninthCardNextClick()">
-                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
-              </ion-button>
-            </ion-col>
-            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
-              <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
-                <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </div>
-      </form>
-  </swiper-slide> -->
-    <swiper-slide>
       <form [formGroup]="drimsFormTen" novalidate>
-        <h4 class="pageNumber">Page 8 of 8</h4>
         <div class="divOutLine">
           <h3 class="heading">Invoice options</h3>
           <div class="button-content">
@@ -861,5 +758,66 @@
         </div>
       </form>
     </swiper-slide>
+    <!-- <swiper-slide>
+      <form [formGroup]="drimsFormNine" novalidate>
+        <h4 class="pageNumber">Page 8 of 8</h4>
+
+        <div class="divOutLine">
+          <h3 class="heading">My wholesaler will</h3>
+          <div class="button-content">
+            <ion-radio-group formControlName="myWholesalerPolicyType">
+              <ion-list style="background: transparent;">
+                <ion-item class="roundedInput">
+                  <ion-label class="lable" style="white-space: unset;">Accept returns according to manufacturer
+                    policy</ion-label>
+                  <ion-radio mode="md" value="1" color="secondary" slot="start"
+                    (ionSelect)="myWholesalerWill('wsAcceptRATMP')">
+                  </ion-radio>
+                </ion-item>
+                <ion-item class="roundedInput">
+                  <ion-label class="lable" style="white-space: unset;">Not accept returns for outdated over</ion-label>
+                  <ion-radio mode="md" value="2" color="secondary" slot="start"
+                    (ionSelect)="myWholesalerWill('wsNotAcceptRFOO')">
+                  </ion-radio>
+                </ion-item>
+                <ion-item class="roundedInput">
+                  <ion-input formControlName="myWholesalerPolicyMonths" type="number" placeholder="Months">
+                  </ion-input>
+                  <ion-label class="lable">months</ion-label>
+                </ion-item>
+                <ion-item class="roundedInput">
+                  <ion-label class="lable">Not accept returns</ion-label>
+                  <ion-radio mode="md" value="3" color="secondary" slot="start"
+                    (ionSelect)="myWholesalerWill('wsNotAcceptReturns')">
+                  </ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-radio-group>
+          </div>
+          <br />
+        </div>
+
+        <div style="padding-top: 15px;">
+          <ion-row>
+            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
+                <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
+              </ion-button>
+            </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button shape="round" class="ioncardButtonNormal" (click)="ninthCardNextClick()">
+                <ion-icon slot="end" name="arrow-forward-circle-outline"></ion-icon>NEXT
+              </ion-button>
+            </ion-col>
+            <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
+              <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+  </swiper-slide> -->
+   
   </swiper-container>
 </ion-content>

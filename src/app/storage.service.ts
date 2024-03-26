@@ -13,13 +13,13 @@ export class StorageService {
   baseurl: any;
   serverurl: any;
   //LocalURL
-  // mobileserverurl: string = "http://localhost:8081/";
-  // baseURL: string = "http://localhost:8081/";
+  mobileserverurl: string = "http://localhost:8081/";
+  baseURL: string = "http://localhost:8081/";
   // mobileserverurl: string = "http://192.168.5.155:8080/";
   // baseURL: string = "http://192.168.5.155:8080/";
   //ServerURL
-  mobileserverurl: string = "http://65.108.201.61:8090/drug/";
-  baseURL: string = "http://65.108.201.61:8090/";
+  // mobileserverurl: string = "http://65.108.201.61:8090/drug/";
+  // baseURL: string = "http://65.108.201.61:8090/";
   mobileserverserive: any;
   constructor(private http: HttpClient, public toastController: ToastController, public alertController: AlertController, private loadingCtrl: LoadingController) {
     this.secretKey = 7061737323313233;
