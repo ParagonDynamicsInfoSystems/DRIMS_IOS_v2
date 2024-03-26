@@ -124,7 +124,7 @@ export class CompanyDebitMemoListPage implements OnInit {
 
                 if (result['success'] === true) {
                   this.storageservice.successToastCustom('Delete', 'Record has been deleted successfully.');
-                  this.filterList();
+                  this.resetList()
                 } else if (result['success'] === false) {
                   var msg = result['message'];
                   if (msg == null) {

@@ -65,7 +65,7 @@
         <div class="button-content">
           <ion-label class="lable">State <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
-            <ion-select name="input2" (ionFocus)="focusInput($event, 'input2')"formControlName="companyState" okText="Okay" cancelText="Dismiss" style="width: 520px;"
+            <ion-select #selectField (focus)="focusNext(selectField)"formControlName="companyState" okText="Okay" cancelText="Dismiss" style="width: 520px;"
               placeholder="State">
               <ion-select-option *ngFor='let cElement of stateList' value="{{cElement.id}}">{{cElement.text}}
               </ion-select-option>

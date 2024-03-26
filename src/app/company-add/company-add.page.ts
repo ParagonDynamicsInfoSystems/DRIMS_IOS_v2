@@ -22,6 +22,8 @@ export class CompanyAddPage implements OnInit {
 swiperRef:ElementRef | undefined
 swiper?:Swiper
 @ViewChild('input2') input2!: IonSelect;
+@ViewChild('selectField') selectField!: IonSelect;
+
 
 
 
@@ -737,7 +739,10 @@ back(){
 
   this.swiper?.slidePrev();
 }
-
+focusNext(selectField: IonSelect) {
+  console.log("Karthikeyan ")
+  selectField.open();
+}
 focusInput(event :any, nextInput :any) {
   console.log("Karthikeyan ")
   if (event.key === 'Tab') {
