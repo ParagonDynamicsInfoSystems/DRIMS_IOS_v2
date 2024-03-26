@@ -52,7 +52,7 @@
           <ion-label class="lable">City <span style="color:red">*</span> </ion-label>
           <ion-item class="roundedInput">
             <ion-row>
-              <ion-input name="input1" formControlName="companyCity" type="text" placeholder="City">
+              <ion-input name="input1" (focus)="focusNext(selectField)" formControlName="companyCity" type="text" placeholder="City">
               </ion-input>
             </ion-row>
           </ion-item>
@@ -65,7 +65,7 @@
         <div class="button-content">
           <ion-label class="lable">State <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
-            <ion-select #selectField (focus)="focusNext(selectField)"formControlName="companyState" okText="Okay" cancelText="Dismiss" style="width: 520px;"
+            <ion-select #selectField formControlName="companyState" okText="Okay" cancelText="Dismiss" style="width: 520px;"
               placeholder="State">
               <ion-select-option *ngFor='let cElement of stateList' value="{{cElement.id}}">{{cElement.text}}
               </ion-select-option>
