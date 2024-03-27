@@ -27,7 +27,12 @@ export class CompanyListPage implements OnInit {
   }
  
   gotoAddNew() {
-    this.router.navigate(['/company-add']);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        refreshPage: 'yes'
+      }
+    };
+    this.router.navigate(['/company-add'],navigationExtras);
   }
 
   resetList() {
@@ -40,8 +45,10 @@ export class CompanyListPage implements OnInit {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         companyCode: encodeURIComponent(this.ced.encryptAesToString(companyCode, this.storageservice.secretKey)),
+        refreshPage: 'yes'
 
       }
+   
     };
     this.router.navigate(['/company-add'], navigationExtras); 
   }

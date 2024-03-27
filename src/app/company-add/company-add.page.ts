@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { CedService } from '../ced.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -21,8 +21,8 @@ export class CompanyAddPage implements OnInit {
 
 swiperRef:ElementRef | undefined
 swiper?:Swiper
-@ViewChild('input2') input2!: IonSelect;
-@ViewChild('selectField') selectField!: IonSelect;
+  @ViewChild('selectField')selectField!: IonSelect;
+
 
 
 
@@ -57,8 +57,11 @@ swiper?:Swiper
   };
 
   readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
+  inpage2: boolean = false;
+  inpage3: boolean = false;
+  inpage4: boolean= false;
 
-  constructor(private ced: CedService, private router: Router, public formbuilder: FormBuilder, public storageservice: StorageService,
+  constructor(private ced: CedService, private router: Router, public formbuilder: FormBuilder, public storageservice: StorageService,private renderer: Renderer2,
     private route: ActivatedRoute, public commonService: CommonService) { 
       this.drimsFormTen = this.formbuilder.group({
         invoiceDetails: this.formbuilder.array([]) // Initialize invoiceDetails as a FormArray
@@ -72,10 +75,11 @@ swiper?:Swiper
       companyStreet: ["", [Validators.required]],
       companyCity: ["", [Validators.required]],
       companyState: ["", [Validators.required]],
+      companyPincode: ["", [Validators.required, Validators.pattern('[0-9]{5}'), Validators.maxLength(5), Validators.minLength(5)]],
+
     });
 
     this.drimsFormTwo = formbuilder.group({
-      companyPincode: ["", [Validators.required, Validators.pattern('[0-9]{5}'), Validators.maxLength(5), Validators.minLength(5)]],
       companyPhone: ["", [Validators.required, Validators.pattern('[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}'), Validators.maxLength(12), Validators.minLength(12)]],
       companyFax: ["", [Validators.required, Validators.pattern('[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}'), Validators.maxLength(12), Validators.minLength(12)]],
       companyContact: ['', Validators.compose([Validators.maxLength(60), Validators.pattern(this.splCharNumRegex), Validators.required])],
@@ -86,7 +90,7 @@ swiper?:Swiper
     });
 
     this.drimsFormThree = formbuilder.group({
-      wholesalerPolicyCode: ["", [Validators.required]],
+      wholesalerPolicyCode: ["", [Validators.required],[Validators.maxLength(50)]],
       wholesalerCode: ["", [Validators.required]],
       wholesalerPhoneNo: ["", [Validators.required, Validators.pattern('[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}'), Validators.maxLength(12), Validators.minLength(12)]],
       wholesalerEmailID: ['', [Validators.required, Validators.email, Validators.pattern('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}')]],
@@ -194,9 +198,10 @@ swiper?:Swiper
           "companyStreet": data['companyStreet'],
           "companyCity": data['companyCity'],
           "companyState": data['companyState'],
+          "companyPincode": data['companyPincode'],
+
         });
         this.drimsFormTwo.patchValue({
-          "companyPincode": data['companyPincode'],
           "companyPhone": data['companyPhone'],
           "companyFax": data['companyFax'],
           "companyContact": data['companyContact'],
@@ -326,6 +331,8 @@ this.back()  }
   secondCardNextClick() {
     this.isSubmitted = true;
     if (!this.drimsFormTwo.valid) {
+
+      this.inpage2 = true
       this.storageservice.warningToast('Please provide all the required values!');
     }
     else {
@@ -343,7 +350,8 @@ this.back()  }
   }
   fourthCardNextClick() {
     this.isSubmitted = true;
-    if (!this.drimsFormFour.valid) {
+    this.inpage2 = true;
+    if (!this.drimsFormFour.valid || !this.drimsFormThree.valid) {
       this.storageservice.warningToast('Please provide all the required values!');
     }
     else {
@@ -372,6 +380,7 @@ this.back()  }
 
   seventhCardNextClick() {
     this.isSubmitted = true;
+    this.inpage3 = true;
     if (!this.drimsFormSeven.valid) {
       this.storageservice.warningToast('Please provide all the required values!');
     }
@@ -402,6 +411,7 @@ this.next()
 
   submitFinalClick() {
     this.isSubmitted = true;
+    this.inpage4 = true;
     if (!this.drimsFormOne.valid || !this.drimsFormTwo.valid || !this.drimsFormThree.valid ||
       !this.drimsFormFour.valid || !this.drimsFormFive.valid ||
       !this.drimsFormSeven.valid || !this.drimsFormEight.valid || !this.drimsFormNine.valid ||
@@ -418,7 +428,7 @@ this.next()
         "companyCity": this.drimsFormOne.controls['companyCity'].value,
         "companyState": this.drimsFormOne.controls['companyState'].value,
 
-        "companyPincode": this.drimsFormTwo.controls['companyPincode'].value,
+        "companyPincode": this.drimsFormOne.controls['companyPincode'].value,
         "companyPhone": this.drimsFormTwo.controls['companyPhone'].value,
         "companyFax": this.drimsFormTwo.controls['companyFax'].value,
         "companyContact": this.drimsFormTwo.controls['companyContact'].value,
@@ -646,7 +656,7 @@ this.next()
         'issuesCreditsStreet': this.drimsFormOne.value.companyStreet,
         'issuesCreditsCity': this.drimsFormOne.value.companyCity,
         'issuesCreditsState': this.drimsFormOne.value.companyState,
-        'issuesCreditsZipCode': this.drimsFormTwo.value.companyPincode,
+        'issuesCreditsZipCode': this.drimsFormOne.value.companyPincode,
         'issuesCreditsPhone': this.drimsFormTwo.value.companyPhone,
         'issuesCreditsFax': this.drimsFormTwo.value.companyFax
       })
@@ -658,8 +668,7 @@ this.next()
         'issuesCreditsName': '',
       })
       this.drimsFormEight.patchValue({
-        'issuesCreditsPhone': '',
-        'issuesCreditsFax': ''
+        
       })
       this.drimsFormSeven.patchValue({
         'issuesCreditsName': '',
@@ -667,7 +676,9 @@ this.next()
         'issuesCreditsStreet': '',
         'issuesCreditsCity': '',
         'issuesCreditsState': '',
-        'issuesCreditsZipCode': ''
+        'issuesCreditsZipCode': '',
+        'issuesCreditsPhone': '',
+        'issuesCreditsFax': ''
       })
     }
   }
@@ -739,20 +750,12 @@ back(){
 
   this.swiper?.slidePrev();
 }
+// focusNext(selectField: IonSelect) {
+//   selectField.open();
+// }
 focusNext(selectField: IonSelect) {
   console.log("Karthikeyan ")
-  selectField.open();
-}
-focusInput(event :any, nextInput :any) {
-  console.log("Karthikeyan ")
-  if (event.key === 'Tab') {
-    event.preventDefault(); // prevent default tab behavior
-    switch (nextInput) {
-      case 'input2':
-        this.input2.open();
-        break;
-    }
-  }
+selectField.open();
 }
 }
 
