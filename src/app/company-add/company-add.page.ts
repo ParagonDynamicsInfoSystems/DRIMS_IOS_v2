@@ -90,7 +90,7 @@ swiper?:Swiper
     });
 
     this.drimsFormThree = formbuilder.group({
-      wholesalerPolicyCode: ["", [Validators.required],[Validators.maxLength(50)]],
+      wholesalerPolicyCode: ["", [Validators.required,Validators.maxLength(40)]],
       wholesalerCode: ["", [Validators.required]],
       wholesalerPhoneNo: ["", [Validators.required, Validators.pattern('[0-9]{3}[-]{1}[0-9]{3}[-]{1}[0-9]{4}'), Validators.maxLength(12), Validators.minLength(12)]],
       wholesalerEmailID: ['', [Validators.required, Validators.email, Validators.pattern('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}')]],
@@ -101,7 +101,6 @@ swiper?:Swiper
       wholesalerCity: [""],
       wholesalerState: [""],
       wholesalerZipCode: ["", [Validators.pattern("^[0-9]*$"), Validators.maxLength(5), Validators.minLength(5)]],
-
       wholesalerName: [""],
       wholesalerExpiryPacket: [""],
       wholesalerAllowOverride: [""],
@@ -351,6 +350,8 @@ this.back()  }
   fourthCardNextClick() {
     this.isSubmitted = true;
     this.inpage2 = true;
+
+    console.log("4"+this.drimsFormFour.valid+"3"+this.drimsFormThree.valid)
     if (!this.drimsFormFour.valid || !this.drimsFormThree.valid) {
       this.storageservice.warningToast('Please provide all the required values!');
     }

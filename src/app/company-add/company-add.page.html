@@ -217,7 +217,7 @@
             <small style="color: #f70505;">Number is required !</small>
           </div>
           <div style="padding-left: 32px;" *ngIf="drimsFormTwo.controls['defNumber'].hasError('pattern')">
-            <small style="color: hwb(34 0% 0%);">DEA number should start with 2 Alphabets followed by 7 numbers!</small>
+            <small style="color: #f70505;">DEA number should start with 2 Alphabets followed by 7 numbers!</small>
           </div>
         </div>
         </ion-col>
@@ -267,7 +267,7 @@
         <div class="button-content">
           <ion-label class="lable">Account <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
-            <ion-input formControlName="wholesalerPolicyCode" type="text" placeholder="Account">
+            <ion-input formControlName="wholesalerPolicyCode" type="text" placeholder="Account" [counter]="true" maxlength="20">
             </ion-input>
           </ion-item>
           <div style="padding-left: 32px;"
@@ -280,7 +280,7 @@
         </div>
 
         <div class="button-content">
-          <ion-label class="lable">Name</ion-label>
+          <ion-label class="lable">Name  <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
             <!-- <ion-select placeholder="Name"  okText="Okay" cancelText="Dismiss" style="width: 520px;" (ionChange)="wholesalerfetchDetailsById($event.target.value)" formControlName="wholesalerCode" style="background-color: white;">
               <ion-select-option *ngFor="let tittle of wholesalerList" [value]="tittle.id">
@@ -638,7 +638,7 @@
           <div *ngIf="isCppEnable" class="button-content">
             <ion-label class="lable">Direct %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-input formControlName="cppDirect" type="number" placeholder="Direct">
+              <ion-input formControlName="cppDirect" type="number" inputmode="numeric" placeholder="Direct">
               </ion-input>
             </ion-item>
             <div style="padding-left: 32px;"
@@ -651,7 +651,7 @@
             <ion-label class="lable">Batch %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="cppBatch" type="number" placeholder="Batch">
+                <ion-input formControlName="cppBatch" type="number" inputmode="numeric" placeholder="Batch">
                 </ion-input>
               </ion-row>
             </ion-item>
@@ -663,7 +663,7 @@
           <div *ngIf="isOppEnable" class="button-content">
             <ion-label class="lable">Direct %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-input formControlName="oppDirect" type="number" placeholder="Direct">
+              <ion-input formControlName="oppDirect" type="number" inputmode="numeric" placeholder="Direct">
               </ion-input>
             </ion-item>
             <div style="padding-left: 32px;"
@@ -676,7 +676,7 @@
             <ion-label class="lable">Batch %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="oppBatch" type="number" placeholder="Batch">
+                <ion-input formControlName="oppBatch" type="number" inputmode="numeric" placeholder="Batch">
                 </ion-input>
               </ion-row>
             </ion-item>
@@ -689,7 +689,7 @@
             <ion-label class="lable">Return fee %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="dppReturnFee" type="number" placeholder="Return fee">
+                <ion-input formControlName="dppReturnFee" type="number" inputmode="numeric" placeholder="Return fee">
                 </ion-input>
               </ion-row>
             </ion-item>
