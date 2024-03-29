@@ -50,6 +50,9 @@ swiper?:Swiper
   readonly phoneMask: MaskitoOptions = {
     mask: [ /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/],
   };
+  readonly zipmask: MaskitoOptions = {
+    mask: [ /\d/, /\d/, /\d/, /\d/, /\d/],
+  };
 
   readonly cardMask: MaskitoOptions = {
    
