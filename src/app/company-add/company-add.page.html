@@ -594,7 +594,7 @@
                 </ion-radio>
               </ion-item>
               <ion-item class="roundedInput">
-                <ion-input formControlName="generalInfroWacAwapPer" type="number" [readonly]="disabledAWPLessPercentage"
+                <ion-input formControlName="generalInfroWacAwapPer" type="number"  pattern="[0-9]*"[readonly]="disabledAWPLessPercentage"
                   placeholder="AWP less percentage"></ion-input>
                 <ion-label class="lable">%</ion-label>
               </ion-item>
@@ -651,7 +651,7 @@
             <ion-label class="lable">Batch %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="cppBatch" type="number" inputmode="numeric" placeholder="Batch">
+                <ion-input formControlName="cppBatch" type="number" inputmode="numeric"  pattern="[0-9]*" placeholder="Batch">
                 </ion-input>
               </ion-row>
             </ion-item>
@@ -663,7 +663,7 @@
           <div *ngIf="isOppEnable" class="button-content">
             <ion-label class="lable">Direct %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-input formControlName="oppDirect" type="number" inputmode="numeric" placeholder="Direct">
+              <ion-input formControlName="oppDirect" type="number" inputmode="numeric"  pattern="[0-9]*" placeholder="Direct">
               </ion-input>
             </ion-item>
             <div style="padding-left: 32px;"
@@ -676,7 +676,7 @@
             <ion-label class="lable">Batch %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="oppBatch" type="number" inputmode="numeric" placeholder="Batch">
+                <ion-input formControlName="oppBatch" type="number" inputmode="numeric" pattern="[0-9]*" placeholder="Batch">
                 </ion-input>
               </ion-row>
             </ion-item>
@@ -689,7 +689,7 @@
             <ion-label class="lable">Return fee %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="dppReturnFee" type="number" inputmode="numeric" placeholder="Return fee">
+                <ion-input formControlName="dppReturnFee" type="number" inputmode="numeric"  pattern="[0-9]*"placeholder="Return fee">
                 </ion-input>
               </ion-row>
             </ion-item>
