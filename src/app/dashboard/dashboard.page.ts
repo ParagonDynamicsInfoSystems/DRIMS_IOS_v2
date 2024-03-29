@@ -53,8 +53,7 @@ export class DashboardPage implements OnInit {
    let navigationExtras: NavigationExtras = {
      queryParams: {
        companyCode: encodeURIComponent(this.ced.encryptAesToString(companyCode, this.storageservice.secretKey)),
-
-     }
+       refreshPage: 'yes'     }
    };
    this.router.navigate(['/company-add'], navigationExtras); 
  }
