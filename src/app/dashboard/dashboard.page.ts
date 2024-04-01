@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { StorageService } from '../storage.service';
 import { CedService } from '../ced.service';
 import { ConnectivityService } from '../connectivity.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -16,12 +18,14 @@ export class DashboardPage implements OnInit {
   userName: any = '';
   searchInput: string = '';
   isonline :boolean = true;
-  constructor(private ced: CedService,private router: Router, public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController,private connectivity: ConnectivityService) {
+  constructor(private ced: CedService,private router: Router,private navCtrl: NavController,
+     public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController,private connectivity: ConnectivityService) {
     this.userName = localStorage.getItem('firstNameLastName');
 
    }
 
    async ngOnInit() {
+    // window.location.reload();
     localStorage.setItem('onlineStatus', "true");
 
     if(localStorage.getItem('onlineStatus') =="true"){
@@ -40,7 +44,7 @@ export class DashboardPage implements OnInit {
  } 
 
  gotoAddNew() {
-   this.router.navigate(['/company-add']);
+  this.navCtrl.navigateForward('/company-add');
  }
 
  resetList() {
@@ -53,9 +57,11 @@ export class DashboardPage implements OnInit {
    let navigationExtras: NavigationExtras = {
      queryParams: {
        companyCode: encodeURIComponent(this.ced.encryptAesToString(companyCode, this.storageservice.secretKey)),
-       refreshPage: 'yes'     }
+          }
    };
-   this.router.navigate(['/company-add'], navigationExtras); 
+   this.navCtrl.navigateForward(['/company-add'], navigationExtras);
+
+  //  this.router.navigate(['/company-add'], navigationExtras); 
  }
  toggleChanged(event: CustomEvent) {
    // Get the value of the toggle

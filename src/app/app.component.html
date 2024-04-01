@@ -1,6 +1,6 @@
 <ion-app>
 	<ion-split-pane contentId="main-content">
-		<ion-menu contentId="main-content" type="overlay" swipe-gesture="false">
+		<ion-menu contentId="main-content"  *ngIf="islogedin" type="overlay" swipe-gesture="false">
 
 			<div class="menuHeaderStyle">
 				<ion-menu-toggle>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { StorageService } from './storage.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -46,8 +46,17 @@ export class AppComponent {
     }
   ];
   showSplash = true;
+  islogedin: boolean = false;
 
   constructor(private router: Router, public storageservice: StorageService, public nativeStorage: NativeStorage, private platform: Platform) { 
+   var data 
+    this.storageservice.data$.subscribe(value => {
+      data = value;
+      this.showSideBar(data)
+
+    });
+
+  
    // this.initializeApp();
   }
 
@@ -60,6 +69,17 @@ export class AppComponent {
   //   });
   // }
 
+  showSideBar(data:any){
+    //  var islogedin = localStorage.getItem('isloggedin');
+    if (data == "True")
+    {
+      this.islogedin = true
+    }
+    else{
+      this.islogedin = false
+
+    }
+  }
   watchLoading(){
     this.storageservice.watchLoading().subscribe(loading => {
       this.loading = loading;
@@ -80,14 +100,22 @@ export class AppComponent {
     localStorage.setItem('roleType', '');
     localStorage.setItem('DRIMS_Id', '');
     localStorage.setItem('DRIMS_Pwd', '');
+    localStorage.setItem('isloggedin', "");
 
     this.storageservice.publishSomeData({
       status_get: false
     });
     localStorage.clear();
 
-    this.nativeStorage.clear();
+    this.nativeStorage.clear(); 
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        refreshPage: 'yes'
 
-    this.router.navigate(['/login']);
+      },
+      skipLocationChange: false
+}
+
+    this.router.navigate(['/login'],navigationExtras);
   }
 }

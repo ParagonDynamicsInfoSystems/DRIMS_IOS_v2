@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { StorageService } from '../storage.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { CedService } from '../ced.service';
 declare var grecaptcha: any;
 
@@ -21,7 +21,8 @@ export class LoginPage implements OnInit {
   empIdVal: string ="";
   pwdVal: string ="";
 
-  constructor(public formbuilder: FormBuilder, private router: Router, public storageservice: StorageService,
+  constructor(public formbuilder: FormBuilder, private navCtrl: NavController,
+    private router: Router, public storageservice: StorageService,
     private loadingCtrl: LoadingController, 
     private route: ActivatedRoute, private ced: CedService) {
       this.loginform = formbuilder.group({
@@ -31,6 +32,7 @@ export class LoginPage implements OnInit {
      }
 
   ngOnInit() {
+    
   }
 
   hideShowPassword() {
@@ -75,10 +77,15 @@ export class LoginPage implements OnInit {
         localStorage.setItem('roleType', this.ced.decryptingProcess(result["roleType"]));
         localStorage.setItem('DRIMS_Id', email_get);
         localStorage.setItem('DRIMS_Pwd', password_get);
-        //#endregion
-        // this.datastorage.createDB()
+        localStorage.setItem('isloggedin', "True");
 
-        this.router.navigate(['/dashboard']);
+        // this.router.navigateByUrl('/dashboard', {skipLocationChange: true}).then(() => {
+        //   this.router.navigate(["/dashboard"]);
+        //   });
+        this.storageservice.setData('True');
+
+        this.navCtrl.navigateForward('/dashboard');
+
       }
       else {
         this.storageservice.warningToast(message);

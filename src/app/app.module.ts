@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaModule } from 'ng-recaptcha'; 
@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './auth/auth-interceptor';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -20,6 +20,8 @@ import { DatePipe } from '@angular/common';
     BrowserModule, IonicModule.forRoot(),
     AppRoutingModule,
     ],
+    exports: [RouterModule],
+
     
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {

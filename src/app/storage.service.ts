@@ -8,6 +8,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class StorageService {
   loading = new BehaviorSubject(false);
+  private dataSubject = new BehaviorSubject<string>('Initial Value');
+  public data$ = this.dataSubject.asObservable();
 
   secretKey: any;
   baseurl: any;
@@ -25,7 +27,9 @@ export class StorageService {
     this.secretKey = 7061737323313233;
    }
 
-   
+   setData(value: string) {
+    this.dataSubject.next(value);
+  }
   postrequest(url: string, data: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

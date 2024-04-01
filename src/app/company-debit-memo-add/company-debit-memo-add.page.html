@@ -18,9 +18,9 @@
         <h5 class="heading">Return Management</h5>       
         <h5 class="heading">Return Memo Information</h5>
       <hr>
-        <div class="button-content">
+        <!-- <div class="button-content" *ngIf="!IsEditMode">
           <ion-label class="lable">Company Name <span style="color:red">*</span></ion-label>
-          <!-- <ion-item lines="none" class="roundedInput">
+        <ion-item lines="none" class="roundedInput">
             <ion-row>
               <ion-select disabled="true" formControlName="companyName"
                 okText="Okay" cancelText="Dismiss" style="width: 520px;" placeholder="Company name">
@@ -29,9 +29,10 @@
                 </ion-select-option>
               </ion-select>
             </ion-row>
-          </ion-item> -->
-          <ion-item class="roundedInput">
-            <ion-select  [disabled]="isDisabled" formControlName="companyName"placeholder="Company Name">
+          </ion-item> 
+          
+          <ion-item class="roundedInput"  *ngIf="!IsEditMode">
+            <ion-select  [disabled]="IsEditMode" formControlName="companyName"placeholder="Company Name">
               <ion-select-option *ngFor='let cElement of companyList'  value="{{cElement.id}}">
                 <ng-container *ngIf="cElement.id==compId">
                   {{cElement.text}}
@@ -44,7 +45,22 @@
             *ngIf="isSubmitted && drimsFormOne.controls['companyName'].hasError('required')">
             <small style="color: #f70505;">Please select Company name.</small>
           </div>          
+        </div> -->
+        <div class="button-content" >
+          <ion-label class="lable">Company Name <span style="color:red">*</span></ion-label>
+          <ion-item class="roundedInput" >
+
+          <ng-container  *ngFor="let cElement of companyList">
+              <span *ngIf="cElement.id==compId">{{ cElement.text }}</span>           
+          </ng-container>
+            
+          </ion-item>
+          <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormOne.controls['companyName'].hasError('required')">
+            <small style="color: #f70505;">Please select Company name.</small>
+          </div>          
         </div>
+
 
         <div class="button-content">
           <ion-label class="lable">Date Entered <span style="color:red">*</span></ion-label>
@@ -67,11 +83,19 @@
             <small style="color: #f70505;">Please enter 'Return name'.</small>
           </div>
         </div>
-
-        <div class="button-content">
+        <div class="button-content" *ngIf="!IsEditMode">
           <ion-label class="lable">Debit Memo No <span style="color:red">*</span></ion-label>
           <ion-item lines="none" class="roundedInput">
             <ion-input [disabled]="IsEditMode" formControlName="dbMemoNo"type="text" placeholder="Debit memo number"></ion-input>
+          </ion-item>
+          <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['dbMemoNo'].hasError('required')">
+            <small style="color: #f70505;">Please enter 'Debit memo number'.</small>
+          </div>
+        </div>
+        <div class="button-content" *ngIf="IsEditMode">
+          <ion-label class="lable">Debit Memo No <span style="color:red">*</span></ion-label>
+          <ion-item lines="none" class="roundedInput">
+             {{drimsFormOne.value.dbMemoNo}}
           </ion-item>
           <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['dbMemoNo'].hasError('required')">
             <small style="color: #f70505;">Please enter 'Debit memo number'.</small>
