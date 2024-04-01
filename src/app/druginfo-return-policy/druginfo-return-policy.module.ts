@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { DruginfoReturnPolicyPageRoutingModule } from './druginfo-return-policy-routing.module';
 
 import { DruginfoReturnPolicyPage } from './druginfo-return-policy.page';
+import { MaskitoModule } from '@maskito/angular';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { DruginfoReturnPolicyPage } from './druginfo-return-policy.page';
     IonicModule,
     DruginfoReturnPolicyPageRoutingModule,
     ReactiveFormsModule,
+    MaskitoModule
 
   ],
   declarations: [DruginfoReturnPolicyPage],

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { StorageService } from '../storage.service';
 import Swiper from 'swiper';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 
 @Component({
   selector: 'app-druginfo-return-policy',
@@ -22,6 +23,11 @@ export class DruginfoReturnPolicyPage implements OnInit {
   IsEditMode: boolean = false;
   Acceptpercentage: boolean = false;
   requestId: string ="";
+  readonly fiveintmask: MaskitoOptions = {
+    mask: [ /\d/, /\d/, /\d/, /\d/, /\d/],
+  };
+  readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
+
 
   constructor(private router: Router, public formbuilder: FormBuilder, public storageservice: StorageService,
     private route: ActivatedRoute) {

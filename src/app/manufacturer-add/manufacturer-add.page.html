@@ -17,10 +17,10 @@
         <div class="button-content">
           <ion-label class="lable">Name <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
-            <ion-row>
+            
               <ion-input formControlName="manufacturerName" type="text" placeholder="Name">
               </ion-input>
-            </ion-row>
+           
           </ion-item>
           <div style="padding-left: 32px;"
             *ngIf="isSubmitted && drimsFormOne.controls['manufacturerName'].hasError('required')">
@@ -154,10 +154,10 @@
         <div class="button-content">
           <ion-label class="lable">City </ion-label>
           <ion-item class="roundedInput">
-            <ion-row>
+            
               <ion-input formControlName="cityName" type="text" placeholder="City">
               </ion-input>
-            </ion-row>
+          
           </ion-item>
         </div>
 

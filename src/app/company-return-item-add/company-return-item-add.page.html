@@ -126,12 +126,16 @@
         <ion-label class="lable">Manufacturer </ion-label>
           <ion-item class="roundedInput">
             <ion-row>
-              <ion-select formControlName="manufacturerBy" [disabled]="true" okText="Okay" cancelText="Dismiss"
+              <!-- <ion-select formControlName="manufacturerBy" [disabled]="true" okText="Okay" cancelText="Dismiss"
                  placeholder="Manufacturer name">
                 <ion-select-option *ngFor='let cElement of manufacturerList' value="{{cElement.id}}">
                   {{cElement.text}}
                 </ion-select-option>
-              </ion-select>
+              </ion-select> -->
+              <ng-container  *ngFor="let cElement of manufacturerList">
+                <span *ngIf="cElement.id==docForm.controls['manufacturerBy'].value">{{ cElement.text }}</span>           
+            </ng-container>
+              
             </ion-row>
           </ion-item>
       </div>
@@ -146,8 +150,8 @@
       <div class="form-group">
         <ion-label class="lable">Price <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
-            <ion-input formControlName="price" type="text" placeholder="Price">
-            </ion-input>
+            <ion-input formControlName="price" type="text"[maskito]="prisemask"
+            [maskitoElement]="maskPredicate" placeholder="Price"> </ion-input>
           </ion-item>
           <div style="padding-left: 32px;" *ngIf="isSubmitted && docForm.controls['price'].hasError('required')">
             <small style="color: #f70505;">Please enter Price.</small>

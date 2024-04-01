@@ -86,7 +86,7 @@
         <div class="button-content" *ngIf="!IsEditMode">
           <ion-label class="lable">Debit Memo No <span style="color:red">*</span></ion-label>
           <ion-item lines="none" class="roundedInput">
-            <ion-input [disabled]="IsEditMode" formControlName="dbMemoNo"type="text" placeholder="Debit memo number"></ion-input>
+            <ion-input [disabled]="IsEditMode" formControlName="dbMemoNo"type="text"[counter]="true" maxlength="10" placeholder="Debit memo number"></ion-input>
           </ion-item>
           <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['dbMemoNo'].hasError('required')">
             <small style="color: #f70505;">Please enter 'Debit memo number'.</small>

@@ -75,7 +75,8 @@
           <ion-label class="lable">
             Accept percentage <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
-            <ion-input (ionChange)="acceptPercetageValidation($event.target.value)" formControlName="acceptpercentage"
+            <ion-input (ionChange)="acceptPercetageValidation($event.target.value)" [maskito]="fiveintmask"
+            [maskitoElement]="maskPredicate" formControlName="acceptpercentage"
               type="text" placeholder="">
             </ion-input>
           </ion-item>
@@ -93,7 +94,8 @@
         <div *ngIf="this.drimsFormOne.value.acceptReturns=='true'" class="button-content">
           <ion-label class="lable">Number of months before expiration <span style="color:red">*</span> </ion-label>
           <ion-item class="roundedInput">
-            <ion-input formControlName="noMonthsBeforeExpiration" placeholder="" (ionChange)="noMonthsBeforeExpirationLimit($event, 15)"></ion-input>
+            <ion-input formControlName="noMonthsBeforeExpiration" placeholder=""[maskito]="fiveintmask"
+            [maskitoElement]="maskPredicate"  (ionChange)="noMonthsBeforeExpirationLimit($event, 15)"></ion-input>
             <!-- <ion-input formControlName="noMonthsBeforeExpiration"  (input)="noMonthsBeforeExpirationLimit($event, 15)" type="number" placeholder="">
             </ion-input> -->
           </ion-item>
@@ -103,9 +105,10 @@
           </div>
         </div>
         <div *ngIf="this.drimsFormOne.value.acceptReturns=='true'" class="button-content">
-          <ion-label class="lable">Number of months after expiration</ion-label>
+          <ion-label class="lable">Number of months after expiration <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
-            <ion-input formControlName="noMonthsAfterExpiration" placeholder="" (ionChange)="noMonthsAfterExpirationLimit($event, 15)"></ion-input>
+            <ion-input formControlName="noMonthsAfterExpiration" placeholder=""[maskito]="fiveintmask"
+            [maskitoElement]="maskPredicate"  (ionChange)="noMonthsAfterExpirationLimit($event, 15)"></ion-input>
             <!-- <ion-input formControlName="noMonthsAfterExpiration" (input)="noMonthsAfterExpirationLimit($event, 15)"  type="tel" placeholder="">
             </ion-input> -->
           </ion-item>

@@ -239,11 +239,11 @@
         <div style="padding-top: 15px;">
           <!-- Previous / Next button -->
           <ion-row>
-            <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
+            <!-- <ion-col style="text-align: left; width: 50%;" class="ion-margin-top">
               <ion-button shape="round" class="ioncardButtonNormal" (click)="moveToPrevious()">
                 <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>PREVIOUS
               </ion-button>
-            </ion-col>
+            </ion-col> -->
             <ion-col style="text-align: right;width: 50%;" class="ion-margin-top">
               <ion-button *ngIf="IsEditMode" shape="round" class="addBtn" (click)="submitFinalClick()">
                 <ion-icon slot="start" name="save-outline"></ion-icon>UPDATE
@@ -362,10 +362,8 @@
         <div class="button-content">
           <ion-label class="lable">City</ion-label>
           <ion-item class="roundedInput">
-            <ion-row>
               <ion-input formControlName="wholesalerCity" type="text" placeholder="City">
               </ion-input>
-            </ion-row>
           </ion-item>
         </div>
 
@@ -642,7 +640,7 @@
           <div *ngIf="isCppEnable" class="button-content">
             <ion-label class="lable">Direct %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-input formControlName="cppDirect" type="number"  [maskito]="zipmask"
+              <ion-input formControlName="cppDirect" type="number"  [maskito]="persemask"
               [maskitoElement]="maskPredicate" inputmode="numeric" placeholder="Direct">
               </ion-input>
             </ion-item>
@@ -650,26 +648,36 @@
               *ngIf="isSubmitted && drimsFormTen.controls['cppDirect'].hasError('required') && inpage4">
               <small style="color: #f70505;">Direct is required !</small>
             </div>
+            <div style="padding-left: 32px;"
+            *ngIf="isSubmitted && drimsFormTen.controls['cppDirect'].hasError('required')  && inpage4">
+            <small style="color: #f70505;">Direct percentage is required !</small>
+          </div>
+          <div style="padding-left: 32px;"
+            *ngIf="drimsFormTen.controls['cppDirect'].hasError('pattern')">
+            <small style="color: #f70505;">Invalid Percentage !</small>
+          </div>
           </div>
 
           <div *ngIf="isCppEnable" class="button-content">
             <ion-label class="lable">Batch %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-row>
-                <ion-input formControlName="cppBatch" type="number" inputmode="numeric"  [maskito]="zipmask"
+                <ion-input formControlName="cppBatch" type="number" inputmode="numeric"  [maskito]="persemask"
                 [maskitoElement]="maskPredicate" placeholder="Batch">
                 </ion-input>
-              </ion-row>
             </ion-item>
             <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormTen.controls['cppBatch'].hasError('required') && inpage4">
               <small style="color: #f70505;">Batch is required !</small>
             </div>
+            <div style="padding-left: 32px;"
+            *ngIf="drimsFormTen.controls['cppBatch'].hasError('pattern')">
+            <small style="color: #f70505;">Invalid Percentage !</small>
+          </div>
           </div>
           <!-- ////////////******OPP**********///////////////// -->
           <div *ngIf="isOppEnable" class="button-content">
             <ion-label class="lable">Direct %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-input formControlName="oppDirect" type="number" inputmode="numeric"   [maskito]="zipmask"
+              <ion-input formControlName="oppDirect" type="number" inputmode="numeric"    [maskito]="persemask"
               [maskitoElement]="maskPredicate" placeholder="Direct">
               </ion-input>
             </ion-item>
@@ -677,13 +685,17 @@
               *ngIf="isSubmitted && drimsFormTen.controls['oppDirect'].hasError('required') && inpage4">
               <small style="color: #f70505;">Direct is required !</small>
             </div>
+            <div style="padding-left: 32px;"
+            *ngIf="drimsFormTen.controls['oppDirect'].hasError('pattern')">
+            <small style="color: #f70505;">Invalid Percentage !</small>
+          </div>
           </div>
 
           <div *ngIf="isOppEnable" class="button-content">
             <ion-label class="lable">Batch %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="oppBatch" type="number" inputmode="numeric" [maskito]="zipmask"
+                <ion-input formControlName="oppBatch" type="number" inputmode="numeric" [maskito]="persemask"
                 [maskitoElement]="maskPredicate" placeholder="Batch">
                 </ion-input>
               </ion-row>
@@ -691,21 +703,29 @@
             <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormTen.controls['oppBatch'].hasError('required') && inpage4">
               <small style="color: #f70505;">Batch is required !</small>
             </div>
+            <div style="padding-left: 32px;"
+            *ngIf="drimsFormTen.controls['oppBatch'].hasError('pattern')">
+            <small style="color: #f70505;">Invalid Percentage !</small>
+          </div>
           </div>
           <!-- ///////////////////*******DPP*******////////////////////// -->
           <div *ngIf="IsReturnFeeEnable" class="button-content">
             <ion-label class="lable">Return fee %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-row>
-                <ion-input formControlName="dppReturnFee" type="number" inputmode="numeric"   [maskito]="zipmask"
+              
+                <ion-input formControlName="dppReturnFee" type="number" inputmode="numeric"   [maskito]="persemask"
                 [maskitoElement]="maskPredicate" placeholder="Return fee">
                 </ion-input>
-              </ion-row>
+              
             </ion-item>
             <div style="padding-left: 32px;"
               *ngIf="isSubmitted && drimsFormTen.controls['dppReturnFee'].hasError('required') && inpage4">
               <small style="color: #f70505;">Return fee is required !</small>
             </div>
+            <div style="padding-left: 32px;"
+            *ngIf="drimsFormTen.controls['dppReturnFee'].hasError('pattern')">
+            <small style="color: #f70505;">Invalid Percentage !</small>
+          </div>
           </div>
 
           <!-- //////////////////////////////////////// -->
@@ -713,7 +733,8 @@
             <ion-label class="lable">Narcotic Controlled Substances <span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="destructionControlledsubstances" type="text" placeholder="Return fee">
+                <ion-input formControlName="destructionControlledsubstances" type="text"  [maskito]="fiveintmask"
+                [maskitoElement]="maskPredicate" placeholder="Return fee">
                 </ion-input>
               </ion-row>
             </ion-item>
@@ -726,7 +747,8 @@
             <ion-label class="lable">Rx Destruction <span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="destructionDisposerx" type="text" placeholder="Return fee">
+                <ion-input formControlName="destructionDisposerx" type="text" [maskito]="fiveintmask"
+                [maskitoElement]="maskPredicate" placeholder="Return fee">
                 </ion-input>
               </ion-row>
             </ion-item>
@@ -739,7 +761,8 @@
             <ion-label class="lable">Hazardous waste<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
               <ion-row>
-                <ion-input formControlName="destructionDisposalhazardous" type="text" placeholder="Return fee">
+                <ion-input formControlName="destructionDisposalhazardous" type="text" [maskito]="fiveintmask"
+                [maskitoElement]="maskPredicate" placeholder="Return fee">
                 </ion-input>
               </ion-row>
             </ion-item>
@@ -751,21 +774,44 @@
           <!-- ///////////////OTHERS/////////////////// -->
           <div *ngIf="isOthers" style="margin: 16px;">
             <ion-button expand="full" (click)="addRow()">Add Row</ion-button>
-            <div *ngFor="let invoiceDetails of drimsFormTen.get('invoiceDetails')!.value; let i = index"
-              [formGroup]="invoiceDetails">
-              <div>
+            <div >
+              <!-- <div *ngIf="drimsFormTen.get('invoiceDetails') as invoiceDetailsArray">
+                <div *ngFor="let invoiceDetails of invoiceDetailsArray.controls; let i = index">
+                                  <div>
                 <ion-item style=" background: #e5e6f0; --background: transparent !important;">
                   <ion-label>Inventory Name</ion-label>
                   <ion-input type="text" formControlName="inventoryName" placeholder="Inventory Name"> </ion-input>
                 </ion-item>
                 <ion-item style=" background: #e5e6f0; --background: transparent !important;">
                   <ion-label>Value<span style="color:red">*</span></ion-label>
-                  <ion-input type="text" formControlName="inventoryValue" placeholder="Value">
+                  <ion-input type="text" formControlName="inventoryValue" placeholder="Value" [maskito]="persemask"
+                  [maskitoElement]="maskPredicate">
                   </ion-input>
                 </ion-item>
-                <ion-button color="danger" (click)="removeRow(i)" expand="full">Remove</ion-button>
+                <ion-button color="danger"  *ngIf="isremove" (click)="removeRow(i)" expand="full">Remove</ion-button>
               </div>
-            </div>
+              </div>
+              </div> -->
+             
+              <div formArrayName ="invoiceDetails">
+                <div *ngFor="let invoiceDetails of itemsFormArray.controls; let i = index"  >
+                      <!-- Your template code here -->
+                    <div  [formGroupName]="i">
+                      <ion-item style=" background: #e5e6f0; --background: transparent !important;">
+                        <ion-label>Inventory Name  <span style="color:red">*</span></ion-label>
+                        <ion-input type="text" formControlName="inventoryName" placeholder="Inventory Name"> </ion-input>
+                      </ion-item>
+                      <ion-item style=" background: #e5e6f0; --background: transparent !important;">
+                        <ion-label>Value<span style="color:red">*</span></ion-label>
+                        <ion-input type="text" formControlName="inventoryValue" placeholder="Value" [maskito]="persemask"
+                          [maskitoElement]="maskPredicate">
+                        </ion-input>
+                      </ion-item>
+                      <ion-button color="danger" *ngIf="isremove" (click)="removeRow(i)" expand="full">Remove</ion-button>
+                    </div>
+                  </div>
+                  </div>
+                         </div>
           </div>
           <br>
         </div>

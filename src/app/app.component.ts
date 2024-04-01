@@ -56,6 +56,8 @@ export class AppComponent {
 
     });
 
+    
+
   
    // this.initializeApp();
   }
@@ -70,15 +72,16 @@ export class AppComponent {
   // }
 
   showSideBar(data:any){
-    //  var islogedin = localStorage.getItem('isloggedin');
+     var islogedin:any = localStorage.getItem('isloggedin');
     if (data == "True")
     {
       this.islogedin = true
-    }
-    else{
+    }else if(islogedin == "True"){
+      this.islogedin = true
+     }
+     else{
       this.islogedin = false
-
-    }
+     }
   }
   watchLoading(){
     this.storageservice.watchLoading().subscribe(loading => {
@@ -119,3 +122,7 @@ export class AppComponent {
     this.router.navigate(['/login'],navigationExtras);
   }
 }
+function elseif() {
+  throw new Error('Function not implemented.');
+}
+

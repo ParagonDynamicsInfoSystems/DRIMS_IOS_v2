@@ -66,6 +66,13 @@ export class CompanyReturnItemAddPage implements OnInit {
     mask: [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/],
   };
 
+  
+  readonly prisemask: MaskitoOptions = {
+   
+    mask: [/\d/, /\d/, /\d/, /\d/, /\d/,  /\d/, /\d/, /\d/, /\d/,  /\d/, /\d/],
+  };
+
+
   readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
 

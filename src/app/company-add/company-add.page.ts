@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { CedService } from '../ced.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '../storage.service';
 import { CommonService } from '../common.service';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
@@ -53,6 +53,13 @@ swiper?:Swiper
   readonly zipmask: MaskitoOptions = {
     mask: [ /\d/, /\d/, /\d/, /\d/, /\d/],
   };
+  readonly persemask: MaskitoOptions = {
+    mask: [ /\d/, /\d/, /\d/],
+  };
+  readonly fiveintmask: MaskitoOptions = {
+    mask: [ /\d/, /\d/, /\d/, /\d/, /\d/],
+  };
+
 
   readonly cardMask: MaskitoOptions = {
    
@@ -63,6 +70,8 @@ swiper?:Swiper
   inpage2: boolean = false;
   inpage3: boolean = false;
   inpage4: boolean= false;
+  isremove: boolean =true;
+   ;
 
   constructor(private ced: CedService, private router: Router, public formbuilder: FormBuilder, public storageservice: StorageService,private renderer: Renderer2,
     private route: ActivatedRoute, public commonService: CommonService) { 
@@ -70,7 +79,6 @@ swiper?:Swiper
         invoiceDetails: this.formbuilder.array([]) // Initialize invoiceDetails as a FormArray
       });
     
-
     this.drimsFormOne = formbuilder.group({
       companyCode: [""],
       companyName: ["", [Validators.required]],
@@ -150,14 +158,18 @@ swiper?:Swiper
       destructionDisposalhazardous: ['', ''],
       invoiceDetails: this.formbuilder.array([
         this.formbuilder.group({
-          inventoryName: [''],
-          inventoryValue: [''],
+          inventoryName: ['',[Validators.required]],
+          inventoryValue: ['',[Validators.required]],
         })
       ]),
     });
     }
 
   ngOnInit() {
+    const invoiceDetailsArray = this.drimsFormTen.get('invoiceDetails') as FormArray;
+
+// Now you can access the controls property safely
+     let formName = invoiceDetailsArray.controls[0];
     
     this.commonService.getWholesalerWithAddressDropdownList().subscribe(
       (data) => {
@@ -179,8 +191,23 @@ swiper?:Swiper
       }
     });
 
+this.checkinvoiceDetailslength()
+    
+
   }
 
+  get itemsFormArray() {
+    return this.drimsFormTen.get('invoiceDetails') as FormArray;
+  }
+checkinvoiceDetailslength(){
+  var array:any = this.drimsFormTen.controls['invoiceDetails'] 
+  if(array.length == 1){
+    this.isremove = false
+  }else{
+    this.isremove = true
+
+  }
+}
 
   BindExistingValues() {
     var postData = {
@@ -328,13 +355,13 @@ swiper?:Swiper
   }
 
   moveToPrevious() {
-    this.isSubmitted = false;
+    this.inpage2 =true
+    this.isSubmitted = true;
 this.back()  }
   secondCardNextClick() {
     this.isSubmitted = true;
     if (!this.drimsFormTwo.valid) {
 
-      this.inpage2 = true
       this.storageservice.warningToast('Please provide all the required values!');
     }
     else {
@@ -572,6 +599,13 @@ this.next()
         this.IsReturnFeeEnable = false;
         this.IsDestructionEnable = false;
         this.isOthers = false;
+        this.drimsFormTen.controls['dppReturnFee'].clearValidators();
+        this.drimsFormTen.controls['oppBatch'].clearValidators();
+        this.drimsFormTen.controls['oppDirect'].clearValidators();
+        this.drimsFormTen.controls['cppBatch'].setValidators(Validators.compose([Validators.required, Validators.max(100), Validators.min(0), Validators.pattern(/^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,2})?)$/)]));
+        this.drimsFormTen.controls['cppBatch'].updateValueAndValidity();
+        this.drimsFormTen.controls['cppDirect'].setValidators(Validators.compose([Validators.required, Validators.max(100), Validators.min(0), Validators.pattern(/^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,2})?)$/)]));
+        this.drimsFormTen.controls['cppDirect'].updateValueAndValidity();
       }
       else if (options == 2) {
         this.isCppEnable = false;
@@ -579,6 +613,14 @@ this.next()
         this.IsReturnFeeEnable = false;
         this.IsDestructionEnable = false;
         this.isOthers = false;
+        this.drimsFormTen.controls['cppBatch'].clearValidators();
+        this.drimsFormTen.controls['cppDirect'].clearValidators();
+        this.drimsFormTen.controls['dppReturnFee'].clearValidators();
+
+        this.drimsFormTen.controls['oppBatch'].setValidators(Validators.compose([Validators.required, Validators.max(100), Validators.min(0), Validators.pattern(/^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,2})?)$/)]));
+        this.drimsFormTen.controls['oppBatch'].updateValueAndValidity();
+        this.drimsFormTen.controls['oppDirect'].setValidators(Validators.compose([Validators.required, Validators.max(100), Validators.min(0), Validators.pattern(/^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,2})?)$/)]));
+        this.drimsFormTen.controls['oppDirect'].updateValueAndValidity();
       }
       else if (options == 3) {
         this.isOppEnable = false;
@@ -586,6 +628,13 @@ this.next()
         this.IsReturnFeeEnable = true;
         this.IsDestructionEnable = false;
         this.isOthers = false;
+        this.drimsFormTen.controls['oppBatch'].clearValidators();
+        this.drimsFormTen.controls['oppDirect'].clearValidators();
+        this.drimsFormTen.controls['cppBatch'].clearValidators();
+        this.drimsFormTen.controls['cppDirect'].clearValidators();
+
+        this.drimsFormTen.controls['dppReturnFee'].setValidators(Validators.compose([Validators.required, Validators.max(100), Validators.min(0), Validators.pattern(/^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,2})?)$/)]));
+        this.drimsFormTen.controls['dppReturnFee'].updateValueAndValidity();
       }
       else if (e.detail.value == 4) {
         this.isCppEnable = false;
@@ -688,6 +737,11 @@ this.next()
   }
 
   addRow() {
+
+    if(this.drimsFormTen.controls['invoiceDetails'].valid){
+
+    
+    
     let invoiceDetailsArray = this.drimsFormTen.controls['invoiceDetails'] as FormArray;
     let arraylen = invoiceDetailsArray.length;
     let newUsergroup: FormGroup = this.formbuilder.group({
@@ -695,6 +749,8 @@ this.next()
       inventoryValue: [''],
     })
     invoiceDetailsArray.insert(arraylen, newUsergroup);
+    this.checkinvoiceDetailslength()
+  }
   }
 
   removeRow(index :any) {
