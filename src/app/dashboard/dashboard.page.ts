@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { StorageService } from '../storage.service';
 import { CedService } from '../ced.service';
 import { ConnectivityService } from '../connectivity.service';
@@ -18,7 +18,7 @@ export class DashboardPage implements OnInit {
   userName: any = '';
   searchInput: string = '';
   isonline :boolean = true;
-  constructor(private ced: CedService,private router: Router,private navCtrl: NavController,
+  constructor(private ced: CedService,private router: Router,private navCtrl: NavController,private loadingCtrl: LoadingController,
      public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController,private connectivity: ConnectivityService) {
     this.userName = localStorage.getItem('firstNameLastName');
 
@@ -170,13 +170,13 @@ export class DashboardPage implements OnInit {
  
  bindList() {
 
+   this.showLoading()
    
-   // this.storageservice.showLoadingIndicator();
    var getListURL = `api/auth/app/companyMaster/getList`;
    this.storageservice.getrequest(getListURL).subscribe(
      (res) => {
       var result :any = res
-
+this.dismissLoading()
        this.storageservice.hideLoadingIndicator();
        this.companyList = result['listCompanyListBean'];
      },
@@ -191,6 +191,24 @@ export class DashboardPage implements OnInit {
        }
      });
 
+}
+
+async showLoading() {
+  const loading = await this.loadingCtrl.create({
+    message: 'Loading...',
+    duration: 9000,
+  });
+
+  loading.present();
+
+  
+}
+
+async dismissLoading() {
+  const loading = await this.loadingCtrl.getTop();
+  if (loading) {
+    await loading.dismiss();
+  }
 }
 
 }

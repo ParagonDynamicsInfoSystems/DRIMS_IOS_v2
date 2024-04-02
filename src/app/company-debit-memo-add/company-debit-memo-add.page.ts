@@ -42,6 +42,11 @@ export class CompanyDebitMemoAddPage implements OnInit {
     var currentDt = new Date().toISOString();
     this.dateEnteredVal = this.datePipe.transform(currentDt, 'yyyy-MM-dd');
 
+    this.drimsFormOne.patchValue({
+     
+      'dateEntered': this.dateEnteredVal
+    });
+
     //Load existing values from the "Visit request" page.
     this.route.queryParams.subscribe(par => {
 var params :any = par

@@ -197,7 +197,8 @@
         <div class="button-content">
           <ion-label class="lable">Zip code</ion-label>
           <ion-item class="roundedInput">
-            <ion-input formControlName="zipCode" type="tel" maxlength="5" placeholder="Zip code">
+            <ion-input formControlName="zipCode" type="tel" maxlength="5" [maskito]="zipMask"
+            [maskitoElement]="maskPredicate"  placeholder="Zip code">
             </ion-input>
           </ion-item>
           <div style="padding-left: 32px;" *ngIf="drimsFormThree.controls['zipCode'].hasError('pattern')">

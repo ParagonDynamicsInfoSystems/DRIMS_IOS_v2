@@ -42,6 +42,11 @@ swiper?:Swiper
     mask:  [/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/] ,
   };
 
+  readonly zipMask: MaskitoOptions = {
+   
+    mask:  [/\d/, /\d/, /\d/, /\d/, /\d/] ,
+  };
+
   readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
 
   constructor(private router: Router, public formbuilder: FormBuilder, public storageservice: StorageService,

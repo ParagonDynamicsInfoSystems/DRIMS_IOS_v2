@@ -301,18 +301,18 @@ export class StorageService {
 
   //#region Functions
   async showLoadingIndicator() {
-    this.loadingCtrl.create({
-      message: 'Processing...',
-      spinner: 'bubbles',
-      cssClass: 'loadingIndicatorCustom'
-    }).then((loading) => {
-      loading.present();
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+      duration: 9000,
     });
+  
+    loading.present();
   }
   async hideLoadingIndicator() {
-    setTimeout(() => {
-      this.loadingCtrl.dismiss();
-    }, 1000);
+    const loading = await this.loadingCtrl.getTop();
+  if (loading) {
+    await loading.dismiss();
+  }
   }
   //#endregion
 

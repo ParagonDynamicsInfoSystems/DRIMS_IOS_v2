@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { CedService } from '../ced.service';
 import { StorageService } from '../storage.service';
 
@@ -17,7 +17,8 @@ export class CompanyDebitMemoListPage implements OnInit {
   searchInput: string = '';
   isonline: boolean;
   debitMemoListlocal: any;
-  constructor(private router: Router, public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController, private ced: CedService
+  constructor(private router: Router, public storageservice: StorageService, private route: ActivatedRoute,
+    private loadingCtrl: LoadingController, public alertController: AlertController, private ced: CedService
    ) {
     if(localStorage.getItem('onlineStatus') =="true"){
       this.isonline = true
@@ -184,11 +185,12 @@ export class CompanyDebitMemoListPage implements OnInit {
     const obj = {
       company: this.companyCode
     }  
-    this.storageservice.showLoadingIndicator();
+    this.showLoading()
     var getListURL = 'api/auth/app/debitMemo/getList';
     this.storageservice.postrequest(getListURL, obj).subscribe(
       (res) => {
         var result :any= res
+        this.dismissLoading() 
 
         this.storageservice.hideLoadingIndicator();
         this.debitMemoList = result['listDebitMemo'];
@@ -216,5 +218,21 @@ export class CompanyDebitMemoListPage implements OnInit {
     // });
   }
 }
+async showLoading() {
+  const loading = await this.loadingCtrl.create({
+    message: 'Loading...',
+    duration: 9000,
+  });
 
+  loading.present();
+
+  
+}
+
+async dismissLoading() {
+  const loading = await this.loadingCtrl.getTop();
+  if (loading) {
+    await loading.dismiss();
+  }
+}
 }

@@ -76,7 +76,7 @@
         <div class="button-content">
           <ion-label class="lable">Return Name <span style="color:red">*</span></ion-label>
           <ion-item lines="none" class="roundedInput">
-            <ion-input formControlName="returnName"  type="text" placeholder="Return name">
+            <ion-input formControlName="returnName" [counter]="true" maxlength="40"  type="text" placeholder="Return name">
             </ion-input>
           </ion-item>
           <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormOne.controls['returnName'].hasError('required')">
