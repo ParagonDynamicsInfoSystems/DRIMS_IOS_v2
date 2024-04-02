@@ -99,10 +99,10 @@
       <small style="color: #f70505;">Zip Code is required !</small>
     </div>
     <div style="padding-left: 32px;" *ngIf="drimsFormOne.controls['companyPincode'].hasError('pattern')">
-      <small style="color: hwb(34 0% 0%);">Zip Code must contain only numbers!</small>
+      <small style="color: #f70505;">Zip Code must contain only numbers!</small>
     </div>
     <div style="padding-left: 32px;" *ngIf="drimsFormOne.controls['companyPincode'].hasError('minlength') || drimsFormOne.controls['companyPincode'].hasError('maxlength')">
-      <small style="color: hwb(34 0% 0%);">Zip Code must be exactly 5 digits!</small>
+      <small style="color:#f70505;">Zip Code must be exactly 5 digits!</small>
     </div>
   </div>
 </ion-col>
@@ -148,7 +148,7 @@
             <small style="color: #f70505;">Phone no is required !</small>
           </div>
           <div style="padding-left: 32px;" *ngIf="drimsFormTwo.controls['companyPhone'].hasError('pattern')">
-            <small style="color: hwb(34 0% 0%);">Phone no required an 10-digit number !</small>
+            <small style="color: #f70505;">Phone no required an 10-digit number !</small>
           </div>
         </div>
         </ion-col>
@@ -164,7 +164,7 @@
             <small style="color: #f70505;">Fax is required !</small>
           </div>
           <div style="padding-left: 32px;" *ngIf="drimsFormTwo.controls['companyFax'].hasError('pattern')">
-            <small style="color: hwb(34 0% 0%);">Fax required an 10-digit number !</small>
+            <small style="color:#f70505;">Fax required an 10-digit number !</small>
           </div>
         </div>
         </ion-col>
@@ -199,7 +199,7 @@
             <small style="color: #f70505;">Please enter Email Id.</small>
           </div>
           <div style="padding-left: 32px;" *ngIf="drimsFormTwo.controls['companyEmailID'].hasError('pattern')">
-            <small style="color: hwb(34 0% 0%);">Please enter valid Email Id.</small>
+            <small style="color: #f70505;">Please enter valid Email Id.</small>
           </div>
         </div>
         </ion-col>
@@ -439,10 +439,8 @@
           <div class="button-content">
             <ion-label class="lable">Name <span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-row>
                 <ion-input formControlName="issuesCreditsName" type="text" placeholder="Name">
                 </ion-input>
-              </ion-row>
             </ion-item>
             <div style="padding-left: 32px;"
               *ngIf="isSubmitted && drimsFormFive.controls['issuesCreditsName'].hasError('required')  && inpage3">
@@ -476,10 +474,8 @@
         <div class="button-content">
           <ion-label class="lable">City <span style="color:red">*</span></ion-label>
           <ion-item class="roundedInput">
-            <ion-row>
               <ion-input formControlName="issuesCreditsCity" type="text" placeholder="City">
               </ion-input>
-            </ion-row>
           </ion-item>
           <div style="padding-left: 32px;"
             *ngIf="isSubmitted && drimsFormSeven.controls['issuesCreditsCity'].hasError('required') && inpage3">
@@ -694,11 +690,9 @@
           <div *ngIf="isOppEnable" class="button-content">
             <ion-label class="lable">Batch %<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-row>
                 <ion-input formControlName="oppBatch" type="number" inputmode="numeric" [maskito]="persemask"
                 [maskitoElement]="maskPredicate" placeholder="Batch">
                 </ion-input>
-              </ion-row>
             </ion-item>
             <div style="padding-left: 32px;" *ngIf="isSubmitted && drimsFormTen.controls['oppBatch'].hasError('required') && inpage4">
               <small style="color: #f70505;">Batch is required !</small>
@@ -732,11 +726,9 @@
           <div *ngIf="IsDestructionEnable" class="button-content">
             <ion-label class="lable">Narcotic Controlled Substances <span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-row>
                 <ion-input formControlName="destructionControlledsubstances" type="text"  [maskito]="fiveintmask"
                 [maskitoElement]="maskPredicate" placeholder="Return fee">
                 </ion-input>
-              </ion-row>
             </ion-item>
             <div style="padding-left: 32px;"
               *ngIf="isSubmitted && drimsFormTen.controls['destructionControlledsubstances'].hasError('required') && inpage4">
@@ -746,11 +738,9 @@
           <div *ngIf="IsDestructionEnable" class="button-content">
             <ion-label class="lable">Rx Destruction <span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-row>
-                <ion-input formControlName="destructionDisposerx" type="text" [maskito]="fiveintmask"
+                <ion-input formControlName="destructionDisposerx" type="text"  [maskito]="fiveintmask"
                 [maskitoElement]="maskPredicate" placeholder="Return fee">
                 </ion-input>
-              </ion-row>
             </ion-item>
             <div style="padding-left: 32px;"
               *ngIf="isSubmitted && drimsFormTen.controls['destructionDisposerx'].hasError('required') && inpage4">
@@ -760,11 +750,9 @@
           <div *ngIf="IsDestructionEnable" class="button-content">
             <ion-label class="lable">Hazardous waste<span style="color:red">*</span></ion-label>
             <ion-item class="roundedInput">
-              <ion-row>
                 <ion-input formControlName="destructionDisposalhazardous" type="text" [maskito]="fiveintmask"
                 [maskitoElement]="maskPredicate" placeholder="Return fee">
                 </ion-input>
-              </ion-row>
             </ion-item>
             <div style="padding-left: 32px;"
               *ngIf="isSubmitted && drimsFormTen.controls['destructionDisposalhazardous'].hasError('required') && inpage4">

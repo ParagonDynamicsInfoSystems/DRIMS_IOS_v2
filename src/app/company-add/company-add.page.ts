@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { CedService } from '../ced.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import {FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '../storage.service';
 import { CommonService } from '../common.service';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
@@ -158,8 +158,8 @@ swiper?:Swiper
       destructionDisposalhazardous: ['', ''],
       invoiceDetails: this.formbuilder.array([
         this.formbuilder.group({
-          inventoryName: ['',[Validators.required]],
-          inventoryValue: ['',[Validators.required]],
+          inventoryName: ['',this.validateInventoryNameWhenInvoiceOptionsIs5.bind(this)],
+          inventoryValue: ['',this.validateInventoryValueWhenInvoiceOptionsIs5.bind(this)],
         })
       ]),
     });
@@ -353,7 +353,25 @@ checkinvoiceDetailslength(){
       this.next()
     }
   }
-
+  validateInventoryNameWhenInvoiceOptionsIs5(control: FormControl) {
+    const invoiceOptionsControl = this.drimsFormTen.get('invoiceOptions');
+    const invoiceOptionsValue = invoiceOptionsControl?.value;
+    if (invoiceOptionsValue === 5) {
+      return Validators.required(control);
+    } else {
+      return null;
+    }
+  }
+  
+  validateInventoryValueWhenInvoiceOptionsIs5(control: FormControl) {
+    const invoiceOptionsControl = this.drimsFormTen.get('invoiceOptions');
+    const invoiceOptionsValue = invoiceOptionsControl?.value;
+    if (invoiceOptionsValue === 5) {
+      return Validators.required(control);
+    } else {
+      return null;
+    }
+  }
   moveToPrevious() {
     this.inpage2 =true
     this.isSubmitted = true;
@@ -649,9 +667,16 @@ this.next()
         this.IsReturnFeeEnable = false;
         this.IsDestructionEnable = false;
         this.isOthers = true;
+
+        
+        
       }
+
+
     }
   }
+
+  
   wholesalerfetchDetailsById(whoCode: any): void {
     if (whoCode != undefined && whoCode != null && whoCode != "") {
       this.commonService.getWholesalerWithAddressDropdownList().subscribe(
