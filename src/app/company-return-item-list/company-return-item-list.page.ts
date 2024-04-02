@@ -295,7 +295,7 @@ console.log(data.id)
    
         addOrUpdateURL = "api/auth/app/returnMemoItems/save";
       
-      // this.storageservice.showLoadingIndicator();
+       this.storageservice.showLoadingIndicator();
       this.storageservice.postrequest(addOrUpdateURL, data).subscribe((res) => {
                           var result :any = res
 

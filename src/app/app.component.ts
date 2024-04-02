@@ -76,10 +76,7 @@ export class AppComponent {
     if (data == "True")
     {
       this.islogedin = true
-    }else if(islogedin == "True"){
-      this.islogedin = true
-     }
-     else{
+    }else{
       this.islogedin = false
      }
   }
