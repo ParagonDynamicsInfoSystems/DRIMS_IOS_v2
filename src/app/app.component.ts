@@ -119,7 +119,5 @@ export class AppComponent {
     this.router.navigate(['/login'],navigationExtras);
   }
 }
-function elseif() {
-  throw new Error('Function not implemented.');
-}
+
 

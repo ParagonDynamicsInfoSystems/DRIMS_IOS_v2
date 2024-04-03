@@ -58,8 +58,10 @@ export class LoginPage implements OnInit {
       "password": password_get,
       "recaptchaResponse": captchaValue,    
     }
-
+this.storageservice.showLoadingIndicator()
     this.storageservice.postrequest(logInServiceUrl, postData).subscribe(res => {
+      this.storageservice.hideLoadingIndicator()
+
       var result:any = res
       this.response = result;
       this.hideLoadingIndicator();
