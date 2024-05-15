@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './auth/auth-interceptor';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { CommonModule, DatePipe } from '@angular/common';
+import { SQLite } from '@ionic-native/sqlite/ngx';
 
 
 @NgModule({
@@ -34,7 +35,9 @@ import { CommonModule, DatePipe } from '@angular/common';
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     NativeStorage,
 
-  DatePipe],
+  DatePipe,
+  SQLite,
+],
   bootstrap: [AppComponent],
 
   

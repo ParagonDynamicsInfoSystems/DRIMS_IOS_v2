@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { StorageService } from '../storage.service';
 import { LoadingController, NavController } from '@ionic/angular';
 import { CedService } from '../ced.service';
+import { DatabaseService } from '../database.service';
 declare var grecaptcha: any;
 
 
@@ -24,6 +25,7 @@ export class LoginPage implements OnInit {
   constructor(public formbuilder: FormBuilder, private navCtrl: NavController,
     private router: Router, public storageservice: StorageService,
     private loadingCtrl: LoadingController, 
+    private datastorage : DatabaseService,
     private route: ActivatedRoute, private ced: CedService) {
       this.loginform = formbuilder.group({
         empId: ['', Validators.compose([Validators.maxLength(50), Validators.required])],
@@ -85,6 +87,9 @@ this.storageservice.showLoadingIndicator()
         //   this.router.navigate(["/dashboard"]);
         //   });
         this.storageservice.setData('True');
+
+        this.datastorage.createDB()
+
 
         this.navCtrl.navigateForward('/dashboard');
 

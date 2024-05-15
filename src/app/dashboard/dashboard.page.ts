@@ -5,6 +5,7 @@ import { StorageService } from '../storage.service';
 import { CedService } from '../ced.service';
 import { ConnectivityService } from '../connectivity.service';
 import { Location } from '@angular/common';
+import { DatabaseService } from '../database.service';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class DashboardPage implements OnInit {
   searchInput: string = '';
   isonline :boolean = true;
   constructor(private ced: CedService,private router: Router,private navCtrl: NavController,private loadingCtrl: LoadingController,
-     public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController,private connectivity: ConnectivityService) {
+     public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController,private connectivity: ConnectivityService,public dbService: DatabaseService) {
     this.userName = localStorage.getItem('firstNameLastName');
 
    }
@@ -37,7 +38,7 @@ export class DashboardPage implements OnInit {
 
    this.bindList();
 
-//    this.dbService.createTables()
+  //  this.dbService.createDB()
 //    this.dbService.insertUser("karthi","karthi@adfa.com")
 //    const result = await this.dbService.executeQuery("select username from users")
 // console.log("resultKarthi :" +result)

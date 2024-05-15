@@ -251,7 +251,7 @@ export class StorageService {
     });
   }
 
-  //Added by Gokul for To create an alert with two buttons, one labeled "Override Policy & Save" and the other labeled "Ok".
+  //Added  To create an alert with two buttons, one labeled "Override Policy & Save" and the other labeled "Ok".
  async showConfirmationAlert(headerText: string, messageText: string, overrideText: string, okText: string): Promise<boolean> {
   return new Promise<boolean>(async (resolve) => {
     const alert = await this.alertController.create({
