@@ -17,8 +17,8 @@ export class StorageService {
   //LocalURL
   // mobileserverurl: string = "http://localhost:8081/";
   // baseURL: string = "http://localhost:8081/";
-  // mobileserverurl: string = "http://192.168.5.155:8080/";
-  // baseURL: string = "http://192.168.5.155:8080/";
+  // mobileserverurl: string = "http:// 192.168.208.37:8081/";
+  // baseURL: string = "http:// 192.168.208.37:8081/";
   //ServerURL
   mobileserverurl: string = "http://65.108.201.61:8090/drug/";
   baseURL: string = "http://65.108.201.61:8090/";

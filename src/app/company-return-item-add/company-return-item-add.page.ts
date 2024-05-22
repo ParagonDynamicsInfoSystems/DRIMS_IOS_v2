@@ -8,6 +8,8 @@ import { CommonService } from '../common.service';
 import { ConnectivityService } from '../connectivity.service';
 import { StorageService } from '../storage.service';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
+import { DatabaseService } from '../database.service';
+import { IsReturnableOverridepolicyService } from './is-returnable-overridepolicy.service';
 
 @Component({
   selector: 'app-company-return-item-add',
@@ -78,6 +80,8 @@ export class CompanyReturnItemAddPage implements OnInit {
 
   constructor(private ced: CedService, private router: Router, public formbuilder: FormBuilder, public storageservice: StorageService,
     private route: ActivatedRoute, public commonService: CommonService, public el: ElementRef,private connectivity: ConnectivityService
+    ,private datastorage : DatabaseService,
+    private isReturnableOverridepolicyService: IsReturnableOverridepolicyService,
    //, private barcodeScanner: BarcodeScanner,
     ) {
 
@@ -123,10 +127,10 @@ export class CompanyReturnItemAddPage implements OnInit {
   //#region OnInit
   ngOnInit() {
 
-    if(localStorage.getItem('onlineStatus') =="true"){
+    if(localStorage.getItem('networkstatus') !="offline"){
       this.isonline = true
     }else{
-      this.isonline = true
+      this.isonline = false
     }
    // this.connectivity.showNetworkStatusAlert();
     
@@ -140,20 +144,28 @@ export class CompanyReturnItemAddPage implements OnInit {
       'overridePolicyname': '',
       'overridePolicy': '',
     });
-    this.commonService.getManufacturerList().subscribe(
-      (response) => {
-        this.manufacturerList = response;
-      });
+
 if(this.isonline){
+  this.commonService.getManufacturerList().subscribe(
+    (response) => {
+      this.manufacturerList = response;
+    });
+
     this.commonService.getReturnReasonDropdownList().subscribe(
       (data) => {
         this.returnReasonList = data;
       });
     }else{
-      // this.datastorage.getreasomlist().then((data)=>{
-      //   this.returnReasonList = data;
+      this.datastorage.getManufacturerList().then((data)=>{
+        this.manufacturerList = data;
+        console.log(data)
 
-      // })
+      })
+
+      this.datastorage.getreasomlist().then((data)=>{
+        this.returnReasonList = data;
+
+      })
     }
     this.commonService.getDosageDropdownList().subscribe(
       (response) => {
@@ -166,6 +178,8 @@ if(this.isonline){
       if (params && params != null) {
         if (params.returnMemoNo != null) {
           this.returnMemoNo = this.ced.decryptAesformString(decodeURIComponent(params.returnMemoNo), this.storageservice.secretKey);
+
+          if(this.isonline){
           var getReturnMemoNamebyIdURL = `api/auth/app/returnMemoItems/fetchreturnMemoNamebyId?returnMemoNo=${this.returnMemoNo}`;
           this.storageservice.getrequest(getReturnMemoNamebyIdURL).subscribe(
             (result: any) => {
@@ -177,6 +191,17 @@ if(this.isonline){
                 'companyCode': this.companyCode,
               })
             });
+          }else{
+            this.datastorage.fetchreturnMemoNamebyId(this.returnMemoNo).then((result :any)=>{
+              this.returnItemName = result[0]?.text;
+              this.companyCode = result[0]?.value;
+              this.docForm.patchValue({
+                'returnMemoNo': this.returnMemoNo,
+                'return': this.returnItemName,
+                'companyCode': this.companyCode,
+              })
+            })
+          }
         }
 
         if (params.returnMemoItemsCode != null) {
@@ -194,6 +219,7 @@ if(this.isonline){
       }
     });
     this.nextEntryNumber();
+    
   }
   //#endregion
 
@@ -319,108 +345,108 @@ if(this.isonline){
 
 //Check is Returnable From Local SQLite Starts 
 async checkDrugIsReturnableFromLocal(valueForSubmitOrUpdate: any) {
-  // this.docForm.patchValue({
-  //   'overridePolicyname': '',
-  //   'overridePolicy': '',i8yvgbn 
-  //   'returnable': false,
-  // })
-  // this.storageservice.showLoadingIndicator();
-  // await this.isReturnableOverridepolicyService.checkIsReturnableFromLocal(this.docForm.controls['ndcupcCode'].value, this.docForm.controls['fullParticalProduct'].value, this.docForm.controls['expDate'].value, this.docForm.controls['quantity'].value)
-  // .then(async (result) => {
-  //   this.storageservice.hideLoadingIndicator();
-  //   if (result['success']) {
-  //     if (this.docForm.value.repackagedProduct) {
-  //       this.docForm.patchValue({
-  //         'overridePolicyname': this.docForm.value.overridePolicyname + result['overridepolicyText'] + 'Repackaged products are non-returnable. <br>',
-  //         'overridePolicy': this.docForm.value.overridePolicy + result['overridepolicyNumber'] + '1,',
-  //       })
-  //     } else {
-  //       this.docForm.patchValue({
-  //         'overridePolicyname': this.docForm.value.overridePolicyname + result['overridepolicyText'],
-  //         'overridePolicy': this.docForm.value.overridePolicy + result['overridepolicyNumber'],
-  //       })
-  //     }
+  this.docForm.patchValue({
+    'overridePolicyname': '',
+    'overridePolicy': '', 
+    'returnable': false,
+  })
+  this.storageservice.showLoadingIndicator();
+  await this.isReturnableOverridepolicyService.checkIsReturnableFromLocal(this.docForm.controls['ndcupcCode'].value, this.docForm.controls['fullParticalProduct'].value, this.docForm.controls['expDate'].value, this.docForm.controls['quantity'].value)
+  .then(async (result:any) => {
+    this.storageservice.hideLoadingIndicator();
+    if (result['success']) {
+      if (this.docForm.value.repackagedProduct) {
+        this.docForm.patchValue({
+          'overridePolicyname': this.docForm.value.overridePolicyname + result['overridepolicyText'] + 'Repackaged products are non-returnable. <br>',
+          'overridePolicy': this.docForm.value.overridePolicy + result['overridepolicyNumber'] + '1,',
+        })
+      } else {
+        this.docForm.patchValue({
+          'overridePolicyname': this.docForm.value.overridePolicyname + result['overridepolicyText'],
+          'overridePolicy': this.docForm.value.overridePolicy + result['overridepolicyNumber'],
+        })
+      }
 
 
-  //     if (result['overridepolicyText'] == 'YES' && this.docForm.value.controlNo != '2' && !this.docForm.value.repackagedProduct) {
-  //       this.docForm.patchValue({
-  //         'returnable': true,
-  //       })
-  //       if (valueForSubmitOrUpdate == 'onSubmit') {
-  //         this.submitFinalClick();
-  //       } else {
-  //         this.submitFinalClick();
-  //       }
-  //     } else if (result['overridepolicyText'] == 'YES' && this.docForm.value.controlNo == '2' && !this.docForm.value.repackagedProduct) {
-  //       const message = `Item is Returnable <br> Control 2 products require a 222 Form in order to be returned`;
-  //       const userClickedOK = await this.storageservice.GeneralConfirmationAlertOK('Confirmation', message);
-  //       if (userClickedOK) {
-  //         // User clicked "OK"
-  //         this.docForm.patchValue({
-  //           'returnable': true,
-  //         })
-  //         if (valueForSubmitOrUpdate == 'onSubmit') {
-  //           this.submitFinalClick();
-  //         } else {
-  //           this.submitFinalClick();
-  //         }
-  //       }
-  //     } else if (this.docForm.value.overridePolicy != undefined && this.docForm.value.overridePolicy != null && this.docForm.value.overridePolicy != "") {
-  //       //TO REPLACE 'YES' STRING 
-  //       var re = /YES/gi;
-  //       this.docForm.patchValue({
-  //         'overridePolicyname': this.docForm.value.overridePolicyname.replace(re, ""),
-  //       })
+      if (result['overridepolicyText'] == 'YES' && this.docForm.value.controlNo != '2' && !this.docForm.value.repackagedProduct) {
+        this.docForm.patchValue({
+          'returnable': true,
+        })
+        if (valueForSubmitOrUpdate == 'onSubmit') {
+          this.submitFinalClick();
+        } else {
+          this.submitFinalClick();
+        }
+      } else if (result['overridepolicyText'] == 'YES' && this.docForm.value.controlNo == '2' && !this.docForm.value.repackagedProduct) {
+        const message = `Item is Returnable <br> Control 2 products require a 222 Form in order to be returned`;
+        const userClickedOK = await this.storageservice.GeneralConfirmationAlertOK('Confirmation', message);
+        if (userClickedOK) {
+          // User clicked "OK"
+          this.docForm.patchValue({
+            'returnable': true,
+          })
+          if (valueForSubmitOrUpdate == 'onSubmit') {
+            this.submitFinalClick();
+          } else {
+            this.submitFinalClick();
+          }
+        }
+      } else if (this.docForm.value.overridePolicy != undefined && this.docForm.value.overridePolicy != null && this.docForm.value.overridePolicy != "") {
+        //TO REPLACE 'YES' STRING 
+        var re = /YES/gi;
+        this.docForm.patchValue({
+          'overridePolicyname': this.docForm.value.overridePolicyname.replace(re, ""),
+        })
 
-  //       let isFutureDatedProduct = false;
-  //       if (this.docForm.value.overridePolicy === '2,') {
-  //         isFutureDatedProduct = true;
-  //       } else {
-  //         isFutureDatedProduct = false;
-  //       }
+        let isFutureDatedProduct = false;
+        if (this.docForm.value.overridePolicy === '2,') {
+          isFutureDatedProduct = true;
+        } else {
+          isFutureDatedProduct = false;
+        }
 
-  //       var headerText = "";
-  //       if (isFutureDatedProduct) {
-  //         headerText = "Future Dated Item";
-  //       } else {
-  //         headerText = "Non-Returnable Item";
-  //       }
-  //       const userConfirmed = await this.storageservice.showConfirmationAlert(headerText, this.docForm.value.overridePolicyname, 'Override Policy & Save', 'Ok');
-  //       if (this.docForm.value.overridePolicy === '2,') {
-  //         if (userConfirmed) {
-  //           // User clicked "Override Policy & Save"
-  //           this.docForm.patchValue({
-  //             'returnable': true,
-  //             'isFutureDated': false
-  //           })
-  //         } else {
-  //           this.docForm.patchValue({
-  //             'returnable': false,
-  //             'isFutureDated': true
-  //           })
-  //         }
-  //       } else {
-  //         this.docForm.patchValue({
-  //           'returnable': userConfirmed
-  //         })
-  //       }
+        var headerText = "";
+        if (isFutureDatedProduct) {
+          headerText = "Future Dated Item";
+        } else {
+          headerText = "Non-Returnable Item";
+        }
+        const userConfirmed = await this.storageservice.showConfirmationAlert(headerText, this.docForm.value.overridePolicyname, 'Override Policy & Save', 'Ok');
+        if (this.docForm.value.overridePolicy === '2,') {
+          if (userConfirmed) {
+            // User clicked "Override Policy & Save"
+            this.docForm.patchValue({
+              'returnable': true,
+              'isFutureDated': false
+            })
+          } else {
+            this.docForm.patchValue({
+              'returnable': false,
+              'isFutureDated': true
+            })
+          }
+        } else {
+          this.docForm.patchValue({
+            'returnable': userConfirmed
+          })
+        }
 
-  //       if (valueForSubmitOrUpdate == 'onSubmit') {
-  //         this.submitFinalClick();
-  //       } else {
-  //         this.submitFinalClick();
-  //       }
-  //     }
-  //   }
-  //   else if (!result['success']) {
-  //     this.storageservice.warningToast(result['errorMessage']);
-  //   }
-  // })
-  // .catch((error) => {
-  //   this.storageservice.hideLoadingIndicator();
-  //   console.error('Error occurred:', error.message);
-  //   this.storageservice.warningToast(error.message);
-  // });
+        if (valueForSubmitOrUpdate == 'onSubmit') {
+          this.submitFinalClick();
+        } else {
+          this.submitFinalClick();
+        }
+      }
+    }
+    else if (!result['success']) {
+      this.storageservice.warningToast(result.errorMessage);
+    }
+  })
+  .catch((error) => {
+    this.storageservice.hideLoadingIndicator();
+    console.error('Error occurred:', error.message);
+    this.storageservice.warningToast(error.message);
+  });
 } 
 //Check is Returnable From Local SQLite End 
 
@@ -586,16 +612,16 @@ async checkDrugIsReturnableFromLocal(valueForSubmitOrUpdate: any) {
       });
 
     }else{
-      // this.datastorage.createrReturn_memo_itemsLocalTable()
+      this.datastorage.createrReturn_memo_itemsLocalTable()
+console.log(this.docForm.value)
+      this.datastorage.insertReturnLocalDatabase( this.docForm.value).then((data)=>{
+        this.storageservice.successToast('saved successfully in local.');
+        this.navigateBackWithParams();
 
-      // this.datastorage.insertReturnLocalDatabase( this.docForm.value).then((data)=>{
-      //   this.storageservice.successToast('saved successfully in local.');
-      //   this.navigateBackWithParams();
+      }
 
-      // }
-
-      // )
-      // .catch()
+      )
+      .catch()
     }
   }
 
@@ -694,70 +720,70 @@ if(this.isonline){
     }
 
   }else{
-//     if (this.docForm.controls['ndcupcCode'].value != undefined && this.docForm.controls['ndcupcCode'].value != null && this.docForm.controls.ndcupcCode.value != "") 
-//     {
-//       this.datastorage.validate(this.docForm.value.ndcupcCode).then((res) => {
-//         if (res) {
-//         this.docForm.controls['ndcupcCode'].setErrors(null);
+    if (this.docForm.controls['ndcupcCode'].value != undefined && this.docForm.controls['ndcupcCode'].value != null && this.docForm.controls['ndcupcCode'].value != "") 
+    {
+      this.datastorage.validate(this.docForm.value.ndcupcCode).then((res) => {
+        if (res) {
+        this.docForm.controls['ndcupcCode'].setErrors(null);
 
-//         this.datastorage.feachdtl(this.docForm.value.ndcupcCode).then((res) => {
-// console.log("res"+JSON.stringify(res))
-//           var data = res;
-//             this.docForm.patchValue({
-//               'ndcupc': data["ndcupc"],
-//               'description': data["description"],
-//               'unitPackage': data["unitPerPackage"],
-//               'controlNo': data["control"],
-//               'packageSize': data["packageSize"],
-//               'strength': data["strength"],
-//               'dosage': data["dosage"],
-//               'estimatedValue': data["estimatedValue"],
-//               'manufacturerBy': data["manufacturerBy"],
-//               'returnTo': data["linkToReturn"],
-//               'price': data["price"],
-//               'dosageDescription': data["dosageDescription"]
-//             });
+        this.datastorage.feachdtl(this.docForm.value.ndcupcCode).then((res) => {
+console.log("res"+JSON.stringify(res))
+          var data :any= res;
+            this.docForm.patchValue({
+              'ndcupc': data["ndcupc"],
+              'description': data["description"],
+              'unitPackage': data["unitPerPackage"],
+              'controlNo': data["control"],
+              'packageSize': data["packageSize"],
+              'strength': data["strength"],
+              'dosage': data["dosage"],
+              'estimatedValue': data["estimatedValue"],
+              'manufacturerBy': data["manufacturerBy"],
+              'returnTo': data["linkToReturn"],
+              'price': data["myPrice"],
+              'dosageDescription': data["dosageDescription"]
+            });
 
-//             if (!this.getBoolean(data["hazardous"])) {
-//               if (data["control"] == 3 || data["control"] == 4 || data["control"] == 5) {
-//                 this.greenNDCUPC = true;
-//                 this.defaultNDCUPC = false;
-//                 this.redNDCUPC = false;
-//                 this.blueNDCUPC = false;
-//               } else if (data["control"] == 2) {
-//                 this.redNDCUPC = true;
-//                 this.defaultNDCUPC = false;
-//                 this.greenNDCUPC = false;
-//                 this.blueNDCUPC = false;
-//               } else {
-//                 this.defaultNDCUPC = true;
-//                 this.greenNDCUPC = false;
-//                 this.redNDCUPC = false;
-//                 this.blueNDCUPC = false;
+            if (!this.getBoolean(data["hazardous"])) {
+              if (data["control"] == 3 || data["control"] == 4 || data["control"] == 5) {
+                this.greenNDCUPC = true;
+                this.defaultNDCUPC = false;
+                this.redNDCUPC = false;
+                this.blueNDCUPC = false;
+              } else if (data["control"] == 2) {
+                this.redNDCUPC = true;
+                this.defaultNDCUPC = false;
+                this.greenNDCUPC = false;
+                this.blueNDCUPC = false;
+              } else {
+                this.defaultNDCUPC = true;
+                this.greenNDCUPC = false;
+                this.redNDCUPC = false;
+                this.blueNDCUPC = false;
 
-//               }
-//             } else {
-//               this.blueNDCUPC = true;
-//               this.defaultNDCUPC = false;
-//               this.greenNDCUPC = false;
-//               this.redNDCUPC = false;
-//             }
+              }
+            } else {
+              this.blueNDCUPC = true;
+              this.defaultNDCUPC = false;
+              this.greenNDCUPC = false;
+              this.redNDCUPC = false;
+            }
 
-//         })
+        })
 
-//         }
-//         else {
-//           this.docForm.controls['ndcupcCode'].setErrors({ ndcUpcCodeValid: true });
-//         }
+        }
+        else {
+          this.docForm.controls['ndcupcCode'].setErrors({ ndcUpcCodeValid: true });
+        }
 
-//       })
-//       .catch((error) => {
-//         console.error("Error fetching companies:", error);
-//       });
+      })
+      .catch((error) => {
+        console.error("Error fetching companies:", error);
+      });
 
-//     }else{
+    }else{
 
-//     }
+    }
 
     
   }
@@ -833,3 +859,4 @@ if(this.isonline){
   }
 
 }
+

@@ -13,26 +13,30 @@ import { DatabaseService } from '../database.service';
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class DashboardPage implements OnInit  {
 
   companyList: any;
   userName: any = '';
   searchInput: string = '';
   isonline :boolean = true;
   constructor(private ced: CedService,private router: Router,private navCtrl: NavController,private loadingCtrl: LoadingController,
-     public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController,private connectivity: ConnectivityService,public dbService: DatabaseService) {
+     public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController,private connectivity: ConnectivityService,private datastorage : DatabaseService,) {
     this.userName = localStorage.getItem('firstNameLastName');
 
    }
 
+
+
+
    async ngOnInit() {
     // window.location.reload();
-    localStorage.setItem('onlineStatus', "true");
+    // localStorage.setItem('onlineStatus', "true");
+    this.datastorage.createDB()
 
-    if(localStorage.getItem('onlineStatus') =="true"){
+    if(localStorage.getItem('networkstatus') =="offline"){
      this.isonline = true
    }else{
-     this.isonline = true
+     this.isonline = false
    }
   //  this.connectivity.showNetworkStatusAlert();
 
@@ -186,14 +190,31 @@ this.dismissLoading()
        
        if (error.name === 'HttpErrorResponse') {
          this.storageservice.warningToast('Internet connection problem, Please check your internet.');
+         localStorage.setItem("networkstatus","offline")
+         this.getlocallist()
+
+
          this.storageservice.GeneralAlert('HttpErrorResponse', 'Internet connection problem, Please check your internet.');
+
        } else {
          this.storageservice.warningToast('Error: ' + error.message);
        }
      });
 
 }
-
+getlocallist(){
+  console.log("listservice working")
+  this.datastorage.createDB().then(() => {
+    this.datastorage.getCompanylist()
+    .then((companies) => {
+      console.log("Companies:", companies);
+      this.companyList = companies
+    })
+    .catch((error) => {
+      console.error("Error fetching companies:", error);
+    });  });
+ 
+}
 async showLoading() {
   const loading = await this.loadingCtrl.create({
     message: 'Loading...',

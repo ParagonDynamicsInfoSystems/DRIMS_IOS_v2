@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { CedService } from '../ced.service';
 import { StorageService } from '../storage.service';
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-company-debit-memo-list',
@@ -18,12 +19,13 @@ export class CompanyDebitMemoListPage implements OnInit {
   isonline: boolean;
   debitMemoListlocal: any;
   constructor(private router: Router, public storageservice: StorageService, private route: ActivatedRoute,
-    private loadingCtrl: LoadingController, public alertController: AlertController, private ced: CedService
+    private loadingCtrl: LoadingController, public alertController: AlertController, private ced: CedService,
+    private datastorage : DatabaseService,
    ) {
-    if(localStorage.getItem('onlineStatus') =="true"){
+    if(localStorage.getItem('networkstatus') !="offline"){
       this.isonline = true
     }else{
-      this.isonline = true
+      this.isonline = false
     }
     //Load existing values from the "Visit request" page.
     this.route.queryParams.subscribe(par => {
@@ -52,10 +54,10 @@ export class CompanyDebitMemoListPage implements OnInit {
 
   ngOnInit() {
 
-    if(localStorage.getItem('onlineStatus') =="true"){
+    if(localStorage.getItem('networkstatus') != "offline"){
       this.isonline = true
     }else{
-      this.isonline = true
+      this.isonline = false
     }
     this.bindList();
   }
@@ -208,14 +210,14 @@ export class CompanyDebitMemoListPage implements OnInit {
         }
       });
   } else{
-    // this.datastorage.getMemolist(this.companyCode)
-    // .then((Memo) => {
-    //   console.log("Companies:", Memo);
-    //   this.debitMemoList = Memo
-    // })
-    // .catch((error) => {
-    //   console.error("Error fetching companies:", error);
-    // });
+    this.datastorage.getMemolist(this.companyCode)
+    .then((Memo) => {
+      console.log("Companies:", Memo);
+      this.debitMemoList = Memo
+    })
+    .catch((error) => {
+      console.error("Error fetching companies:", error);
+    });
   }
 }
 async showLoading() {

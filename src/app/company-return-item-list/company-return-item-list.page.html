@@ -40,7 +40,7 @@
   <ion-card *ngFor='let element of debitMemoListlocal' class="list-card">
     <ion-card-content>
       <ion-row>
-        <ion-col size="6">
+        <ion-col size="4">
       <ion-item style="--ion-item-background: transparent;" lines="none">
          <ion-label>
           <h2 *ngIf="element.ndcupcCode != null && element.ndcupcCode != ''" class="ion-text-wrap"
@@ -57,32 +57,46 @@
           <p *ngIf="element.expDate != null && element.expDate != ''" class="ion-text-wrap">Expiry date:
             <span class="list-values-ion">{{element.expDate}}</span>
           </p>
+          <p *ngIf="element.returnTo != null && element.returnTo != ''" class="ion-text-wrap">Return To:
+            <span class="list-values-ion">{{element.returnTo}}</span>
+          </p>
           <br />
         </ion-label>
       </ion-item>
     </ion-col>
-    <ion-col size="6">
+    <ion-col size="8">
       <ion-item style="--ion-item-background: transparent;" lines="none">
         <ion-label>
-         <h2 *ngIf="element.ndcupcCode != null && element.ndcupcCode != ''" class="ion-text-wrap"
-           class="list-values-ion">{{element.ndcupcCode}}
+         <h2 *ngIf="element.ndcupcCode != null && element.description != ''" class="ion-text-wrap"
+           class="list-values-ion">Description: <span
+           class="list-values-ion">{{element.description}}</span>
          </h2>
-         <p *ngIf="element.lotNo != null && element.lotNo != ''" class="ion-text-wrap">Lot no.: <span
-             class="list-values-ion">{{element.lotNo}}</span></p>
-         <p *ngIf="element.quantity != null && element.quantity != ''" class="ion-text-wrap">Quantity:
-           <span class="list-values-ion">{{element.quantity}}</span>
+         <p *ngIf="element.fullParticalProduct != null && element.fullParticalProduct != ''" class="ion-text-wrap">Partical Pkg.: <span
+             class="list-values-ion">{{element.fullParticalProductloc}}</span></p>
+         <p *ngIf="element.estimateval != null && element.estimateval != ''" class="ion-text-wrap">Est. value:
+           <span class="list-values-ion">{{element.estimateval}}</span>
          </p>
-         <p *ngIf="element.price != null && element.price != ''" class="ion-text-wrap">Price:
-           <span class="list-values-ion">{{element.price}}</span>
+         <p *ngIf="element.manufacturerBy != null && element.manufacturerBy != ''" class="ion-text-wrap">Manufacturer:
+           <span class="list-values-ion">{{element.manufacturerBy}}</span>
          </p>
-         <p *ngIf="element.expDate != null && element.expDate != ''" class="ion-text-wrap">Expiry date:
-           <span class="list-values-ion">{{element.expDate}}</span>
+         <p *ngIf="element.returnable != null && element.returnable != ''" class="ion-text-wrap">Return Type:
+           <span class="list-values-ion">{{element.returnableloc}}</span>
          </p>
          <br />
        </ion-label>
      </ion-item>
     </ion-col>
     </ion-row>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <!-- <ion-button class="verifyDeclineBtn" size="small"
+          (click)="edit_click(element.returnMemoNo, element.returnMemoItemsCode)">EDIT
+          <ion-icon slot="start" name="create-outline"></ion-icon>
+        </ion-button> -->
+        <ion-button class="verifyDeclineBtn" size="small" color="danger" (click)="deletelocal(element.id)">
+          DELETE
+          <ion-icon slot="start" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-fab>
     </ion-card-content>
   </ion-card>
 

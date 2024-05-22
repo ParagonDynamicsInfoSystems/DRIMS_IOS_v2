@@ -46,7 +46,7 @@ export class AppComponent {
     }
   ];
   showSplash = true;
-  islogedin: boolean = false;
+  islogedin: boolean = true;
 
   constructor(private router: Router, public storageservice: StorageService, public nativeStorage: NativeStorage, private platform: Platform) { 
    var data 
@@ -72,7 +72,7 @@ export class AppComponent {
   // }
 
   showSideBar(data:any){
-     var islogedin:any = localStorage.getItem('isloggedin');
+     var islogedin:any = localStorage.getItem('showsidebar');
     if (data == "True")
     {
       this.islogedin = true

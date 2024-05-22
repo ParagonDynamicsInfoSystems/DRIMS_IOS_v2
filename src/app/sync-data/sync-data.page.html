@@ -1,13 +1,352 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>sync-data</ion-title>
+<ion-header>
+  <ion-toolbar class="header">
+    <ion-buttons slot="start">
+      <ion-back-button class="back-button-ion" defaultHref="dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="ion-text-wrap header-title">Sync </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">State Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{statelivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{statelocaldataCount}}</span></p>
+      
+         
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="SyncState()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('state')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">sync-data</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">dosage Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{dosagelivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{dosagelocaldataCount}}</span></p>
+      
+         
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="SyncDosage()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('dosage')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">drugs Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{drugsLivecount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{drugslocaldataCount}}</span></p>
+      {{drugCount}}
+                <ion-progress-bar [value]="progress"></ion-progress-bar>
+
+
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncDrugs()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('drugs')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">drugs_return_policy Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{drugs_return_policylivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{drugs_return_policylocaldataCount}}</span></p>
+                <!-- <ion-progress-bar [value]="progress"></ion-progress-bar> -->
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncdrugs_return_policy()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('drugs_return_policy')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">manufacturer Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{manufacturerLivecount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{ManufacturerlocaldataCount}}</span></p>
+                {{manufacturerCount}}
+
+                <!-- <ion-progress-bar [value]="progress"></ion-progress-bar> -->
+
+
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncManufacturer()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('manufacturer')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">manufacturer_return_policy Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{manufacturer_return_policyLivecount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{manufacturer_return_policylocaldataCount}}</span></p>
+
+                <!-- <ion-progress-bar [value]="progress"></ion-progress-bar> -->
+
+
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncManufacturer_return_policy()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('dosage')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">wholesaler Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{wholesalerlivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{wholesalerlocaldataCount}}</span></p>
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncWholesaler()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('wholesaler')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">company Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{companylivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{companylocaldataCount}}</span></p>
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="synccompany()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('company')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">return_memo Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{return_memolivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{return_memolocaldataCount}}</span></p>
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncreturn_memo()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('return_memo')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">account Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{accountlivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{accountlocaldataCount}}</span></p>
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncaccount()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('account')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">return_reason Table 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{return_reasonlivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{return_reasonlocaldataCount}}</span></p>
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncreturn_reason()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('return_reason')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">return_memo_itemsTable 
+          </h2>
+          <p class="ion-text-wrap">Data in live : <span
+              class="list-values-ion">{{return_memo_itemslivedataCount}}</span></p>
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{return_memo_itemsLocaldataCount}}</span></p>
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-button class="verifyDeclineBtn" size="small" (click)="syncreturn_memo_items()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button>
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('return_memo_items')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
+  <ion-card  class="list-card">
+    <ion-card-content>
+      <ion-item style="--ion-item-background: transparent;" lines="none">
+        <ion-label>
+          <h2 class="ion-text-wrap"
+            class="list-values-ion">return_memo_items_local Table 
+          </h2>
+    
+              <p class="ion-text-wrap">Data in local : <span
+                class="list-values-ion">{{return_itemsLocaldataCount}}</span></p>
+          <br />
+        </ion-label>
+      </ion-item>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <!-- <ion-button class="verifyDeclineBtn" size="small" (click)="syncreturn_memo_items()">Sync
+          <ion-icon slot="start" name="sync-circle"></ion-icon>   
+             </ion-button> -->
+             <ion-button class="verifyDeclineBtn" size="small" (click)="Deleatetable('return_memo_items_local')">Deleate
+              <ion-icon slot="start" name="trash-sharp"></ion-icon>            
+             </ion-button> 
+      </ion-fab>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

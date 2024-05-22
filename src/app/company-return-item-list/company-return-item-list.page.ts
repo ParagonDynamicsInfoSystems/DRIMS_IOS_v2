@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { CedService } from '../ced.service';
 import { StorageService } from '../storage.service';
+import { DatabaseService } from '../database.service';
 
 @Component({
   selector: 'app-company-return-item-list',
@@ -19,13 +20,15 @@ export class CompanyReturnItemListPage implements OnInit {
   isonline: boolean;
   debitMemoListlocal: any;
 
-  constructor(private router: Router, private ced: CedService, public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController ) {
+  constructor(private router: Router, private ced: CedService, public storageservice: StorageService, private route: ActivatedRoute, public alertController: AlertController 
+    ,private datastorage : DatabaseService,
+  ) {
     //Load existing values from the "Visit request" page.
 
-    if(localStorage.getItem('onlineStatus') =="true"){
+    if(localStorage.getItem('networkstatus') !="offline"){
       this.isonline = true
     }else{
-      this.isonline = true
+      this.isonline = false
     }
     this.route.queryParams.subscribe(par => {
       var params :any = par
@@ -47,10 +50,10 @@ export class CompanyReturnItemListPage implements OnInit {
   }
   
   ngOnInit() {
-    if(localStorage.getItem('onlineStatus') =="true"){
+    if(localStorage.getItem('networkstatus') != "offline"){
       this.isonline = true
     }else{
-      this.isonline = true
+      this.isonline = false
     }
     this.bindList();
   }
@@ -79,7 +82,61 @@ export class CompanyReturnItemListPage implements OnInit {
     };
     this.router.navigate(['/company-return-item-add'], navigationExtras);
   }
+  async deletelocal(id:any){
+    let alert = await this.alertController.create({
+      header: 'Delete request',
+      message: 'Are you sure you want to delete this record in local?',
+      cssClass: 'alertclass',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'alert-button-cancel',
+          handler: () => {
+            
+          }
+        },
+        {
+          text: 'Yes',
+          cssClass: 'alert-button-yes',
+          handler: () => {
+            
+            try {
+           
 
+              this.datastorage.deleteitemlocal(id).then(res => {
+                var result :any = res
+                if (result['success'] === true) {
+                  this.storageservice.successToastCustom('Delete', 'Record has been deleted successfully in local.');
+                  this.resetList();
+                } else if (result['success'] === false) {
+                  var msg = result['message'];
+                  if (msg == null) {
+                    msg = 'Unable to delete, Please contact support.';
+                  }
+                  this.storageservice.warningToast(msg);
+                }
+              },
+              error => {                  
+                if (error.name === 'HttpErrorResponse') {
+                  this.storageservice.warningToast('Internet connection problem, Pls check your internet.');
+                  this.storageservice.GeneralAlert('HttpErrorResponse', 'Internet connection problem, Pls check your internet.');
+                } else {
+                  this.storageservice.warningToast('Error: ' + error.message);
+                }            
+              });
+            } catch (Exception) {
+              this.storageservice.warningToast('Unable to delete, Please contact support.');
+
+            }
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 async delete(returnMemoItemsCode:any) {
       let alert = await this.alertController.create({
@@ -196,9 +253,27 @@ async delete(returnMemoItemsCode:any) {
 
           this.debitMemoList = result['returnMemoItemsDashboardListBean'];
 
-          // // this.datastorage.getreturnItemListLoacl().then((data: any)=>{
-          // //   this.debitMemoListlocal =data
-          // })
+      
+
+          this.datastorage.getreturnItemListLoacl(this.returnMemoNo).then((data: any)=>{
+            this.debitMemoListlocal =data
+  
+            for(let i = 0 ; i<this.debitMemoListlocal.length; i++){
+             if(this.debitMemoListlocal[i].fullParticalProduct) {
+              this.debitMemoListlocal[i].fullParticalProductloc = "Yes"
+             }else{
+              this.debitMemoListlocal[i].fullParticalProductloc = "NO"
+  
+             }
+  
+             if(this.debitMemoListlocal[i].returnable) {
+              this.debitMemoListlocal[i].returnableloc = "Yes"
+             }else{
+              this.debitMemoListlocal[i].returnableloc = "NO"
+  
+             }
+            }
+          })
 
         },
         (error) => {
@@ -213,83 +288,65 @@ async delete(returnMemoItemsCode:any) {
         }
       );
       }else{
-        // this.datastorage.getMemoitemlist(this.returnMemoNo)
-        // .then((Memo :any) => {
-        //   console.log("Companies:", Memo);
-        //   this.debitMemoList = Memo
-        // })
-        // .catch((error :any) => {
-        //   console.error("Error fetching companies:", error);
-        // });
+        this.datastorage.getMemoitemlist(this.returnMemoNo)
+        .then((Memo :any) => {
+          console.log("Companies:", Memo);
+          this.debitMemoList = Memo
+        })
+        .catch((error :any) => {
+          console.error("Error fetching companies:", error);
+        });
 
 
-        // this.datastorage.getreturnItemListLoacl().then((data: any)=>{
-        //   this.debitMemoListlocal =data
-        // })
+        this.datastorage.getreturnItemListLoacl(this.returnMemoNo).then((data: any)=>{
+          this.debitMemoListlocal =data
+
+          for(let i = 0 ; i<this.debitMemoListlocal.length; i++){
+           if(this.debitMemoListlocal[i].fullParticalProduct) {
+            this.debitMemoListlocal[i].fullParticalProductloc = "Yes"
+           }else{
+            this.debitMemoListlocal[i].fullParticalProductloc = "NO"
+
+           }
+
+           if(this.debitMemoListlocal[i].returnable) {
+            this.debitMemoListlocal[i].returnableloc = "Yes"
+           }else{
+            this.debitMemoListlocal[i].returnableloc = "NO"
+
+           }
+          }
+        })
       }
     }  
 
     uplodeLive(i: number = 0){
-        let data :any = this.debitMemoListlocal[i]
-console.log(JSON.stringify(data))
-const json = {
-  "returnMemoItemsCode": data.returnMemoItemsCode,
-  "return": data.return,
-  "returnMemoNo": data.returnMemoNo,
-  "companyCode": data.companyCode,
-  "ndcupcCode": data.ndcupcCode,
-  "unitPackage": data.unitPackage,
-  "description": data.description,
-  "controlNo": data.controlNo,
-  "packageSize": data.packageSize,
-  "strength": data.strength,
-  "dosage": data.dosage,
-  "manufacturerBy": data.manufacturerBy,
-  "returnTo":data.returnTo,
-  "price": data.price,
-  "quantity": data.quantity,
-  "dosageDescription": data.dosageDescription,
-  "fullParticalProduct": data.fullParticalProduct,
-  "reason": data.reason,
-  "expDate": data.expDate,
-  "entryNo":data.entryNo,
-  "lotNo": data.lotNo,
-  "returnable": data.returnable,
-  "repackagedProduct": data.repackagedProduct,
-  "overridePolicy": data.overridePolicy,
-  "overridePolicyname": data.overridePolicyname,
-  "isFutureDated": data.isFutureDated
-};
+        let data :any = this.debitMemoListlocal
+console.log(data)
 
 
-//  const json ={"returnMemoItemsCode":"","returnMemoNo":"1902TEST",
-// "companyCode":"VoorqckDijxOG/Hgd2RGzQ==","ndcupcCode":"11111-1111-11",
-// "unitPackage":"2","description":"TEST","controlNo":"2",
-// "packageSize":"100","strength":"150","dosage":"ACC",
-// "manufacturerBy":"M2968","returnTo":"jenny link to",
-// "price":"10","quantity":10,"dosageDescription":"Accessory",
-// "fullParticalProduct":"true","reason":"4","expDate":"03/2024",
-// "entryNo":28,"lotNo":"H1","returnable":"true",
-// "repackagedProduct":"false","overridePolicy":"",
-// "overridePolicyname":"YES","isFutureDated":"false"}
-console.log("json"+JSON.stringify(json));
+
+
 console.log(data);
-console.log(data.id)
+try{
+for (let i = 0 ; i < data.length ; i++){
+this.submitFinalClick(data[i]).then((res)=>{
 
- this.submitFinalClick(json).then((res)=>{
-  if(this.debitMemoListlocal.length > i){
-    this.uplodeLive(i+1)
+  console.log(res)
 
-    console.log(i)
-    }
- })
+  if(res){
+    this.datastorage.updatereturn_memo_items_local(data[i].id)
+  }
+})}
+this.storageservice.successToast("Updated to live successfully")
+}catch{
 
-
+}
 
     }
 
     async submitFinalClick(data :any) {
-
+var issucess = true
       var addOrUpdateURL = "";
      console.log("karthi check"+JSON.stringify(data))
    
@@ -300,17 +357,21 @@ console.log(data.id)
                           var result :any = res
 
         console.log("karthi result"+JSON.stringify(result))
-
         this.storageservice.hideLoadingIndicator();
         if (result['success']) {
-         
+          issucess = true
+
+
 
 
           //Back
           // this.navigateBackWithParams();
+
+          
         }
         else if (!result['success']) {
           this.storageservice.warningToast('Error: ' + result['message']);
+          issucess = false
 
         }
   
@@ -329,6 +390,7 @@ console.log(data.id)
 
           }
         });
-  
+        return  issucess
+
     }
 }

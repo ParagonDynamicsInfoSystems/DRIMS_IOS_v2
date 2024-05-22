@@ -8,9 +8,9 @@
     </div>
 
     <form [formGroup]="loginform">
-      <div class="formtext">       
+      <div class="formtext" *ngIf="!alreadylogedIn">       
      
-        <div heading-column-login>
+        <div heading-column-login >
           <div style="display: flex;justify-content: center;align-items: center;">
             <ion-img src="assets/img/omega_logo-trans.png" alt="Logo"style="width: 30%;"></ion-img>
           </div>
@@ -71,6 +71,18 @@
         </div>
 
       </div>
+      <ion-row *ngIf="alreadylogedIn">
+        <ion-col style="display: flex;justify-content: center;align-items: center;">
+          <re-captcha (resolved)="onCaptchaResolved($event)"></re-captcha>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row *ngIf="alreadylogedIn">
+        <ion-col style="text-align: center;">
+          <ion-button login-page-text class="loginbtn" (click)="login_click_session1()" shape="round">Login
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </form>
   </div>
 </ion-content>

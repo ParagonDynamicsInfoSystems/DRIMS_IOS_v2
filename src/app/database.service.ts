@@ -6,6 +6,7 @@ import { SQLite, SQLiteObject } from "@ionic-native/sqlite/ngx";
   providedIn: "root"
 })
 export class DatabaseService {
+
   databaseObj!: SQLiteObject;
   count: number =0;
   Statecount: number =0;
@@ -13,32 +14,33 @@ export class DatabaseService {
   constructor( private sqlite: SQLite,) { }
 
 
- createDB() {
+ createDB(): Promise<void> {
 
-    this.sqlite.create({
-      name: "DRI.db",
-      location: "default"
-    })
-    .then((db: SQLiteObject) => {
-      this.databaseObj = db;
+    return this.sqlite.create({
+     name: "DRI.db",
+     location: "default"
+   })
+     .then((db: SQLiteObject) => {
+       this.databaseObj = db;
        alert("DRI Database Created!");
        console.log("Database created");
-      this.createStateTable()
-      this.createDosageTable()
-      this.createDrugsTable()
-      this.createDrugs_return_policyTable()
-      this.createManufacturerTable()
-      this.createManufacturer_return_policyTable()
-      this.createwholesalerTable()
-      this.createCompanyTable()
-      this.createrAccountTable()
-      this.createrReturn_reasonTable()   
-      this.createrReturn_memoTable()
-this.createrReturn_memo_itemsTable()   
-    })
-    .catch(error => {console.log("Error creating database", error)
-      alert("error " + JSON.stringify(error))
-    });
+       this.createStateTable();
+       this.createDosageTable();
+       this.createDrugsTable();
+       this.createDrugs_return_policyTable();
+       this.createManufacturerTable();
+       this.createManufacturer_return_policyTable();
+       this.createwholesalerTable();
+       this.createCompanyTable();
+       this.createrAccountTable();
+       this.createrReturn_reasonTable();
+       this.createrReturn_memoTable();
+       this.createrReturn_memo_itemsTable();
+     })
+     .catch(error => {
+       console.log("Error creating database", error);
+       alert("error " + JSON.stringify(error));
+     });
   
   }
   async createStateTable() {
@@ -167,7 +169,15 @@ this.createrReturn_memo_itemsTable()
   }
 
 
-
+  async updatereturn_memo_items_local(id: any) {
+    try {
+      const sql = `UPDATE return_memo_items_local SET live_updated_on = datetime('now'), is_synced_live = '1' WHERE id = ?`;
+      await this.databaseObj.executeSql(sql, [id]);
+      console.log(`Record with id ${id} updated`);
+    } catch (error) {
+      console.error('Unable to update item:', error);
+    }
+  }
 
   async createManufacturerTable() {
    
@@ -946,6 +956,8 @@ this.createrReturn_memo_itemsTable()
   }
 
   getCompanylist(): Promise<any[]> {
+
+    
     return new Promise((resolve, reject) => {
       this.databaseObj.executeSql(`
           SELECT 
@@ -969,7 +981,7 @@ this.createrReturn_memo_itemsTable()
             com.is_active = 'Y' 
           ORDER BY 
             com.company_name ASC;
-        `, []).then((data) => {
+        `,[]).then((data) => {
           let result = [];
           for (let i = 0; i < data.rows.length; i++) {
             result.push(data.rows.item(i));
@@ -1035,6 +1047,80 @@ this.createrReturn_memo_itemsTable()
       FROM return_reason 
       ORDER BY reason_name;
             `, []).then((data) => {
+          let result = [];
+          for (let i = 0; i < data.rows.length; i++) {
+            result.push(data.rows.item(i));
+            console.log(JSON.stringify(data.rows.item(i)))
+          }
+          resolve(result);
+        }).catch((error) => {
+          reject(error);
+          console.log("error"+error)
+          console.error("Error executing SQL query:", error);
+          alert("error " + JSON.stringify(error))
+
+
+        });
+      })
+    
+  }
+
+  getManufacturerList(): Promise<any[]> {
+
+   
+    return new Promise((resolve, reject) => {
+      this.databaseObj.executeSql(`
+      select manufacturer_code as id, manufacturer_name as text 
+      from manufacturer where is_active='Y' 
+      order by manufacturer_name asc`, []).then((data) => {
+          let result = [];
+          for (let i = 0; i < data.rows.length; i++) {
+            result.push(data.rows.item(i));
+            console.log(JSON.stringify(data.rows.item(i)))
+          }
+          resolve(result);
+        }).catch((error) => {
+          reject(error);
+          console.log("error"+error)
+          console.error("Error executing SQL query:", error);
+          alert("error " + JSON.stringify(error))
+
+
+        });
+      })
+    
+  }
+
+  fetchreturnMemoNamebyId(id:any): Promise<any[]> {
+
+   
+    return new Promise((resolve, reject) => {
+      this.databaseObj.executeSql(`
+      select return_memo_name as text,company as value from return_memo where return_memo_no= '${id}'`, []).then((data) => {
+          let result = [];
+          for (let i = 0; i < data.rows.length; i++) {
+            result.push(data.rows.item(i));
+            console.log(JSON.stringify(data.rows.item(i)))
+          }
+          resolve(result);
+        }).catch((error) => {
+          reject(error);
+          console.log("error"+error)
+          console.error("Error executing SQL query:", error);
+          alert("error " + JSON.stringify(error))
+
+
+        });
+      })
+    
+  }
+
+  deleteitemlocal(id:any): Promise<any[]> {
+
+   
+    return new Promise((resolve, reject) => {
+      this.databaseObj.executeSql(`
+      delete  from return_memo_items_local where id= '${id}'`, []).then((data) => {
           let result = [];
           for (let i = 0; i < data.rows.length; i++) {
             result.push(data.rows.item(i));
@@ -1186,14 +1272,12 @@ this.createrReturn_memo_itemsTable()
     return this.databaseObj;
   }
 
-  getreturnItemListLoacl(): Promise<any[]> {
+  getreturnItemListLoacl(returnMemoNo: any): Promise<any[]> {
 
    
       return new Promise((resolve, reject) => {
         this.databaseObj.executeSql(`
-        SELECT *
-        FROM return_memo_items_local 
-        ORDER BY created_local_on;
+        select * from return_memo_items_local where returnMemoNo = '${returnMemoNo}' and is_synced_live = 0        ORDER BY created_local_on;
               `, []).then((data) => {
             let result = [];
             for (let i = 0; i < data.rows.length; i++) {
