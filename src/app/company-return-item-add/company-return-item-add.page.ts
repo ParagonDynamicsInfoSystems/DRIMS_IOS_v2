@@ -17,7 +17,8 @@ import { IsReturnableOverridepolicyService } from './is-returnable-overridepolic
   styleUrls: ['./company-return-item-add.page.scss'],
 })
 export class CompanyReturnItemAddPage implements OnInit {
-  modelExpDate: Date = new Date(); ;
+  modelExpDate: Date = new Date();refId: any;
+ ;
   datePickerConfig: Partial<BsDatepickerConfig>;
   isonline: boolean =true;
 
@@ -216,6 +217,12 @@ if(this.isonline){
           //Load existing values
           this.BindExistingValues();
         }
+
+        if(params.ref != null){
+          this.IsEditMode = true;
+          this.refId= params.ref 
+          this.BindExistingValueslocal();
+        }
       }
     });
     this.nextEntryNumber();
@@ -299,11 +306,85 @@ if(this.isonline){
   //#endregion
 
 
+  BindExistingValueslocal() {
+    this.storageservice.showLoadingIndicator();
+    this.datastorage.getreturnMemoItemsEdit(this.refId).then((res:any) => {
+      var result :any = res
+      if (result.length == 1) {
+        //Edit details
+        var data = result[0];
+        //To show the values
+        this.docForm.patchValue({
+          'returnMemoItemsCode': data["returnMemoItemsCode"],
+          'ndcupcCode': data["ndcupcCode"],
+          'unitPackage': data['unitPackage'],
+          'description': data['description'],
+          'controlNo': data['controlNo'],
+          'packageSize': data['packageSize'],
+          'strength': data['strength'],
+          'estimatedValue': data['estimatedValue'],
+          'dosage': data['dosage'],
+          'manufacturerBy': data['manufacturerBy'],
+          'returnTo': data['returnTo'],
+          'price': data['price'],
+          'quantity': data['quantity'],
+          'dosageDescription': data['dosageDescription'],
+          'fullParticalProduct': this.getBoolean(data['fullParticalProduct']).toString(),
+          'reason': data['reason'],
+          'expDate': data['expDate'],
+          'entryNo': data['entryNo'],
+          'lotNo': data['lotNo'],
+          'returnable': this.getBoolean(data['returnable']),
+          'repackagedProduct': this.getBoolean(data['repackagedProduct']),
+        });
+
+        //Date picker start
+        //Added by gokul for monthDate Date picker
+        var monthEdit = parseInt(data['expDate'].substring(0, 2));
+        var editMonth = (monthEdit < 10 ? '0' : '') + monthEdit;
+        var editYear = parseInt(data['expDate'].substring(3, 8));
+        var editTempExpValue = new Date(editMonth + "/01/" + editYear);
+        this.modelExpDate = editTempExpValue;
+        //Date picker end
+
+        if (!this.getBoolean(data["hazardous"])) {
+          if (data["control"] == 3 || data["control"] == 4 || data["control"] == 5) {
+            this.greenNDCUPC = true;
+            this.defaultNDCUPC = false;
+            this.redNDCUPC = false;
+            this.blueNDCUPC = false;
+          } else if (data["control"] == 2) {
+            this.redNDCUPC = true;
+            this.defaultNDCUPC = false;
+            this.greenNDCUPC = false;
+            this.blueNDCUPC = false;
+          } else {
+            this.defaultNDCUPC = true;
+            this.greenNDCUPC = false;
+            this.redNDCUPC = false;
+            this.blueNDCUPC = false;
+          }
+        } else {
+          this.blueNDCUPC = true;
+          this.defaultNDCUPC = false;
+          this.greenNDCUPC = false;
+          this.redNDCUPC = false;
+        }
+        this.storageservice.hideLoadingIndicator();
+      } else {
+        this.storageservice.hideLoadingIndicator();
+      }
+
+    });
+  }
+
   async checkValidationAndFullParticalProduct(valueForSubmitOrUpdate: any) {
     this.isSubmitted = true;
     if (!this.docForm.valid) {
 
       this.storageservice.warningToast('Please provide all the required values!');
+      return
+
     }
     // FullParticalProduct Quantity Start //   
     if (typeof this.docForm.value.quantity === 'number' && !Number.isInteger(this.docForm.value.quantity) && this.docForm.value.fullParticalProduct === 'true') {
@@ -614,14 +695,22 @@ async checkDrugIsReturnableFromLocal(valueForSubmitOrUpdate: any) {
     }else{
       this.datastorage.createrReturn_memo_itemsLocalTable()
 console.log(this.docForm.value)
-      this.datastorage.insertReturnLocalDatabase( this.docForm.value).then((data)=>{
+if (!this.IsEditMode) {
+  this.datastorage.insertReturnLocalDatabase( this.docForm.value).then((data)=>{
         this.storageservice.successToast('saved successfully in local.');
         this.navigateBackWithParams();
 
       }
 
-      )
-      .catch()
+      )}
+      if (this.IsEditMode) {
+        this.datastorage.updateReturnMemoItem( this.docForm.value).then((data)=>{
+              this.storageservice.successToast('Updated successfully in local.');
+              this.navigateBackWithParams();
+      
+            }
+      
+            )}
     }
   }
 

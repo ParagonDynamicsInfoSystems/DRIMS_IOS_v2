@@ -191,10 +191,12 @@ this.dismissLoading()
        if (error.name === 'HttpErrorResponse') {
          this.storageservice.warningToast('Internet connection problem, Please check your internet.');
          localStorage.setItem("networkstatus","offline")
+         this.isonline = true
+
          this.getlocallist()
 
 
-         this.storageservice.GeneralAlert('HttpErrorResponse', 'Internet connection problem, Please check your internet.');
+         this.storageservice.GeneralAlert(' Offline Mode Active', 'It looks like your device is currently in offline mode. Ensure Your Data is Synced Properly');
 
        } else {
          this.storageservice.warningToast('Error: ' + error.message);

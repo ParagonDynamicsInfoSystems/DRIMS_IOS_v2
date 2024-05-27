@@ -82,6 +82,15 @@ export class CompanyReturnItemListPage implements OnInit {
     };
     this.router.navigate(['/company-return-item-add'], navigationExtras);
   }
+
+  edit_clickOffline(id:any) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        ref: id
+      }
+    };
+    this.router.navigate(['/company-return-item-add'], navigationExtras);
+  }
   async deletelocal(id:any){
     let alert = await this.alertController.create({
       header: 'Delete request',

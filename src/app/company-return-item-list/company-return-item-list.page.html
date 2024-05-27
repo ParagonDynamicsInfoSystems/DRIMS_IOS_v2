@@ -31,7 +31,7 @@
       <ion-button class="add-button" (click)="gotoAddNew()">
         <ion-icon name="add-outline"></ion-icon>
       </ion-button>
-      <ion-button class="add-button" (click)="uplodeLive()">
+      <ion-button *ngIf="isonline"  class="add-button" (click)="uplodeLive()">
         <ion-icon name="cloud-upload-outline"></ion-icon>
       </ion-button>
     </div>
@@ -88,10 +88,10 @@
     </ion-col>
     </ion-row>
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <!-- <ion-button class="verifyDeclineBtn" size="small"
-          (click)="edit_click(element.returnMemoNo, element.returnMemoItemsCode)">EDIT
+        <ion-button class="verifyDeclineBtn" size="small"
+          (click)="edit_clickOffline(element.id)">EDIT
           <ion-icon slot="start" name="create-outline"></ion-icon>
-        </ion-button> -->
+        </ion-button>
         <ion-button class="verifyDeclineBtn" size="small" color="danger" (click)="deletelocal(element.id)">
           DELETE
           <ion-icon slot="start" name="trash-outline"></ion-icon>
@@ -153,11 +153,11 @@
     </ion-col>
     </ion-row>
       <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-button class="verifyDeclineBtn" size="small"
+        <ion-button *ngIf="isonline"  class="verifyDeclineBtn" size="small"
           (click)="edit_click(element.returnMemoNo, element.returnMemoItemsCode)">EDIT
           <ion-icon slot="start" name="create-outline"></ion-icon>
         </ion-button>
-        <ion-button class="verifyDeclineBtn" size="small" color="danger" (click)="delete(element.returnMemoItemsCode)">
+        <ion-button *ngIf="isonline"  class="verifyDeclineBtn" size="small" color="danger" (click)="delete(element.returnMemoItemsCode)">
           DELETE
           <ion-icon slot="start" name="trash-outline"></ion-icon>
         </ion-button>

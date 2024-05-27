@@ -22,7 +22,7 @@
         <ion-button class="reset-button" (click)="resetList()">
           <ion-icon name="refresh"></ion-icon>
         </ion-button>
-        <ion-button class="add-button" (click)="gotoAddNew()">
+        <ion-button class="add-button" *ngIf="isonline" (click)="gotoAddNew()">
           <ion-icon name="add-outline"></ion-icon>
         </ion-button>
       </div>
@@ -47,7 +47,7 @@
             </ion-label>
           </ion-item>
           <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-button class="verifyDeclineBtn" size="small"
+            <ion-button *ngIf="isonline"  class="verifyDeclineBtn" size="small"
               (click)="edit_click(element.returnMemoNo)">EDIT
               <ion-icon slot="start" name="create-outline"></ion-icon>
             </ion-button>
@@ -56,7 +56,7 @@
               <ion-icon slot="start" name="log-in-outline"></ion-icon>
              
             </ion-button>
-            <ion-button class="verifyDeclineBtn" size="small" color="danger" (click)="delete(element.returnMemoNo)">
+            <ion-button  *ngIf="isonline"  class="verifyDeclineBtn" size="small" color="danger" (click)="delete(element.returnMemoNo)">
               DELETE
               <ion-icon slot="start" name="trash-outline"></ion-icon>
             </ion-button>

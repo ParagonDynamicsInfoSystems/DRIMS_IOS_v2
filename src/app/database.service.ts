@@ -22,7 +22,7 @@ export class DatabaseService {
    })
      .then((db: SQLiteObject) => {
        this.databaseObj = db;
-       alert("DRI Database Created!");
+       // alert("DRI Database Created!");
        console.log("Database created");
        this.createStateTable();
        this.createDosageTable();
@@ -30,7 +30,7 @@ export class DatabaseService {
        this.createDrugs_return_policyTable();
        this.createManufacturerTable();
        this.createManufacturer_return_policyTable();
-       this.createwholesalerTable();
+       this.createwholesalertable();
        this.createCompanyTable();
        this.createrAccountTable();
        this.createrReturn_reasonTable();
@@ -39,7 +39,7 @@ export class DatabaseService {
      })
      .catch(error => {
        console.log("Error creating database", error);
-       alert("error " + JSON.stringify(error));
+      //  // alert("error " + JSON.stringify(error));
      });
   
   }
@@ -56,15 +56,15 @@ export class DatabaseService {
     )
     `, [])
       .then(() => {
-        alert("State Table Created!");
+        // // alert("State Table Created!");
         console.log("State Table Created!")
       })
       .catch(e => {
         
       
         if(!(JSON.stringify(e.message).includes("table state already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}
+          // // alert("error " + JSON.stringify(e.message) )
+        }
       });
    
   }
@@ -81,13 +81,13 @@ export class DatabaseService {
     )
     `, [])
       .then(() => {
-        alert("State dosage Created!");
+        // // alert("State dosage Created!");
         console.log("State dosage Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table dosage already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}
+          // // alert("error " + JSON.stringify(e.message) )
+        }
       });
   
   }
@@ -127,13 +127,13 @@ export class DatabaseService {
   );
     `, [])
       .then(() => {
-        alert("State drugs Created!");
+        // alert("State drugs Created!");
         console.log("State drugs Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table drugs already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}     
+          // alert("error " + JSON.stringify(e.message))
+        }     
        });
  
   }
@@ -158,13 +158,13 @@ export class DatabaseService {
   );
     `, [])
       .then(() => {
-        alert("State drugs_return_policy Created!");
+        // alert("State drugs_return_policy Created!");
         console.log("State drugs_return_policy Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table drugs_return_policy already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}      });
+          // alert("error " + JSON.stringify(e.message))
+        }      });
    
   }
 
@@ -211,13 +211,13 @@ export class DatabaseService {
   );
     `, [])
       .then(() => {
-        alert("State manufacturer Created!");
+        // alert("State manufacturer Created!");
         console.log("State manufacturer Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table manufacturer already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}
+          // alert("error " + JSON.stringify(e.message))
+        }
       });
 
   }
@@ -242,17 +242,17 @@ export class DatabaseService {
   );
     `, [])
       .then(() => {
-        alert("State manufacturer_return_policy Created!");
+        // alert("State manufacturer_return_policy Created!");
         console.log("State manufacturer_return_policy Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table manufacturer_return_policy already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}      });
+          // alert("error " + JSON.stringify(e.message))
+        }      });
   
   }
 
-  async createwholesalerTable() {
+  async createwholesalertable() {
   
     this.databaseObj.executeSql(`
     CREATE TABLE wholesaler (
@@ -279,13 +279,13 @@ export class DatabaseService {
   );
     `, [])
       .then(() => {
-        alert("State wholesaler Created!");
+        // alert("State wholesaler Created!");
         console.log("State wholesaler Created!")
       })
-      .catch(e => {
+      .catch((e:any) => {
         if(!(JSON.stringify(e.message).includes("table wholesaler already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}      });
+          // alert("error " + JSON.stringify(e.message))
+        }      });
   
   }
 
@@ -342,13 +342,14 @@ export class DatabaseService {
   );
     `, [])
       .then(() => {
-        alert("State company Created!");
+        // alert("State company Created!");
         console.log("State company Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table company already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}       });
+          // alert("error " + JSON.stringify(e.message))
+        }
+               });
   
   }
   async createrReturn_memoTable() {
@@ -370,13 +371,13 @@ export class DatabaseService {
   );
     `, [])
       .then(() => {
-        alert("State return_memo Created!");
+        // alert("State return_memo Created!");
         console.log("State return_memo Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table return_memo already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}      });
+          // alert("error " + JSON.stringify(e.message))
+        }      });
   
   }
 
@@ -405,13 +406,13 @@ export class DatabaseService {
   
     `, [])
       .then(() => {
-        alert("State account Created!");
+        // alert("State account Created!");
         console.log("State account Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table account already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}      });
+          // alert("error " + JSON.stringify(e.message))
+        }      });
   
   }
 
@@ -454,13 +455,13 @@ export class DatabaseService {
   
     `, [])
       .then(() => {
-        alert("State return_memo_items_local Created!");
+        // alert("State return_memo_items_local Created!");
         console.log("State return_memo_items_local Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table return_memo_items_local already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}      });
+          // alert("error " + JSON.stringify(e.message))
+        }      });
   
   }
 
@@ -478,13 +479,13 @@ export class DatabaseService {
     )
     `, [])
       .then(() => {
-        alert("State return_reason Created!");
+        // alert("State return_reason Created!");
         console.log("State return_reason Created!")
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table return_reason already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}      });
+          // alert("error " + JSON.stringify(e.message))
+        }      });
    
   }
   async createrReturn_memo_itemsTable() {
@@ -531,8 +532,8 @@ export class DatabaseService {
       })
       .catch(e => {
         if(!(JSON.stringify(e.message).includes("table return_memo_items already exists")) ){
-          alert("error " + JSON.stringify(e.message)
-        )}      });
+          // alert("error " + JSON.stringify(e.message))
+        }      });
    
   }
   tableExists(tableName: string): Promise<boolean> {
@@ -541,7 +542,7 @@ export class DatabaseService {
         .then((db: SQLiteObject) => {
           db.executeSql(`SELECT name FROM sqlite_master WHERE type="table" AND name=?`, [tableName])
             .then(result => {
-              alert("result  " + JSON.stringify(result.rows))
+              // alert("result  " + JSON.stringify(result.rows))
               if (result.rows.length > 0) {
                 // Table exists
                 resolve(true);
@@ -569,7 +570,7 @@ export class DatabaseService {
 
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -585,7 +586,7 @@ export class DatabaseService {
       //  this.getRows();
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -601,7 +602,7 @@ export class DatabaseService {
       //  this.getRows();
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -618,7 +619,7 @@ export class DatabaseService {
       //  this.getRows();
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -639,7 +640,7 @@ export class DatabaseService {
       //  this.getRows();
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -659,7 +660,7 @@ export class DatabaseService {
       //  this.getRows();
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -696,7 +697,7 @@ export class DatabaseService {
       .catch(e => {
 
 
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -724,7 +725,7 @@ export class DatabaseService {
       //  this.getRows();
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -813,6 +814,45 @@ export class DatabaseService {
     
   }
 
+  async  updateReturnMemoItem(data:any) {
+    try {
+      await this.databaseObj.executeSql(
+        `UPDATE return_memo_items_local
+         SET returnMemo = ${data.returnMemo},
+             returnMemoNo = ${data.returnMemoNo},
+             companyCode = ${data.companyCode},
+             ndcupcCode = ${data.ndcupcCode},
+             unitPackage = ${data.unitPackage},
+             description = ${data.description},
+             controlNo = ${data.controlNo},
+             packageSize = ${data.packageSize},
+             strength = ${data.strength},
+             dosage = ${data.dosage},
+             manufacturerBy = ${data.manufacturerBy},
+             returnTo = ${data.returnTo},
+             price = ?${data.price},
+             quantity = ${data.quantity},
+             dosageDescription = ${data.dosageDescription},
+             fullParticalProduct = ${data.fullParticalProduct},
+             reason = ${data.reason},
+             expDate = ${data.expDate},
+             entryNo = ${data.entryNo},
+             lotNo = ${data.lotNo},
+             returnable = ${data.returnable},
+             repackagedProduct = ${data.repackagedProduct},
+             overridePolicy = ${data.overridePolicy},
+             overridePolicyname = ${data.overridePolicyname},
+             isFutureDated = ${data.isFutureDated},
+          returnMemoItemsCode = ${data.returnMemoItemsCode}
+           where id = ${data.id}`,
+        []
+      );
+    } catch (e) {
+      console.error("Error in updating drug data: " + JSON.stringify(e));
+    }
+  }
+  
+
   insertreturn_memoRow(row :any) {
     this.databaseObj.executeSql(`
     INSERT INTO return_memo (
@@ -826,7 +866,7 @@ export class DatabaseService {
       //  this.getRows();
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -851,7 +891,7 @@ export class DatabaseService {
         INSERT INTO manufacturer (manufacturer_code, manufacturer_name, department, street, city, state, zip_code, contact_person, mail_id, phone_no, fax_no, toll_free_no, link_to, bill_to, return_service, created_by, created_on, modified_by, modified_on, billing_preference, is_special, manufacture_id)     VALUES 
         ("${row.manufacturer_code}", "${row.manufacturer_name}", "${row.department}", "${row.street}", "${row.city}", "${row.state}", "${row.zip_code}" , "${row.contact_person}" , "${row.mail_id}", "${row.phone_no}" 
         , "${row.fax_no}", "${row.toll_free_no}", "${row.link_to}", "${row.bill_to}", "${row.return_service}", "${row.created_by}" , "${row.created_on}" , "${row.modified_by}" , "${row.modified_on}" , "${row.billing_preference}" , "${row.is_special}" , "${row.manufacture_id}" ) ; `)
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
 
        
     
@@ -872,7 +912,7 @@ export class DatabaseService {
       //  this.getRows();
       })
       .catch(e => {
-        alert("error " + JSON.stringify(e))
+        // alert("error " + JSON.stringify(e))
       });
   }
 
@@ -948,7 +988,7 @@ export class DatabaseService {
    
       return this.databaseObj.executeSql(`DROP TABLE IF EXISTS ${tableName}`, []).then(() => {
         console.log(`Table ${tableName} deleted successfully`);
-        alert(`Table ${tableName} deleted successfully`)
+        // alert(`Table ${tableName} deleted successfully`)
       }).catch(error => {
         console.error(`Error deleting table ${tableName}:`, error);
       });
@@ -992,7 +1032,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
 
 
         });
@@ -1030,7 +1070,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
 
 
         });
@@ -1057,7 +1097,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
 
 
         });
@@ -1065,6 +1105,31 @@ export class DatabaseService {
     
   }
 
+  
+  getreturnMemoItemsEdit(id:any): Promise<any[]> {
+
+   
+    return new Promise((resolve, reject) => {
+      this.databaseObj.executeSql(`
+      select * from return_memo_items_local where id ='${id}';
+            `, []).then((data) => {
+          let result = [];
+          for (let i = 0; i < data.rows.length; i++) {
+            result.push(data.rows.item(i));
+            console.log(JSON.stringify(data.rows.item(i)))
+          }
+          resolve(result);
+        }).catch((error) => {
+          reject(error);
+          console.log("error"+error)
+          console.error("Error executing SQL query:", error);
+          // alert("error " + JSON.stringify(error))
+
+
+        });
+      })
+    
+  }
   getManufacturerList(): Promise<any[]> {
 
    
@@ -1083,7 +1148,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
 
 
         });
@@ -1107,7 +1172,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
 
 
         });
@@ -1131,7 +1196,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
 
 
         });
@@ -1185,7 +1250,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
         });
       })
     
@@ -1206,7 +1271,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
         });
       })
     
@@ -1262,7 +1327,7 @@ export class DatabaseService {
           reject(error);
           console.log("error"+error)
           console.error("Error executing SQL query:", error);
-          alert("error " + JSON.stringify(error))
+          // alert("error " + JSON.stringify(error))
         });
       })
     
@@ -1289,7 +1354,7 @@ export class DatabaseService {
             reject(error);
             console.log("error"+error)
             console.error("Error executing SQL query:", error);
-            alert("error " + JSON.stringify(error))
+            // alert("error " + JSON.stringify(error))
   
   
           });
