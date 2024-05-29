@@ -298,11 +298,13 @@ export class SyncDataPage implements OnInit {
 
   
 
-  SyncState(){
+  async SyncState(){
     for (let i = 0; i < this.stateList.length; i++) {
       console.log(this.stateList[i]); // Output each element of the array
-      this.datastorage.insertStateRow(this.stateList[i])
+      await this.datastorage.insertStateRow(this.stateList[i])
     }
+
+    this.statelocaldataCount = await this.datastorage.countRows('state');
   }
 
 
